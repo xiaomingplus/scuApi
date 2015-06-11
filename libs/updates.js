@@ -1270,7 +1270,7 @@ updates.newsLectures = function(o,cb){
 
 };
 
-
+data.load();
 setTimeout(function(){
 updates.term({
 studentId:2012141442029,
