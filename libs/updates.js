@@ -1270,13 +1270,9 @@ updates.newsLectures = function(o,cb){
 
 };
 
-data.load();
+datas.load();
 setTimeout(function(){
-updates.term({
-studentId:2012141442029,
-    password:'013991',
-
-},function(e,r){
+updates.term(function(e,r){
 
 });
 },2000);
