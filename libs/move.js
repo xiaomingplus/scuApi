@@ -2,9 +2,9 @@ var move={
     'name':"迁移数据"
 };
 var conn = require('../mysql.js');
-var conn2 = require('../mysql2.js');
+//var conn2 = require('../mysql2.js');
 move.user = function(){
-conn2.query(
+conn.query(
     {
         sql:"select * from si_user"
     },function(e,r){
@@ -36,7 +36,7 @@ conn2.query(
 //move.user();
 
 move.libUser = function(){
-    conn2.query(
+    conn.query(
         {
             sql:"select * from si_user"
         },function(e,r){
