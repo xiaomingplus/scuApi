@@ -19,8 +19,10 @@ conn.query(
                 if(r[i].student_id<3014161442029) {
                     // console.log(r[i].student_id);
 
+                    if(r[i].student_id<3014161442029) {
 
-                    value.push('(' + r[i].student_id + ',"' + r[i].student_password + '")');
+                        value.push('(' + r[i].student_id + ',"' + r[i].student_password + '")');
+                    }
                 }
             }
         }
@@ -58,7 +60,7 @@ move.libUser = function(){
             }
             // console.log(value);return;
             var sql ="insert into `scu_library` (`id`,`password`) VALUES "+value.join(',');
-            console.log(sql);
+            //console.log(sql);
             conn.query(
                 {
                     sql:sql

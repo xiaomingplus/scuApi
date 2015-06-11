@@ -9,7 +9,15 @@ var move = require('./move.js');
  */
 
 
-move.user();
+//move.user();
+
+
+/**
+ * 迁移scuinfo的用户图书馆帐号
+ */
+
+
+move.libUser();
 
 
 /**
