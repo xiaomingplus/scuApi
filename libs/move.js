@@ -15,12 +15,18 @@ conn.query(
         var value=[];
         for(var i=0;i< r.length;i++){
             if(r[i].student_id && r[i].student_password) {
-                value.push('(' + r[i].student_id + ',"' + r[i].student_password + '")');
+                
+                if(r[i].student_id<3014161442029) {
+                    // console.log(r[i].student_id);
+
+
+                    value.push('(' + r[i].student_id + ',"' + r[i].student_password + '")');
+                }
             }
         }
-       // console.log(value);return;
+       //// console.log(value);return;
         var sql ="insert into `scu_user` (`id`,`password`) VALUES "+value.join(',');
-        console.log(sql);
+        //console.log(sql);
         conn.query(
             {
                 sql:sql
