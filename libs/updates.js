@@ -1270,20 +1270,17 @@ updates.newsLectures = function(o,cb){
 
 };
 
-/*
+
 setTimeout(function(){
-updates.renew({
+updates.term({
 studentId:2012141442029,
     password:'013991',
-    xc:6,
-    barcode:90491139,
-    borId:"U12005391"
 
 },function(e,r){
 
 });
 },2000);
-*/
+
 //todo 根据参数来
 
 
