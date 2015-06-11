@@ -1270,13 +1270,6 @@ updates.newsLectures = function(o,cb){
 
 };
 
-datas.load();
-setTimeout(function(){
-updates.term(function(e,r){
-
-});
-},2000);
-
 //todo 根据参数来
 
 

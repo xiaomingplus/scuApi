@@ -65,4 +65,6 @@ move.libUser = function(){
 
 };
 
-move.libUser();
+//move.libUser();
+
+module.exports = move;
