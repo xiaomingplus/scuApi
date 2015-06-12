@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongo = mongoose.createConnection('203.195.164.179','open');
+mongo = mongoose.createConnection('127.0.0.1','open');
 mongo.on('error',console.error.bind(console,'conn error\n'));
 mongo.once('open',function(){
 	console.log('conn open\n');
