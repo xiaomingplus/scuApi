@@ -3,14 +3,8 @@
  */
 var request = require('request');
 var libs = require('./libs.js');
-var mysql = require('easymysql');
 var conn = require('../mysql.js');
-var cheerio = require('cheerio');
-//var EventEmitter = require('events').EventEmitter;
-//var event = new EventEmitter();
 var config = require('../config.js');
-var async = require('async');
-var updates = require('./updates.js');
 var autos={
 name:"自动"
 };
@@ -101,7 +95,6 @@ autos.queryScoreProducer = function(o){
 
 //添加到课表队列生产者
 autos.queryMajorProducer = function(o){
-console.log(o);
     conn.query(
         {
             sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user limit "+ o.start+",1"
