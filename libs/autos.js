@@ -1,5 +1,6 @@
 /**
  * 自动运行
+ * 初始化
  */
 var request = require('request');
 var libs = require('./libs.js');
@@ -174,11 +175,7 @@ autos.queryMajorProducer = function(o){
         });
 
 };
-////autos.producer();
-/*
-autos.queryMajorProducer(
-    {start:3000});
-*/
+
 //添加到图书信息队列生产者
 autos.queryBookProducer = function(o){
     console.log(o);
@@ -273,6 +270,7 @@ autos.queryBookProducer = function(o){
                                 return;
                             }
 
+                            //todo 不能只根据这个来做是否更新的判断，还需要有每一个书的续借时间的变化
 
                             if (r.length != rows.length) {
                                 request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
@@ -291,7 +289,20 @@ autos.queryBookProducer = function(o){
                                 return;
 
                             } else {
-                                console.log(user.id + '的图书貌似没有变化');
+
+
+                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
+                                        if (eee) {
+                                            autos.queryBookProducer({start: o.start + 1});
+                                            console.log(eee);
+                                            return;
+                                        }
+                                        console.log(user.id + '的图书貌似没有变化，然而也加入了队列');
+
+                                        autos.queryBookProducer({start: o.start + 1});
+                                        return;
+                                    }
+                                );
                                 autos.queryBookProducer({start: o.start + 1});
                                 return;
                             }
@@ -353,11 +364,27 @@ autos.queryExamProducer = function(o){
 
 };
 
+//autos.queryExamProducer(
+//    {
+//        start: 0
+//    }
+//);
 
-autos.queryExamProducer(
-    {
-        start:0
-    }
-);
+autos.queryMajorProducer(
+    {start: 0});
+
+autos.queryScoreProducer({
+    start: 0
+});
+
+setInterval(function() {
+
+    autos.queryBookProducer(
+        {
+            start: 0
+        }
+    );
+
+},24*3600*1000);
 
 module.exports = autos;
