@@ -341,7 +341,7 @@ autos.queryExamProducer = function(o){
             if (rrr.length > 0) {
                 var user = rrr[0];
                 user.order = o.start;
-                        request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + user.id + ',"password":"' + user.password + '","appId":"10000"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + user.id + ',"password":"' + user.password + '"}', function (eee, rrr) {
                                 if(eee){
                                     autos.queryExamProducer({start:o.start+1});
                                     console.log(eee);
