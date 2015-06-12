@@ -6,10 +6,10 @@ var client = require('easymysql');
 var conn = null;
 
 var db_conf = {
-    'host':'127.0.0.1',
-    'user':'root',
-    'password':'123456',
-    'database':'secret'
+    'host':'scuinfo.cojlxhdpe4yp.ap-northeast-1.rds.amazonaws.com',
+    'user':'dsgygb',
+    'password':'www.scuinfo.com',
+    'database':'scuinfo'
 };
 
 
