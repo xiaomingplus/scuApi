@@ -324,7 +324,7 @@ updates.teacher = function(cb){
                             return;
                         }
                     async.eachSeries(urls, function (url, cb) {
-                        console.log(url);
+                        //console.log(url);
                         libs.rePost(url, function (eee, rrr) {
                             if (eee) {
                                 console.log(eee);

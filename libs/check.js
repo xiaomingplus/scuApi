@@ -15,7 +15,7 @@ check.password = function(o,cb,debug){
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
-    console.log("select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId);
+    //console.log("select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId);
   conn.query({
       sql:"select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId
   },function(e,r){
@@ -26,7 +26,7 @@ check.password = function(o,cb,debug){
           return;
       }else{
           
-          console.log(r);
+          //console.log(r);
           if(r.length==0) {
 
               //cb(code.notFoundStudentId);
@@ -383,7 +383,7 @@ check.renewPassword = function(o,cb,debug){
 
 
 check.renew = function (o,cb){
-console.log(o);
+//console.log(o);
     if(!o.studentId){
         cb(code.lackParamsStudentId);
         return;

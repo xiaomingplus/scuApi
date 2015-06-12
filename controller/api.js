@@ -14,10 +14,10 @@ api.apiPermission = function(req,res,next){
     //console.log('permission');
     res.setHeader('content-type','application/json; charset=UTF-8');
     var id = req.query.appId;
-    console.log(id);
+    //console.log(id);
     //根据appid读取app权限信息
     services.app_permission_model.findOne({appid:id},function(err,app_permission){
-        console.log(err,app_permission);
+        //console.log(err,app_permission);
 
         if(err){
             console.log(err);
@@ -172,7 +172,7 @@ check.student(req.query,function(e,r){
        res.end(JSON.stringify(e));
        return;
    }
-    console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
+    //console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
     conn.query(
         {
             sql:"select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion+" order by id desc"
@@ -368,12 +368,6 @@ req.query.field = 'major';
                         }
 
                     }
-                    console.log(r);
-                    
-                    console.log(common.todayStartTimestamp());
-                    console.log(datas.firstDay);
-                    console.log(datas.currentTerm.termId);
-console.log(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7));
                     res.dump('ok',{
                         currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
                         count: r.majorCount,

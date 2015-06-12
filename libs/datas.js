@@ -430,11 +430,7 @@ datas.getStatus = function(){
 datas.getAccount = function(){
     return datas.account;
 };
-datas.load();
 
-setTimeout(function(){
-    console.log(datas);
-},3000)
 
 
 module.exports = datas;

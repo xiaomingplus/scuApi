@@ -28,7 +28,7 @@ consumer.scoreQuery= function(){
             if(Object.keys(user).length>0) {
                 //console.log(user);
                 
-                console.log('队列开始第一项了');
+                //console.log('队列开始第一项了');
                 updates.score(user, function (ee) {
                     if (ee) {
                         console.log('更新成绩错误'+user.studentId);
@@ -66,7 +66,7 @@ callback.post({
                 setTimeout(function(){
                     consumer.scoreQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -131,7 +131,7 @@ consumer.majorQuery= function(){
                 setTimeout(function(){
                     consumer.majorQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -197,7 +197,7 @@ consumer.examQuery= function(){
                 setTimeout(function(){
                     consumer.examQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -215,18 +215,18 @@ consumer.bookQuery= function(){
                 },1000);
                 return;
             }
-            console.log(body);
+            //console.log(body);
             try {
                 var user = JSON.parse(body);
 
             }catch(e){
                 var user = {}
             }
-            console.log(user);
+            //console.log(user);
 
             if(Object.keys(user).length>0) {
 
-                console.log('队列开始第一项了');
+                //console.log('队列开始第一项了');
                 updates.library(user, function (ee) {
                     if (ee) {
                         console.log(ee);
@@ -264,7 +264,7 @@ consumer.bookQuery= function(){
                 setTimeout(function(){
                     consumer.bookQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -291,7 +291,7 @@ consumer.renewQuery= function(){
 
             if(Object.keys(user).length>0) {
 
-                console.log('队列开始第一项了');
+                //console.log('队列开始第一项了');
                 updates.renew(user, function (ee) {
                     if (ee) {
                         console.log(ee);
@@ -330,7 +330,7 @@ consumer.renewQuery= function(){
                 setTimeout(function(){
                     consumer.renewQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
