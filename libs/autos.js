@@ -370,13 +370,20 @@ autos.queryExamProducer = function(o){
 //    }
 //);
 
-autos.queryMajorProducer(
-    {start: 0});
-
+//autos.queryMajorProducer(
+//    {start: 0});
+//
 autos.queryScoreProducer({
-    start: 0
+    start: 10655
 });
 
+
+
+autos.queryBookProducer(
+    {
+        start: 0
+    }
+);
 setInterval(function() {
 
     autos.queryBookProducer(
