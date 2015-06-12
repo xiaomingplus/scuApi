@@ -369,6 +369,10 @@ req.query.field = 'major';
 
                     }
                     console.log(r);
+                    
+                    console.log(common.todayStartTimestamp());
+                    console.log(datas.firstDay);
+                    console.log(datas.currentTerm.termId);
 
                     res.dump('ok',{
                         currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
@@ -382,6 +386,7 @@ req.query.field = 'major';
 
                     if(r.majorVersion > 0){
                         res.dump('ok',{
+                            currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
                             count: r.majorCount,
                             updateAt: r.majorUpdateAt,
                             version: r.majorVersion,

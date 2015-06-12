@@ -11,7 +11,8 @@ var app = express();
 // view engine set
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+app.set('env','production');
+app.use(logger('pro'));
 app.use('/', routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
