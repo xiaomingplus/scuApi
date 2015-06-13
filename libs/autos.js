@@ -17,7 +17,7 @@ autos.queryScoreProducer = function(o){
 //console.log(o);
     conn.query(
         {
-            sql:"select `id`,`password`,`scoreVersion`,`scoreCount` from scu_user limit "+ o.start+",1"
+            sql:"select `id`,`password`,`scoreVersion`,`scoreCount` from scu_user where error=0 limit "+ o.start+",1 "
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -59,7 +59,7 @@ autos.queryScoreProducer = function(o){
                     }
 
                     if (r != user.scoreCount) {
-                        request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + user.id + ',"password":"' + user.password + '"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + user.id + ',"password":"' + user.password + '","appId":"10000"}', function (eee, rrr) {
 
                                 if(eee){
                                     autos.queryScoreProducer({start:o.start+1});
@@ -98,7 +98,7 @@ autos.queryScoreProducer = function(o){
 autos.queryMajorProducer = function(o){
     conn.query(
         {
-            sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user limit "+ o.start+",1"
+            sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user where error=0 limit "+ o.start+",1"
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -181,7 +181,7 @@ autos.queryBookProducer = function(o){
     console.log(o);
     conn.query(
         {
-            sql:"select `id`,`password`,`version` from scu_library limit "+ o.start+",1"
+            sql:"select `id`,`password`,`version` from scu_library where error=0 limit "+ o.start+",1"
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -328,7 +328,7 @@ autos.queryExamProducer = function(o){
     console.log(o);
     conn.query(
         {
-            sql:"select `id`,`password`,`examVersion`,`examCount` from scu_user limit "+ o.start+",1"
+            sql:"select `id`,`password`,`examVersion`,`examCount` from scu_user  where error=0 limit "+ o.start+",1"
         },function(eee,rrr) {
             if (eee) {
                 autos.queryExamProducer({start:o.start+1});
@@ -370,12 +370,12 @@ autos.queryExamProducer = function(o){
 //    }
 //);
 
-//autos.queryMajorProducer(
-//    {start: 0});
+autos.queryMajorProducer(
+    {start: 0});
 //
-autos.queryScoreProducer({
-    start: 10655
-});
+//autos.queryScoreProducer({
+//    start: 10655
+//});
 
 
 
@@ -391,6 +391,9 @@ setInterval(function() {
             start: 0
         }
     );
+
+    autos.queryMajorProducer(
+        {start: 0});
 
 },24*3600*1000);
 
