@@ -271,8 +271,8 @@ api.exam = function(req,res){
                         list[i] = {
                             term: datas.termById[rr[i].termId].name,
                             examName:rr[i].examName,
-                            start:rr[i].start,
-                            end:rr[i].end,
+                            start:(rr[i].start-8*60*60),
+                            end:(rr[i].end-8*60*60),
                             credit:rr[i].credit,
                             name:rr[i].name,
                             campus:datas.campusById[rr[i].campusId].name,
