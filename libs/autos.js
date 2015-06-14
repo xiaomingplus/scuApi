@@ -67,7 +67,7 @@ autos.queryScoreProducer = function(o){
                                     console.log(eee);
                                     return;
                                 }
-                                //console.log(user.id+'已加入成绩队列');
+                                console.log(user.id+'已加入成绩队列'+new Date());
                                 autos.queryScoreProducer({start:o.start+1});
                                 return;
                             }
@@ -151,7 +151,7 @@ autos.queryMajorProducer = function(o){
                                     console.log(eee);
                                     return;
                                 }
-                                //console.log(user.id+'已加入课表队列');
+                                console.log(user.id+'已加入课表队列'+new Date());
                                 autos.queryMajorProducer({start:o.start+1});
                                 return;
                             }
@@ -288,7 +288,7 @@ autos.queryBookProducer = function(o){
                                             console.log(eee);
                                             return;
                                         }
-                                        console.log(user.id + '已加入图书队列');
+                                        //console.log(user.id + '已加入图书队列');
                                         autos.queryBookProducer({start: o.start + 1});
                                         return;
                                     }
@@ -303,7 +303,7 @@ autos.queryBookProducer = function(o){
                                                     console.log(eee);
                                                     return;
                                                 }
-                                                console.log('续借成功');
+                                                //console.log('续借成功');
                                                 return;
                                             }
                                         );
@@ -325,7 +325,7 @@ autos.queryBookProducer = function(o){
                                                     console.log(eee);
                                                     return;
                                                 }
-                                                console.log('续借成功');
+                                                //console.log('续借成功');
                                                 return;
                                             }
                                         );
@@ -342,7 +342,7 @@ autos.queryBookProducer = function(o){
                                             console.log(eee);
                                             return;
                                         }
-                                        //console.log(user.id + '的图书貌似没有变化，然而也加入了队列');
+                                        console.log(user.id + '的图书貌似没有变化，然而也加入了队列'+new Date());
 
                                         autos.queryBookProducer({start: o.start + 1});
                                         return;
@@ -392,7 +392,7 @@ autos.queryExamProducer = function(o){
                                     console.log(eee);
                                     return;
                                 }
-                                console.log(user.id+'已加入考表队列');
+                                //console.log(user.id+'已加入考表队列');
                                 autos.queryExamProducer({start:o.start+1});
                                 return;
                             }
