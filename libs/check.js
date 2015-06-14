@@ -209,7 +209,7 @@ check.libraryPassword = function(o,cb,debug){
                         }
 
                         conn.query({
-                            sql: "update scu_library set password =:password where id = :id",
+                            sql: "update scu_library set password =:password,error=0 where id = :id",
                             params: {
                                 id: o.studentId,
                                 password: password
