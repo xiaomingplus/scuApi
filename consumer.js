@@ -31,7 +31,16 @@ consumer.scoreQuery= function(){
                 //console.log('队列开始第一项了');
                 updates.score(user, function (ee) {
                     if (ee) {
-                        //console.log('更新成绩错误'+user.studentId);
+                        console.log('更新成绩错误'+user.studentId);
+                        console.log({
+                            callback:user.appId?datas.app[user.appId].callback:"",
+                            appId: user.appId,
+                            code: ee.code,
+                            message:ee.message,
+                            action: 'score',
+                            studentId: user.studentId
+
+                        });
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -41,7 +50,7 @@ consumer.scoreQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            ////console.log(e,r);
+                            console.log(e,r);
                         });
                     }else{
                         console.log({
@@ -52,7 +61,7 @@ consumer.scoreQuery= function(){
     action: 'score',
     studentId: user.studentId
 
-})
+});
 callback.post({
     callback:user.appId?datas.app[user.appId].callback:"",
     appId: user.appId,
