@@ -48,7 +48,7 @@ autos.queryScoreProducer = function(o){
                                     autos.queryScoreProducer({start:o.start+1});
                                     return;
                                 }
-                                console.log(user.id+'的帐号密码有问题');
+                                //console.log(user.id+'的帐号密码有问题');
                                 autos.queryScoreProducer({start:o.start+1});
                                 return;
                             }
@@ -67,7 +67,7 @@ autos.queryScoreProducer = function(o){
                                     console.log(eee);
                                     return;
                                 }
-                                console.log(user.id+'已加入成绩队列');
+                                //console.log(user.id+'已加入成绩队列');
                                 autos.queryScoreProducer({start:o.start+1});
                                 return;
                             }
@@ -149,7 +149,7 @@ autos.queryMajorProducer = function(o){
                                     console.log(eee);
                                     return;
                                 }
-                                console.log(user.id+'已加入课表队列');
+                                //console.log(user.id+'已加入课表队列');
                                 autos.queryMajorProducer({start:o.start+1});
                                 return;
                             }
@@ -179,7 +179,7 @@ autos.queryMajorProducer = function(o){
 
 //添加到图书信息队列生产者
 autos.queryBookProducer = function(o){
-    console.log(o);
+    //console.log(o);
     conn.query(
         {
             sql:"select `id`,`password`,`version` from scu_library where error=0 limit "+ o.start+",1"
@@ -208,7 +208,7 @@ autos.queryBookProducer = function(o){
                                     autos.queryBookProducer({start:o.start+1});
                                     return;
                                 }
-                                console.log(user.id+'的帐号密码有问题');
+                                //console.log(user.id+'的帐号密码有问题');
                                 autos.queryBookProducer({start:o.start+1});
                                 return;
                             }
