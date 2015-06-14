@@ -8,7 +8,6 @@ var datas = require('./libs/datas.js');
 
 var update = require('./libs/updates.js');
 var routes = require('./routes/index');
-//var autos = require('./libs/autos.js');
 var app = express();
 var updates = require('./libs/updates.js');
 // view engine setup

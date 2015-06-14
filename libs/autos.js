@@ -98,7 +98,7 @@ autos.queryScoreProducer = function(o){
 //添加到课表队列生产者
 autos.queryMajorProducer = function(o){
     
-    console.log('major',o);
+    //console.log('major',o);
     conn.query(
         {
             sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user where error=0 limit "+ o.start+",1"
@@ -181,7 +181,7 @@ autos.queryMajorProducer = function(o){
 
 //添加到图书信息队列生产者
 autos.queryBookProducer = function(o){
-    console.log('book',o);
+    //console.log('book',o);
     conn.query(
         {
             sql:"select `id`,`password`,`version` from scu_library where error=0 limit "+ o.start+",1"
@@ -414,15 +414,13 @@ autos.queryExamProducer = function(o){
 //    }
 //);
 
-autos.queryMajorProducer(
-    {start: 0});
-//
-//autos.queryScoreProducer({
-//    start: 10655
-//});
 
 
+setTimeout(function(){
+    autos.queryMajorProducer(
+        {start: 0});
 
+},6*60*60*1000);
 autos.queryBookProducer(
     {
         start: 0
@@ -436,9 +434,11 @@ setInterval(function() {
         }
     );
 
-    autos.queryMajorProducer(
-        {start: 0});
+    setTimeout(function(){
+        autos.queryMajorProducer(
+            {start: 0});
 
+    },6*60*60*1000);
 },24*3600*1000);
 
 module.exports = autos;
