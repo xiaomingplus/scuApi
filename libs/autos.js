@@ -186,7 +186,7 @@ autos.queryBookProducer = function(o){
         {
             sql:"select `id`,`password`,`version` from scu_library where error=0 order by ai limit "+ o.start+",1"
         },function(eee,rrr) {
-//console.log(rrr);
+console.log(rrr);
             if (eee) {
                 autos.queryBookProducer({start:o.start+1});
                 console.log(eee);
@@ -418,15 +418,23 @@ autos.queryExamProducer = function(o){
 
 
 setTimeout(function(){
-    autos.queryMajorProducer(
-        {start: 0});
+    autos.queryBookProducer(
+        {
+            start: 0
+        }
+    );
+
+
+    setTimeout(function(){
+        autos.queryMajorProducer(
+            {
+                start:0
+            }
+        )
+    },6*60*60*1000);
 
 },6*60*60*1000);
-autos.queryBookProducer(
-    {
-        start: 0
-    }
-);
+
 setInterval(function() {
 
     autos.queryBookProducer(
