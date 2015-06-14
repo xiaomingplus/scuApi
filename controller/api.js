@@ -261,7 +261,7 @@ api.exam = function(req,res){
                     res.dump('mysqlError');
                     return;
                 }
-                console.log(rr);
+                //console.log(rr);
                 
                 //console.log(datas.termById);
                 if(rr.length>0) {
@@ -282,7 +282,7 @@ api.exam = function(req,res){
                         }
 
                     }
-                    console.log(r);
+                    //console.log(r);
 
                     res.dump('ok',{
                         currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
@@ -421,7 +421,7 @@ api.book = function(req,res){
             res.end(JSON.stringify(e));
             return;
         }
-        console.log(r);
+        //console.log(r);
 //console.log("select * from scu_book where studentId='"+ req.query.studentId+"' and version="+ r.version);
         conn.query(
             {
@@ -432,7 +432,7 @@ api.book = function(req,res){
                     res.dump('mysqlError');
                     return;
                 }
-                console.log(rr);
+                //console.log(rr);
 
                 if(rr.length>0) {
 

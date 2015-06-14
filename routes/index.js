@@ -72,7 +72,7 @@ router.get('/t',function(req,res){
 });
 
 router.post('/t',function(req,res){
-  console.log(req.body);
+  //console.log(req.body);
 });
 
 

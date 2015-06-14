@@ -33,7 +33,7 @@ conn.query(
             {
                 sql:sql
             },function(ee,rr){
-                console.log(ee,rr);
+                //console.log(ee,rr);
             }
         )
     }
@@ -65,7 +65,7 @@ move.libUser = function(){
                 {
                     sql:sql
                 },function(ee,rr){
-                    console.log(ee,rr);
+                    //console.log(ee,rr);
                 }
             )
         }

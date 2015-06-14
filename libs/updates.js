@@ -505,7 +505,7 @@ options.courseDetailPage = parseInt(options.courseDetailPage);
                                     var sql;
                                     var courseSql = "('" + courseBase.courseId + "'," + courseBase.collegeId + ",'" + common.mysqlEscape(courseBase.name) + "',''," + 0 + ",'" + courseBase.type + "','','','','',0,'','','',0,0,''," + (parseInt(latestVersion) + 1) + ")";
                                     sql = "insert into scu_course (`courseId`,`collegeId`,`name`,`orderId`,`credit`,`type`,`examType`,`teacher`,`weekHasLesson`,`lesson`,`week`,`campusId`,`building`,`classroom`,`max`,`count`,`limit`,`version`) VALUES " + courseSql;
-                                    console.log(sql);
+                                    //console.log(sql);
                                     conn.query(
                                         {
                                             sql: sql
@@ -1062,7 +1062,7 @@ updates.exam = function(o,cb){
 
 //todo 根据参数更新图书馆信息
 updates.library = function(o,cb){
-    console.log(o);
+    //console.log(o);
     libs.checkLib(o,function(e,r){
         if(e){
             cb(e);
@@ -1117,11 +1117,11 @@ updates.library = function(o,cb){
                 var sql;
                 var listSql = [];
                 for (var i = 0; i < list.length; i++) {
-                    console.log(list[i]);
+                    //console.log(list[i]);
                     listSql[i] = "('"+ o.studentId+"','" + list[i].barcode + "','" + list[i].borId + "'," + list[i].xc + ",'" + list[i].name + "'," + list[i].deadline + ",'" + list[i].author + "','" + list[i].location + "','" + list[i].index + "'," + (parseInt(roww[0].version) + 1) + ")";
                 }
                 sql = "insert into scu_book (`studentId`,`barcode`,`borId`,`xc`,`name`,`deadline`,`author`,`location`,`index`,`version`) VALUES " + listSql.join(',');
-                console.log(sql);
+                //console.log(sql);
                 conn.query(
                     {
                         sql: sql
@@ -1160,7 +1160,7 @@ updates.library = function(o,cb){
                 });
 
             }else{
-                console.log("update `scu_library` set `count`=0,`version`=version+1"  + ",updateAt=" + common.time() + " where id='" + o.studentId+"'");
+                //console.log("update `scu_library` set `count`=0,`version`=version+1"  + ",updateAt=" + common.time() + " where id='" + o.studentId+"'");
                 conn.query(
                     {
                         sql: "update `scu_library` set `count`=0,`version`=version+1"  + ",updateAt=" + common.time() + " where id='" + o.studentId+"'"
@@ -1225,7 +1225,7 @@ updates.renew = function(o,cb){
                     url:"http://mc.m.5read.com/user/logout/logout.jspx",
                     jar:r
                 },function(eee,rrr,bbb) {
-                    console.log(eee, rrr.statusCode);
+                    //console.log(eee, rrr.statusCode);
                     if (ee) {
                         cb(code.requestLibError);
                         console.log(ee);

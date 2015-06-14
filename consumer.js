@@ -31,7 +31,7 @@ consumer.scoreQuery= function(){
                 //console.log('队列开始第一项了');
                 updates.score(user, function (ee) {
                     if (ee) {
-                        console.log('更新成绩错误'+user.studentId);
+                        //console.log('更新成绩错误'+user.studentId);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -41,7 +41,7 @@ consumer.scoreQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            ////console.log(e,r);
                         });
                     }else{
 callback.post({
@@ -53,7 +53,7 @@ callback.post({
     studentId: user.studentId
 
 },function(e,r){
-    console.log(e,r);
+    //console.log(e,r);
 });
                     }
 
@@ -107,7 +107,7 @@ consumer.majorQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         })
                     }else{
                         callback.post({
@@ -119,7 +119,7 @@ consumer.majorQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            ////console.log(e,r);
                         });
                     }
                 });
@@ -159,7 +159,7 @@ consumer.examQuery= function(){
             }catch(e){
                 var user = {}
             }
-            console.log(user);
+            //console.log(user);
 
             if(Object.keys(user).length>0) {
                 updates.exam(user, function (ee) {
@@ -173,7 +173,7 @@ consumer.examQuery= function(){
                             action: 'exam',
                             studentId: user.studentId
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         })
                     }else{
                         callback.post({
@@ -185,7 +185,7 @@ consumer.examQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         });
                     }
                 });
@@ -239,7 +239,7 @@ consumer.bookQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         })
                     }else{
                         callback.post({
@@ -251,7 +251,7 @@ consumer.bookQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         });
 
                     }
@@ -304,7 +304,7 @@ consumer.renewQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                             callback.post({
                                 callback:user.appId?datas.app[user.appId].callback:"",
                                 appId: user.appId,
@@ -314,7 +314,7 @@ consumer.renewQuery= function(){
                                 studentId: user.studentId
 
                             },function(e,r){
-                                console.log(e,r);
+                                //console.log(e,r);
                             });
                         })
                     }else{

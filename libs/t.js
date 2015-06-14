@@ -87,5 +87,5 @@ callback.post({
     action: 'exam',
     studentId: 2012141442029
 },function(e,r){
-    console.log(e,r);
+    //console.log(e,r);
 })

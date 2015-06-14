@@ -32,7 +32,7 @@ autos.queryScoreProducer = function(o){
             if (rrr.length > 0) {
                 var user = rrr[0];
                 user.order = o.start;
-                console.log(user);
+                //console.log(user);
                 libs.getScoreCount({
                     studentId: user.id,
                     password: user.password
@@ -76,7 +76,7 @@ autos.queryScoreProducer = function(o){
                         return;
 
                     } else {
-                        console.log(user.id+'的成绩貌似没有变化');
+                        //console.log(user.id+'的成绩貌似没有变化');
                         autos.queryScoreProducer({start:o.start+1});
                         return;
                     }
@@ -158,7 +158,7 @@ autos.queryMajorProducer = function(o){
                         return;
 
                     } else {
-                        console.log(user.id+'的课表貌似没有变化');
+                        //console.log(user.id+'的课表貌似没有变化');
                         autos.queryMajorProducer({start:o.start+1});
                         return;
                     }
@@ -223,7 +223,7 @@ autos.queryBookProducer = function(o){
                     
                     if(r.length==0){
 
-                        console.log('没有借书');
+                        //console.log('没有借书');
                         conn.query(
                             {
                                 sql:"select id from scu_book where version = "+user.version
@@ -236,7 +236,7 @@ autos.queryBookProducer = function(o){
                                 }
                                 
                                 if(rows.length == 0){
-                                    console.log('没有变化');
+                                    //console.log('没有变化');
                                     autos.queryBookProducer({start: o.start + 1});
                                     return;
                                 }
@@ -247,7 +247,7 @@ autos.queryBookProducer = function(o){
                                             console.log(eee);
                                             return;
                                         }
-                                        console.log(user.id + '已加入图书队列');
+                                        console.log(user.id + '已加入图书队列'+new Date());
                                         autos.queryBookProducer({start: o.start + 1});
                                         return;
                                     }
@@ -294,7 +294,7 @@ autos.queryBookProducer = function(o){
 
                                 for(var i=0;i< rows.length;i++){
                                     if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                        console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
+                                        //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
                                         request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
                                                 if (eee) {
                                                     console.log(eee);
@@ -316,7 +316,7 @@ autos.queryBookProducer = function(o){
                             } else {
                                 for(var i=0;i< rows.length;i++){
                                     if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                        console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
+                                        //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
                                         request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
                                                 if (eee) {
                                                     console.log(eee);
@@ -339,7 +339,7 @@ autos.queryBookProducer = function(o){
                                             console.log(eee);
                                             return;
                                         }
-                                        console.log(user.id + '的图书貌似没有变化，然而也加入了队列');
+                                        //console.log(user.id + '的图书貌似没有变化，然而也加入了队列');
 
                                         autos.queryBookProducer({start: o.start + 1});
                                         return;
@@ -367,7 +367,7 @@ autos.queryBookProducer = function(o){
 
 //添加到考表队列生产者
 autos.queryExamProducer = function(o){
-    console.log(o);
+    //console.log(o);
     conn.query(
         {
             sql:"select `id`,`password`,`examVersion`,`examCount` from scu_user  where error=0 limit "+ o.start+",1"
