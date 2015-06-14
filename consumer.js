@@ -274,7 +274,7 @@ consumer.bookQuery= function(){
 consumer.renewQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=renew&opt=get',function(err,response,body) {
-            console.log(err,body);
+            //console.log(err,body);
             if (err) {
                 console.log(err);
                 setTimeout(function(){

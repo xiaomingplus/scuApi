@@ -735,7 +735,7 @@ libs.get({
             var sql;
             var scoreSql = [];
             for (var i = 0; i < scores.length; i++) {
-                scoreSql[i] = "('"+scores[i].courseId+"','"+scores[i].name+"','"+scores[i].englishName+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
+                scoreSql[i] = "('"+scores[i].courseId+"','"+(scores[i].name)+"','"+common.mysqlEscape(scores[i].englishName)+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
             }
 
 
@@ -858,7 +858,7 @@ updates.curriculum = function(o,cb){
                         var sql;
                         var listSql = [];
                         for (var i = 0; i < list.length; i++) {
-                            listSql[i] = "('" + list[i].courseId + "','" + list[i].name + "','" + list[i].orderId + "'," + list[i].credit + ",'" + list[i].propertyId + "'," + o.studentId + ",'" + datas.currentTerm.termId + "','" + list[i].status + "','" + list[i].weekHasLesson + "','" + list[i].teacher + "'," + list[i].week + ",'" + list[i].lesson + "','" + list[i].campusId + "','" + list[i].building + "','" + list[i].classroom + "'," + (parseInt(roww[0].majorVersion) + 1) + ")";
+                            listSql[i] = "('" + list[i].courseId + "','" + (list[i].name) + "','" + list[i].orderId + "'," + list[i].credit + ",'" + list[i].propertyId + "'," + o.studentId + ",'" + datas.currentTerm.termId + "','" + list[i].status + "','" + list[i].weekHasLesson + "','" + list[i].teacher + "'," + list[i].week + ",'" + list[i].lesson + "','" + list[i].campusId + "','" + list[i].building + "','" + list[i].classroom + "'," + (parseInt(roww[0].majorVersion) + 1) + ")";
                         }
                         sql = "insert into scu_major (`courseId`,`name`,`orderId`,`credit`,`propertyId`,`studentId`,`termId`,`status`,`weekHasLesson`,`teacherName`,`week`,`lesson`,`campusId`,`building`,`classroom`,`version`) VALUES " + listSql.join(',');
                         //console.log(sql);
@@ -1064,6 +1064,8 @@ updates.exam = function(o,cb){
 updates.library = function(o,cb){
     //console.log(o);
     libs.checkLib(o,function(e,r){
+        
+        //console.log(e,r);
         if(e){
             cb(e);
 

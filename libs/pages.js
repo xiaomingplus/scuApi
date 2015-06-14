@@ -17,7 +17,7 @@ pages.teacherList = function(html,cb){
     teacherIdTd=$($(v).find('td')[4]).find("img").attr('onclick');
         item = {
             id:teacherIdTd.substring(teacherIdTd.indexOf('xjsh=')+5,teacherIdTd.indexOf('&xjsm')),
-            name: $($(v).find('td')[1]).text().trim(),
+            name: common.mysqlEscape($($(v).find('td')[1]).text().trim()),
             collegeId:datas.college[$($(v).find('td')[2]).text().trim()].collegeId,
             college: $($(v).find('td')[2]).text().trim(),
             level: $($(v).find('td')[3]).text().trim()
@@ -52,7 +52,7 @@ pages.courseList = function(html,key){
                 key:i,
                 courseId:$($(v).find('td')[1]).text().trim(),
                 type: $($(v).find('td')[4]).text().trim(),
-                name: $($(v).find('td')[2]).text().trim(),
+                name: common.mysqlEscape($($(v).find('td')[2]).text().trim()),
                 college: college,
                 collegeId: collegeId
             };
@@ -599,13 +599,13 @@ pages.exam = function(html){
     var tr=$($("table.displayTag")[1]).find('tr');
         for(var m = 1;m<tr.length;m++){
             item={
-                'examName':$($(tr[m]).find('td')[0]).text().trim(),
+                'examName':common.mysqlEscape($($(tr[m]).find('td')[0]).text().trim()),
                 'campusId':$($(tr[m]).find('td')[1]).text().trim()?datas.campus[$($(tr[m]).find('td')[1]).text().trim()].campusId:"",
                 'teamId':datas.currentTerm.termId,
                 'start':parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substring(0,$($(tr[m]).find('td')[8]).text().trim().indexOf('-'))))/1000),
                 'end':parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substr(($($(tr[m]).find('td')[8]).text().trim().indexOf('-')+1)))/1000)),
                 'week':parseInt($($(tr[m]).find('td')[5]).text().trim()),
-                'name':$($(tr[m]).find('td')[4]).text().trim(),
+                'name':common.mysqlEscape($($(tr[m]).find('td')[4]).text().trim()),
                 'building':$($(tr[m]).find('td')[2]).text().trim(),
                 'classroom':$($(tr[m]).find('td')[3]).text().trim()
             };
@@ -640,9 +640,9 @@ pages.library = function(html){
     for(var i=0;i<table.length;i++){
         var date =$($(table[i]).find("table tr td")[2]).text().trim();
          item = {
-             name:$($(table[i]).find("table tr td")[1]).text().trim(),
+             name:common.mysqlEscape($($(table[i]).find("table tr td")[1]).text().trim()),
              deadline:parseInt(new Date(date.substr(0,4)+'-'+date.substr(4,2)+'-'+date.substr(6,2)+" 0:0:0:0").getTime()/1000),
-             author:$($(table[i]).find("table tr td")[0]).text().trim(),
+             author:common.mysqlEscape($($(table[i]).find("table tr td")[0]).text().trim()),
              location:$($(table[i]).find("table tr td")[3]).text().trim(),
              index:$($(table[i]).find("table tr td")[4]).text().trim(),
              xc:$($(table[i]).find("table tr td")[5]).find("input[name=xc]").val(),
