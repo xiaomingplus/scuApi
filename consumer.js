@@ -44,6 +44,15 @@ consumer.scoreQuery= function(){
                             ////console.log(e,r);
                         });
                     }else{
+                        console.log({
+    callback:user.appId?datas.app[user.appId].callback:"",
+    appId: user.appId,
+    code: 200,
+    message:user.studentId+'的成绩已更新到最新版',
+    action: 'score',
+    studentId: user.studentId
+
+})
 callback.post({
     callback:user.appId?datas.app[user.appId].callback:"",
     appId: user.appId,
@@ -53,7 +62,7 @@ callback.post({
     studentId: user.studentId
 
 },function(e,r){
-    //console.log(e,r);
+    console.log(e,r);
 });
                     }
 
@@ -340,7 +349,7 @@ consumer.renewQuery= function(){
 consumer.init = function(){
     if(datas.status.appStatus) {
         consumer.scoreQuery();
-        consumer.bookQuery();
+         consumer.bookQuery();
         consumer.majorQuery();
         consumer.renewQuery();
         consumer.examQuery();

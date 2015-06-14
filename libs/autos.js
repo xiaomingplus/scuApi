@@ -18,7 +18,7 @@ autos.queryScoreProducer = function(o){
 //console.log(o);
     conn.query(
         {
-            sql:"select `id`,`password`,`scoreVersion`,`scoreCount` from scu_user where error=0 limit "+ o.start+",1 "
+            sql:"select `id`,`password`,`scoreVersion`,`scoreCount` from scu_user where error=0 order by ai limit "+ o.start+",1 "
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -101,7 +101,7 @@ autos.queryMajorProducer = function(o){
     //console.log('major',o);
     conn.query(
         {
-            sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user where error=0 limit "+ o.start+",1"
+            sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user where error=0 order by ai  limit "+ o.start+",1"
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -184,7 +184,7 @@ autos.queryBookProducer = function(o){
     //console.log('book',o);
     conn.query(
         {
-            sql:"select `id`,`password`,`version` from scu_library where error=0 limit "+ o.start+",1"
+            sql:"select `id`,`password`,`version` from scu_library where error=0 order by ai limit "+ o.start+",1"
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -236,6 +236,7 @@ autos.queryBookProducer = function(o){
                                     console.log(err);
                                     return;
                                 }
+
                                 
                                 if(rows.length == 0){
                                     //console.log('没有变化');
@@ -372,7 +373,7 @@ autos.queryExamProducer = function(o){
     //console.log('exam',o);
     conn.query(
         {
-            sql:"select `id`,`password`,`examVersion`,`examCount` from scu_user  where error=0 limit "+ o.start+",1"
+            sql:"select `id`,`password`,`examVersion`,`examCount` from scu_user  where error=0 order by ai  limit "+ o.start+",1"
         },function(eee,rrr) {
             if (eee) {
                 autos.queryExamProducer({start:o.start+1});

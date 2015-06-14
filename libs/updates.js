@@ -605,6 +605,7 @@ libs.get({
     url: config.urls.scoreAll
 },function(e,r){
     if(e){
+        // console.log('3')
         cb(e);
 
         //密码错误
@@ -626,7 +627,7 @@ libs.get({
         return;
     }
     var scoreList = pages.scoreList(r.data);
-
+// console.log(scoreList)
    if(Object.keys(scoreList).length==0){
        conn.query(
            {
@@ -742,7 +743,7 @@ libs.get({
 
 
             sql = "insert into scu_score (`courseId`,`name`,`englishName`,`orderId`,`credit`,`score`,`propertyId`,`studentId`,`reason`,`termId`,`version`) VALUES " + scoreSql.join(',');
-            //console.log(sql);
+            // console.log(sql);
             conn.query(
                 {
                     sql: sql
@@ -1151,7 +1152,7 @@ updates.library = function(o,cb){
                                     //console.log(rrrrrr);
                                     //console.log('4');
                                     cb(null);
-                                    console.log(o.studentId + '的图书成功更新到版本' + (parseInt(o.version) + 1));
+                                    console.log(o.studentId + '的图书成功更新到最新版本'); ;
                                     return;
 
                                 }
@@ -1172,8 +1173,9 @@ updates.library = function(o,cb){
                             console.log(eeeeee);
                             return;
                         } else {
+                            //console.log('222');
                             cb(null);
-                            console.log(o.studentId + '的图书成功更新到版本' + (parseInt(o.version) + 1));
+                            console.log(o.studentId + '的图书成功更新到版本');
                             return;
 
                         }
