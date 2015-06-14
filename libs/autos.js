@@ -97,6 +97,8 @@ autos.queryScoreProducer = function(o){
 
 //添加到课表队列生产者
 autos.queryMajorProducer = function(o){
+    
+    console.log('major',o);
     conn.query(
         {
             sql:"select `id`,`password`,`majorVersion`,`majorCount` from scu_user where error=0 limit "+ o.start+",1"
@@ -179,7 +181,7 @@ autos.queryMajorProducer = function(o){
 
 //添加到图书信息队列生产者
 autos.queryBookProducer = function(o){
-    //console.log(o);
+    console.log('book',o);
     conn.query(
         {
             sql:"select `id`,`password`,`version` from scu_library where error=0 limit "+ o.start+",1"
@@ -367,7 +369,7 @@ autos.queryBookProducer = function(o){
 
 //添加到考表队列生产者
 autos.queryExamProducer = function(o){
-    //console.log(o);
+    //console.log('exam',o);
     conn.query(
         {
             sql:"select `id`,`password`,`examVersion`,`examCount` from scu_user  where error=0 limit "+ o.start+",1"
