@@ -6,6 +6,7 @@ var request = require('request');
 var libs = require('./libs.js');
 var conn = require('../mysql.js');
 var config = require('../config.js');
+var common=require('./common.js');
 var autos={
 name:"自动"
 };
@@ -261,7 +262,7 @@ autos.queryBookProducer = function(o){
                     
                     conn.query(
                         {
-                            sql:"select id from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version
+                            sql:"select * from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version
                         },function(err,rows) {
 
                             if(err){
@@ -273,6 +274,10 @@ autos.queryBookProducer = function(o){
                             //todo 不能只根据这个来做是否更新的判断，还需要有每一个书的续借时间的变化
 
                             if (r.length != rows.length) {
+
+
+
+
                                 request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
 
                                         if (eee) {
@@ -286,10 +291,47 @@ autos.queryBookProducer = function(o){
                                     }
                                 );
 
+
+                                for(var i=0;i< rows.length;i++){
+                                    if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
+                                        console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
+                                        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                if (eee) {
+                                                    console.log(eee);
+                                                    return;
+                                                }
+                                                console.log('续借成功');
+                                                return;
+                                            }
+                                        );
+
+
+                                    }
+
+
+                                }
+
                                 return;
 
                             } else {
+                                for(var i=0;i< rows.length;i++){
+                                    if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
+                                        console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
+                                        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                if (eee) {
+                                                    console.log(eee);
+                                                    return;
+                                                }
+                                                console.log('续借成功');
+                                                return;
+                                            }
+                                        );
 
+
+                                    }
+
+
+                                }
 
                                 request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
                                         if (eee) {
