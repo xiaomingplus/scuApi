@@ -1189,6 +1189,7 @@ updates.library = function(o,cb){
 
 //todo 根据参数续借信息
 updates.renew = function(o,cb){
+    //console.log(o);
     libs.checkLib(o,function(e,r){
         if(e){
             cb(e);
@@ -1247,7 +1248,7 @@ updates.renew = function(o,cb){
 
                     } else {
                         //成功
-                        //console.log(o.studentId+"续借成功");
+                        console.log(o.studentId+"续借成功");
                         cb(null);
                         return;
 

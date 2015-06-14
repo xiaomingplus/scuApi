@@ -274,7 +274,7 @@ consumer.bookQuery= function(){
 consumer.renewQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=renew&opt=get',function(err,response,body) {
-            //console.log(err,body);
+            console.log(err,body);
             if (err) {
                 console.log(err);
                 setTimeout(function(){
@@ -339,7 +339,6 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-
         consumer.scoreQuery();
         consumer.bookQuery();
         consumer.majorQuery();
@@ -348,9 +347,8 @@ consumer.init = function(){
     }else{
 
         setTimeout(function(){
-            console.log('app信息未载入，2秒后将自动再试');
             consumer.init()
-        },2000);
+        },3000);
 
     }
 };
