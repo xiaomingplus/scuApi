@@ -602,12 +602,12 @@ pages.exam = function(html){
                 'examName':common.mysqlEscape($($(tr[m]).find('td')[0]).text().trim()),
                 'campusId':$($(tr[m]).find('td')[1]).text().trim()?datas.campus[$($(tr[m]).find('td')[1]).text().trim()].campusId:"",
                 'teamId':datas.currentTerm.termId,
-                'start':parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substring(0,$($(tr[m]).find('td')[8]).text().trim().indexOf('-'))))/1000),
-                'end':parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substr(($($(tr[m]).find('td')[8]).text().trim().indexOf('-')+1)))/1000)),
-                'week':parseInt($($(tr[m]).find('td')[5]).text().trim()),
+                'start':$($(tr[m]).find('td')[7]).text().trim()?(parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substring(0,$($(tr[m]).find('td')[8]).text().trim().indexOf('-'))))/1000)):0,
+                'end':$($(tr[m]).find('td')[7]).text().trim()?(parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substr(($($(tr[m]).find('td')[8]).text().trim().indexOf('-')+1)))/1000))):0,
+                'week':$($(tr[m]).find('td')[5]).text().trim()?parseInt($($(tr[m]).find('td')[5]).text().trim()):0,
                 'name':common.mysqlEscape($($(tr[m]).find('td')[4]).text().trim()),
-                'building':$($(tr[m]).find('td')[2]).text().trim(),
-                'classroom':$($(tr[m]).find('td')[3]).text().trim()
+                'building':$($(tr[m]).find('td')[2]).text().trim()?$($(tr[m]).find('td')[2]).text().trim():"",
+                'classroom':$($(tr[m]).find('td')[3]).text().trim()?$($(tr[m]).find('td')[3]).text().trim():"",
             };
             data.push(item);
 
