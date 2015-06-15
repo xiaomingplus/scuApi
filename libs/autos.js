@@ -182,11 +182,12 @@ autos.queryMajorProducer = function(o){
 //添加到图书信息队列生产者
 autos.queryBookProducer = function(o){
     //console.log('book',o);
+    console.log("select `id`,`password`,`version` from scu_library where error=0 order by ai limit "+ o.start+",1");
     conn.query(
         {
             sql:"select `id`,`password`,`version` from scu_library where error=0 order by ai limit "+ o.start+",1"
         },function(eee,rrr) {
-console.log(rrr);
+console.log(rrr+new Date());
             if (eee) {
                 autos.queryBookProducer({start:o.start+1});
                 console.log(eee);
@@ -286,33 +287,36 @@ console.log(rrr);
                                         if (eee) {
                                             autos.queryBookProducer({start: o.start + 1});
                                             console.log(eee);
+
                                             return;
                                         }
                                         //console.log(user.id + '已加入图书队列');
                                         autos.queryBookProducer({start: o.start + 1});
+
+                                        for(var i=0;i< rows.length;i++){
+                                            if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
+                                                //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
+                                                request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                        if (eee) {
+                                                            console.log(eee);
+                                                            return;
+                                                        }
+                                                        //console.log('续借成功');
+                                                        return;
+                                                    }
+                                                );
+
+
+                                            }
+
+
+                                        }
                                         return;
                                     }
                                 );
 
 
-                                for(var i=0;i< rows.length;i++){
-                                    if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                        //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
-                                        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
-                                                if (eee) {
-                                                    console.log(eee);
-                                                    return;
-                                                }
-                                                //console.log('续借成功');
-                                                return;
-                                            }
-                                        );
 
-
-                                    }
-
-
-                                }
 
                                 return;
 
