@@ -187,7 +187,7 @@ autos.queryBookProducer = function(o){
         {
             sql:"select `id`,`password`,`version` from scu_library where error=0 order by ai limit "+ o.start+",1"
         },function(eee,rrr) {
-console.log(rrr+new Date());
+console.log(JSON.stringify(rrr[0])+new Date());
             if (eee) {
                 autos.queryBookProducer({start:o.start+1});
                 console.log(eee);
@@ -227,9 +227,29 @@ console.log(rrr+new Date());
                     if(r.length==0){
 
                         //console.log('没有借书');
+
+                        if(user.version==0){
+                            console.log("借书版本为0"+config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}');
+
+                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
+
+                                    if (eee) {
+                                        autos.queryBookProducer({start: o.start + 1});
+                                        console.log(eee);
+                                        return;
+                                    }
+                                    console.log(user.id + '已加入首次图书队列'+new Date());
+                                    autos.queryBookProducer({start: o.start + 1});
+                                    return;
+                                }
+                            );
+                            return;
+                        }
+
+
                         conn.query(
                             {
-                                sql:"select id from scu_book where version = "+user.version
+                                sql:"select id from scu_book where studentId='"+user.id+"' and version = "+user.version
                             },function(err,rows) {
 
                                 if (err) {
@@ -240,11 +260,11 @@ console.log(rrr+new Date());
 
                                 
                                 if(rows.length == 0){
-                                    //console.log('没有变化');
+                                    console.log(user.id+'没有变化');
                                     autos.queryBookProducer({start: o.start + 1});
                                     return;
                                 }
-                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + user.id + ',"password":"' + user.password + '"}', function (eee, rrr) {
+                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
 
                                         if (eee) {
                                             autos.queryBookProducer({start: o.start + 1});
@@ -256,6 +276,7 @@ console.log(rrr+new Date());
                                         return;
                                     }
                                 );
+                                return;
 
 
                             });
@@ -263,10 +284,10 @@ console.log(rrr+new Date());
                         return;
                     }
 //console.log("select id from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version);
-                    
+                    console.log("select * from scu_book where studentId='"+user.id+"' and barcode in ("+ r.join(',')+") and version = "+user.version);
                     conn.query(
                         {
-                            sql:"select * from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version
+                            sql:"select * from scu_book where studentId='"+user.id+"' and barcode in ("+ r.join(',')+") and version = "+user.version
                         },function(err,rows) {
 
                             if(err){
@@ -321,6 +342,18 @@ console.log(rrr+new Date());
                                 return;
 
                             } else {
+                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
+                                        if (eee) {
+                                            autos.queryBookProducer({start: o.start + 1});
+                                            console.log(eee);
+                                            return;
+                                        }
+                                        console.log(user.id + '的图书貌似没有变化，然而也加入了队列'+new Date());
+
+                                        autos.queryBookProducer({start: o.start + 1});
+                                        return;
+                                    }
+                                );
                                 for(var i=0;i< rows.length;i++){
                                     if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
                                         //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
@@ -340,19 +373,7 @@ console.log(rrr+new Date());
 
                                 }
 
-                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '"}', function (eee, rrr) {
-                                        if (eee) {
-                                            autos.queryBookProducer({start: o.start + 1});
-                                            console.log(eee);
-                                            return;
-                                        }
-                                        console.log(user.id + '的图书貌似没有变化，然而也加入了队列'+new Date());
 
-                                        autos.queryBookProducer({start: o.start + 1});
-                                        return;
-                                    }
-                                );
-                                autos.queryBookProducer({start: o.start + 1});
                                 return;
                             }
                             //cb(null);
@@ -419,14 +440,14 @@ autos.queryExamProducer = function(o){
 //    }
 //);
 
-
+autos.queryBookProducer(
+    {
+        start: 0
+    }
+);
 
 setTimeout(function(){
-    autos.queryBookProducer(
-        {
-            start: 0
-        }
-    );
+
 
 
     setTimeout(function(){

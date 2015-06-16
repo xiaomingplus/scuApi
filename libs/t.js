@@ -3,6 +3,8 @@
 var common= require('./common');
 var datas= require('./datas');
 var callback= require('./callback.js');
+
+var libs= require('./libs.js');
 /// /var t = {
 //appid:"IZqpBTVRmWL0phxNtAxWA64PlVwNMJN1",
 //    appkey:"K6davkJJTazmXOTH1P3N",
@@ -77,15 +79,22 @@ var callback= require('./callback.js');
 //
 //    var week =  (parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
 //    console.log(week);
-//},2000);
+////},2000);
+//
+//callback.post({
+//    callback:"http://localhost:8120/api/updateCallback",
+//    appId: 10000,
+//    code: 200,
+//    message:'成功',
+//    action: 'exam',
+//    studentId: 2012141442029
+//},function(e,r){
+//    //console.log(e,r);
+//})
 
-callback.post({
-    callback:"http://localhost:8120/api/updateCallback",
-    appId: 10000,
-    code: 200,
-    message:'成功',
-    action: 'exam',
-    studentId: 2012141442029
-},function(e,r){
-    //console.log(e,r);
-})
+libs.getBookId({
+    studentId: '1141047034',
+    password: '888'
+}, function (e, r) {
+    console.log(e,r);
+});
