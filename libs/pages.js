@@ -645,7 +645,6 @@ pages.library = function(html){
              author:common.mysqlEscape($($(table[i]).find("table tr td")[0]).text().trim()),
              location:$($(table[i]).find("table tr td")[3]).text().trim(),
              index:$($(table[i]).find("table tr td")[4]).text().trim(),
-             xc:$($(table[i]).find("table tr td")[5]).find("input[name=xc]").val(),
              barcode:$($(table[i]).find("table tr td")[5]).find("input[name=barcode]").val(),
              borId:$($(table[i]).find("table tr td")[5]).find("input[name=bor_id]").val()
          };

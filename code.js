@@ -20,6 +20,10 @@ var code={
         code:200,
         message:"成功添加该同学的考表到更新队列中，大约需要3分钟更新完毕，更新成功后会推送到你填写的callback网址中"
     },
+    'renewUpdateQuerySuccess':{
+      code:200,
+        message:"续借操作提交成功，请勿重复提交"
+    },
     'test':{
         code:1001,
             message:"xxx"
@@ -157,6 +161,14 @@ var code={
     'libraryUpdatePasswordQuerySuccess':{
         code:2033,
         message:"图书馆密码有更改,正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
+    },
+    'lackParamsBookId':{
+        code:2034,
+        message:"缺少参数 bookId"
+    },
+    'lackParamsBorrowId':{
+        code:2035,
+        message:"缺少参数 borrowId"
     }
 
 

@@ -1121,9 +1121,9 @@ updates.library = function(o,cb){
                 var listSql = [];
                 for (var i = 0; i < list.length; i++) {
                     //console.log(list[i]);
-                    listSql[i] = "('"+ o.studentId+"','" + list[i].barcode + "','" + list[i].borId + "'," + list[i].xc + ",'" + list[i].name + "'," + list[i].deadline + ",'" + list[i].author + "','" + list[i].location + "','" + list[i].index + "'," + (parseInt(roww[0].version) + 1) + ")";
+                    listSql[i] = "('"+ o.studentId+"','" + list[i].barcode + "','" + list[i].borId + "','" + list[i].name + "'," + list[i].deadline + ",'" + list[i].author + "','" + list[i].location + "','" + list[i].index + "'," + (parseInt(roww[0].version) + 1) + ")";
                 }
-                sql = "insert into scu_book (`studentId`,`barcode`,`borId`,`xc`,`name`,`deadline`,`author`,`location`,`index`,`version`) VALUES " + listSql.join(',');
+                sql = "insert into scu_book (`studentId`,`barcode`,`borId`,`name`,`deadline`,`author`,`location`,`index`,`version`) VALUES " + listSql.join(',');
                 //console.log(sql);
                 conn.query(
                     {
@@ -1218,7 +1218,6 @@ updates.renew = function(o,cb){
                 url:"http://202.115.54.52:90/sms/opac/user/renew.action",
                 jar:r,
                 form:{
-                    xc:o.xc,
                     barcode:o.barcode,
                     bor_id:o.borId
                 }

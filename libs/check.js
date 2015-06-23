@@ -394,17 +394,13 @@ check.renew = function (o,cb){
         return;
     }
 
-    if(!o.xc){
-        cb(code.lackParamsXc);
-        return;
-    }
 
-    if(!o.barcode){
-        cb(code.lackParamsBarcode);
+    if(!o.bookId){
+        cb(code.lackParamsBookId);
         return;
     }
-    if(!o.borId){
-        cb(code.lackParamsBorId);
+    if(!o.borrowId){
+        cb(code.lackParamsBorrowId);
         return;
     }
 
