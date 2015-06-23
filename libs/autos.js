@@ -316,8 +316,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
                                         for(var i=0;i< rows.length;i++){
                                             if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                                //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
-                                                request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
                                                         if (eee) {
                                                             console.log(eee);
                                                             return;
@@ -356,8 +355,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                 );
                                 for(var i=0;i< rows.length;i++){
                                     if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                        //console.log(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}');
-                                        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","xc":'+ rows[i].xc+',"barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
                                                 if (eee) {
                                                     console.log(eee);
                                                     return;
@@ -449,16 +447,30 @@ autos.queryBookProducer(
 setTimeout(function(){
 
 
+    autos.queryMajorProducer(
+        {
+            start:0
+        }
+    )
+    //
+    //setTimeout(function(){
+    //    autos.queryMajorProducer(
+    //        {
+    //            start:0
+    //        }
+    //    )
+    //},6*60*60*1000);
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
 
-    setTimeout(function(){
-        autos.queryMajorProducer(
-            {
-                start:0
-            }
-        )
-    },6*60*60*1000);
+},6*1000);
 
-},6*60*60*1000);
+
+
+
 
 setInterval(function() {
 
@@ -473,6 +485,6 @@ setInterval(function() {
             {start: 0});
 
     },6*60*60*1000);
-},24*3600*1000);
+},7*1000);
 
 module.exports = autos;

@@ -450,12 +450,11 @@ api.book = function(req,res){
                         list[i] = {
                             name:rr[i].name,
                             deadline:rr[i].deadline,
-                            author:rr[i].author,
-                            location:location[rr[i].location.substr(0,1)]?location[rr[i].location.substr(0,1)]:"图书馆",
-                            index:rr[i].index,
-                            xc:rr[i].xc,
-                            barcode:rr[i].barcode,
-                            borId:rr[i].borId
+                            author:rr[i].author,//作者
+                            location:location[rr[i].location.substr(0,1)]?location[rr[i].location.substr(0,1)]:"图书馆",//借书地点
+                            index:rr[i].index,//索引号
+                            bookId:rr[i].barcode,//图书id
+                            borrowId:rr[i].borId
 
                         }
 
@@ -518,7 +517,7 @@ api.renew = function(req,res){
             res.end(JSON.stringify(e));
             return;
         }
-        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + r.password + '","xc":'+ req.query.xc+',"barcode":"'+ req.query.barcode+'","borId":"'+ req.query.borId+'","appId":'+req.query.appId+'}', function (eee, rrr) {
+        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + r.password + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}', function (eee, rrr) {
                 if (eee) {
                     res.dump('requestLibError');
                     console.log(eee);
