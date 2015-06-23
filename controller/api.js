@@ -12,6 +12,7 @@ var libs = require('../libs/libs.js');
 var common =require('../libs/common.js');
 api.apiPermission = function(req,res,next){
     //console.log('permission');
+    console.log(req.query);
     res.setHeader('content-type','application/json; charset=UTF-8');
     var id = req.query.appId;
     //console.log(id);
