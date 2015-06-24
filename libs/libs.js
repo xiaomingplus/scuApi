@@ -33,7 +33,7 @@ lib.check = function (o,cb){
     var j = request.jar();
     var options = {
         method:"post",
-        url: 'http://202.115.47.141/loginAction.do?zjh='+ o.studentId+'&mm='+o.password,
+        url: 'http://202.115.47.141/loginAction.do?zjh='+ o.studentId+'&mm='+encodeURIComponent(o.password),
         encoding: 'binary',
         form:{zjh: o.studentId,mm: ""+o.password+""},
         jar:j
