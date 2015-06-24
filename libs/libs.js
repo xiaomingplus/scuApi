@@ -38,7 +38,7 @@ lib.check = function (o,cb){
         form:{zjh: o.studentId,mm: ""+o.password+""},
         jar:j
     };
-   // console.log(options);
+    //console.log(options);
     request(options,function(err,response){
         if(err){
 

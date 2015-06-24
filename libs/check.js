@@ -2,7 +2,6 @@ var check = {
     name:"检测"
 };
 var code = require('../code.js');
-var services = require('./system.js');
 var conn = require('../mysql.js');
 var aes128 = require('./aes128.js');
 var libs = require('./libs.js');
@@ -14,7 +13,9 @@ check.password = function(o,cb,debug){
         var password = o.password;
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
+        o.password=aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
+    //console.log(password);
     //console.log("select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId);
   conn.query({
       sql:"select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId
@@ -26,7 +27,7 @@ check.password = function(o,cb,debug){
           return;
       }else{
           
-          //console.log(r);
+          console.log(r);
           if(r.length==0) {
 
               //cb(code.notFoundStudentId);
@@ -155,6 +156,7 @@ check.libraryPassword = function(o,cb,debug){
         var password = o.password;
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
+        o.password=aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
     conn.query({
         sql:"select password,error,updateAt,count,version from scu_library where id="+ o.studentId
@@ -288,6 +290,7 @@ check.renewPassword = function(o,cb,debug){
         var password = o.password;
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
+        o.password=aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
     conn.query({
         sql:"select password,error,updateAt,count,version from scu_library where id="+ o.studentId

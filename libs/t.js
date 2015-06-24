@@ -1,10 +1,11 @@
 
-
+var request = require('request');
 var common= require('./common');
 var datas= require('./datas');
 var callback= require('./callback.js');
-
+var aes = require('./aes128.js');
 var libs= require('./libs.js');
+var config= require('../config.js');
 /// /var t = {
 //appid:"IZqpBTVRmWL0phxNtAxWA64PlVwNMJN1",
 //    appkey:"K6davkJJTazmXOTH1P3N",
@@ -92,9 +93,15 @@ var libs= require('./libs.js');
 //    //console.log(e,r);
 //})
 
-libs.getBookId({
-    studentId: '1141047034',
-    password: '888'
-}, function (e, r) {
-    console.log(e,r);
-});
+//libs.getBookId({
+//    studentId: '1141047034',
+//    password: '888'
+//}, function (e, r) {
+//    console.log(e,r);
+//});
+
+
+request(
+    'http://localhost:9231/api/score?appId=10000&appSecret=scuinfo&studentId=2012141442029&password='+aes.encode('10000','scuinfo','+++'),function(e,r,b){
+        console.log(e,b);
+    });
