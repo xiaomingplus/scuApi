@@ -40,7 +40,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9231,function(){
-    console.log('9231');
+    console.log('9231'+new Date());
 });
 
 services.flushPermission();
@@ -50,10 +50,10 @@ services.flushPermission();
  */
 datas.load();
 setInterval(function(){
-  console.log('查看是否全局数据是否有更新');
+  console.log('查看是否全局数据是否有更新'+new Date());
   datas.load();
 },1000*60*600);
 process.on('uncaughtException', function(err) {
-  console.log('Caught exception: ' + err);
+  console.log('Caught exception: ' + err+new Date());
 });
 module.exports = app;

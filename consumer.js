@@ -4,6 +4,7 @@ var request = require('request');
 var config= require('./config.js');
 var datas= require('./libs/datas.js');
 var callback=require('./libs/callback.js');
+var aes128 = require('./libs/aes128.js');
 var consumer = {
     name:"消费者"
 };
@@ -11,7 +12,7 @@ consumer.scoreQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err);
+                console.log(err+new Date());
                 setTimeout(function(){
                     consumer.scoreQuery();
                 },1000);
@@ -24,14 +25,17 @@ consumer.scoreQuery= function(){
                 var user = {}
             }
 
+
             
             if(Object.keys(user).length>0) {
-                //console.log(user);
+
+
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 
                 //console.log('队列开始第一项了');
                 updates.score(user, function (ee) {
                     if (ee) {
-                        console.log('更新成绩错误'+user.studentId);
+                        console.log('更新成绩错误'+user.studentId+new Date());
                         console.log({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -50,7 +54,7 @@ consumer.scoreQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            console.log(e,r+new Date());
                         });
                     }else{
                         console.log({
@@ -71,7 +75,7 @@ callback.post({
     studentId: user.studentId
 
 },function(e,r){
-    console.log(e,r);
+    console.log(e,r+new Date());
 });
                     }
 
@@ -99,7 +103,7 @@ consumer.majorQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=major&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err);
+                console.log(err+new Date());
                 setTimeout(function(){
                     consumer.majorQuery();
                 },1000);
@@ -113,9 +117,10 @@ consumer.majorQuery= function(){
             }
 
             if(Object.keys(user).length>0) {
+                user.password = aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.curriculum(user, function (ee) {
                     if (ee) {
-                        console.log(ee);
+                        console.log(ee+new Date());
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -164,7 +169,7 @@ consumer.examQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=exam&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err);
+                console.log(err+new Date());
                 setTimeout(function(){
                     consumer.examQuery();
                 },1000);
@@ -180,9 +185,10 @@ consumer.examQuery= function(){
             //console.log(user);
 
             if(Object.keys(user).length>0) {
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.exam(user, function (ee) {
                     if (ee) {
-                        console.log(ee);
+                        console.log(ee+new Date());
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -225,9 +231,10 @@ consumer.examQuery= function(){
 
 consumer.bookQuery= function(){
     setTimeout(function(){
+        //console.log(config.queryUrl+'/?name=book&opt=get');
         request(config.queryUrl+'/?name=book&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err);
+                console.log(err+new Date());
                 setTimeout(function(){
                     consumer.bookQuery();
                 },1000);
@@ -245,9 +252,11 @@ consumer.bookQuery= function(){
             if(Object.keys(user).length>0) {
 
                 //console.log('队列开始第一项了');
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
+
                 updates.library(user, function (ee) {
                     if (ee) {
-                        console.log(ee);
+                        console.log(ee+new Date());
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -292,9 +301,9 @@ consumer.bookQuery= function(){
 consumer.renewQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=renew&opt=get',function(err,response,body) {
-            console.log(err,body);
+            //console.log(err,body);
             if (err) {
-                console.log(err);
+                console.log(err+new Date());
                 setTimeout(function(){
                     consumer.renewQuery();
                 },1000);
@@ -307,12 +316,15 @@ consumer.renewQuery= function(){
                 var user = {};
             }
 
+
+
             if(Object.keys(user).length>0) {
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
 
                 //console.log('队列开始第一项了');
                 updates.renew(user, function (ee) {
                     if (ee) {
-                        console.log(ee);
+                        console.log(ee+new Date());
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -376,14 +388,14 @@ consumer.init();
 
 
 process.on('uncaughtException', function(err) {
-    console.log('Caught exception: ' + err);
+    console.log('Caught exception: ' + err+new Date());
 });
 /**
  * 每n分钟自动载入数据
  */
 datas.load();
 setInterval(function(){
-    console.log('查看是否全局数据是否有更新');
+    console.log('查看是否全局数据是否有更新'+new Date());
     datas.load();
 },1000*60*600);
 module.exports = consumer;

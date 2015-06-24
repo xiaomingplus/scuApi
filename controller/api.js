@@ -11,8 +11,6 @@ var request = require('request');
 var libs = require('../libs/libs.js');
 var common =require('../libs/common.js');
 api.apiPermission = function(req,res,next){
-    //console.log('permission');
-    console.log(req.query);
     res.setHeader('content-type','application/json; charset=UTF-8');
     var id = req.query.appId;
     //console.log(id);
@@ -21,7 +19,7 @@ api.apiPermission = function(req,res,next){
         //console.log(err,app_permission);
 
         if(err){
-            console.log(err);
+            console.log(err+new Date());
             res.dump('redisError');
             return;
         }
@@ -71,11 +69,11 @@ api.update = function(req,res){
             return;
         }
 
-                    request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee, rrr) {
+                    request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee, rrr) {
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee);
+                                console.log(eee+new Date());
                                 return;
                             }
                             res.dump('scoreUpdateQuerySuccess');
@@ -94,7 +92,7 @@ api.update = function(req,res){
                     res.end(JSON.stringify(e));
                     return;
                 }
-                            request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee) {
+                            request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
 
                                     if (eee) {
                                         res.dump('requestError');
@@ -118,11 +116,11 @@ api.update = function(req,res){
                     return;
                 }
 
-                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee) {
+                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
 
                                     if (eee) {
                                         res.dump('requestError');
-                                        console.log(eee);
+                                        console.log(eee+new Date());
                                         return;
                                     }
                                     res.dump('libraryUpdateQuerySuccess');
@@ -142,11 +140,11 @@ api.update = function(req,res){
                     res.end(JSON.stringify(e));
                     return;
                 }
-                request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee) {
+                request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
 
                         if (eee) {
                             res.dump('requestError');
-                            console.log(eee);
+                            console.log(eee+new Date());
                             return;
                         }
                         res.dump('examUpdateQuerySuccess');
@@ -167,7 +165,6 @@ api.update = function(req,res){
 
 //输出成绩
 api.score = function(req,res){
-    console.log(req.query);
 req.query.field = 'score';
 check.student(req.query,function(e,r){
    if(e){
@@ -225,11 +222,11 @@ check.student(req.query,function(e,r){
                     return;
                 }
 
-                request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee, rrr) {
+                request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee, rrr) {
 
                         if (eee) {
                             res.dump('requestError');
-                            console.log(eee);
+                            console.log(eee+new Date());
                             return;
                         }
                         res.dump('scoreInitQuerySuccess');
@@ -307,11 +304,11 @@ api.exam = function(req,res){
 
 
 
-                    request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + r.password + '","appId":"'+req.query.appId+'"}', function (eee) {
+                    request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":"'+req.query.appId+'"}', function (eee) {
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee);
+                                console.log(eee+new Date());
                                 return;
                             }
                             res.dump('examInitQuerySuccess');
@@ -393,11 +390,11 @@ req.query.field = 'major';
 
 
 
-                    request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee) {
+                    request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee);
+                                console.log(eee+new Date());
                                 return;
                             }
                             res.dump('majorInitQuerySuccess');
@@ -430,7 +427,7 @@ api.book = function(req,res){
                 sql:"select * from scu_book where studentId="+ req.query.studentId+" and version="+ r.version
             },function(ee,rr){
                 if(ee){
-                    console.log(ee);
+                    console.log(ee+new Date());
                     res.dump('mysqlError');
                     return;
                 }
@@ -483,11 +480,11 @@ api.book = function(req,res){
 
 
 
-                    request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + r.password + '","appId":'+req.query.appId+'}', function (eee) {
+                    request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee);
+                                console.log(eee+new Date());
                                 return;
                             }
                             res.dump('libraryInitQuerySuccess');
@@ -514,14 +511,13 @@ api.renew = function(req,res){
     check.renew(req.query,function(e,r){
 
         if(e){
-            console.log(e);
             res.end(JSON.stringify(e));
             return;
         }
-        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + r.password + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}', function (eee, rrr) {
+        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}', function (eee, rrr) {
                 if (eee) {
                     res.dump('requestLibError');
-                    console.log(eee);
+                    console.log(eee+new Date());
                     return;
                 }
                 res.end(JSON.stringify({

@@ -4,6 +4,13 @@
 var config = {
     queryUrl:"http://203.195.164.179:23333",
 
+    querySecret:{
+
+        appId:"99999999999999",
+        appSecret:"dsgygb123456"
+
+    },
+
     urls:{
        "college" :"http://202.115.47.141/bjkbcxAction.do?oper=bjkb_lb",
         "teacherPost":"http://202.115.47.141/lskbcxAction.do?oper=kbtjcx",

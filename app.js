@@ -55,7 +55,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9232,function(){
-    console.log('9232');
+    console.log('9232'+new Date());
 });
 
 /**
@@ -63,11 +63,11 @@ app.listen(9232,function(){
  */
 datas.load();
 setInterval(function(){
-  console.log('查看是否全局数据是否有更新');
+  console.log('查看是否全局数据是否有更新'+new Date());
   datas.load();
 },1000*60*600);
 
 process.on('uncaughtException', function(err) {
-  console.log('Caught exception: ' + err);
+  console.log('Caught exception: ' + err+new Date());
 });
 module.exports = app;

@@ -31,15 +31,19 @@ lib.check = function (o,cb){
         password:""+datas.account.password+""
     };
     var j = request.jar();
+//console.log(o.password);
+    //console.log(encodeURIComponent(o.password));
     var options = {
         method:"post",
         url: 'http://202.115.47.141/loginAction.do?zjh='+ o.studentId+'&mm='+encodeURIComponent(o.password),
         encoding: 'binary',
-        form:{zjh: o.studentId,mm: ""+o.password+""},
+        form:{zjh: o.studentId,mm:""+o.password+""},
         jar:j
     };
     //console.log(options);
     request(options,function(err,response){
+
+        //console.log(err,response.body);
         if(err){
 
             cb({code:code.requestError.code,message:code.requestError.message});
@@ -51,6 +55,7 @@ lib.check = function (o,cb){
             return;
         }
         var loginCallback = iconv.decode(new Buffer(response.body, 'binary'), 'GBK');//登录返回页面
+        //console.log(loginCallback);
         var $ = cheerio.load(loginCallback);
         if($('title').text().trim()=="学分制综合教务"){
             cb(null,j);
@@ -82,15 +87,20 @@ lib.get = function (o,cb){
             encoding:"binary",
             jar:j
         };
+        //console.log('222');
+        //console.log(opts);
         request(opts,function(err,r){
+            
+            //console.log(opts);
+            //console.log(r.body);
             if(err){
-                cb({code:code.requestError.code,message:code.requestError.message});
+                cb({code:code.requestError.code,message:code.requestError.message,j:j});
                 console.log(err);
                 return;
             }
 
             if(r.statusCode!=200){
-                cb({code:code.requestError.code,message:code.requestError.message});
+                cb({code:code.requestError.code,message:code.requestError.message,j:j});
                 return;
             }
             cb(null, {code:0,j:j, data:iconv.decode(new Buffer(r.body, 'binary'), 'GBK')});

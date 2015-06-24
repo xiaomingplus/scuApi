@@ -344,7 +344,7 @@ updates.teacher = function(cb){
                                     teacherSql[i] = "(\"" + rrrr.data[i].id+ "\"," + rrrr.data[i].collegeId + ",\"" +rrrr.data[i].name + "\",\"" + rrrr.data[i].level+ "\"," + (parseInt(latestVersion) + 1) + ")";
                                 }
                                 sql = "insert into scu_teacher (`teacherId`,`collegeId`,`name`,`level`,`version`) VALUES " + teacherSql.join(',');
-                                console.log(sql);
+                                //console.log(sql);
                                 conn.query(
                                     {
                                         sql: sql
@@ -468,7 +468,7 @@ options.courseDetailPage = parseInt(options.courseDetailPage);
                                                 courseSql[i] = "('" + course[i].courseId + "'," + course[i].collegeId + ",'" + common.mysqlEscape(course[i].name) + "','" + course[i].orderId + "'," + course[i].credit + ",'" + courseBase.type + "','" + course[i].examType + "','" + course[i].teacher + "','" + course[i].weekHasLesson + "','" + course[i].lesson + "'," + course[i].week + ",'" + course[i].campusId + "','" + course[i].building + "','" + course[i].classroom + "'," + course[i].max + "," + course[i].count + ",'" + course[i].limit + "','"+course[i].termId+"'," + (parseInt(latestVersion) + 1) + ")";
                                             }
                                             sql = "insert into scu_course (`courseId`,`collegeId`,`name`,`orderId`,`credit`,`type`,`examType`,`teacher`,`weekHasLesson`,`lesson`,`week`,`campusId`,`building`,`classroom`,`max`,`count`,`limit`,`termId`,`version`) VALUES " + courseSql.join(',');
-                                            console.log(sql);
+                                            //console.log(sql);
                                             conn.query(
                                                 {
                                                     sql: sql
@@ -604,8 +604,18 @@ libs.get({
     password:o.password,
     url: config.urls.scoreAll
 },function(e,r){
+    
+    //console.log(e,r);
     if(e){
-        // console.log('3')
+         //console.log('3')
+        libs.rePost(
+            {
+                url:'http://202.115.47.141/logout.do',
+                form:{
+                    'loginType':"platformLogin"
+                },
+                j: e.j
+            },function(eeee,rrrr){
         cb(e);
 
         //密码错误
@@ -623,11 +633,12 @@ libs.get({
                 }
             );
         }
+            });
         //console.log(e);
         return;
     }
     var scoreList = pages.scoreList(r.data);
-// console.log(scoreList)
+ //console.log(scoreList)
    if(Object.keys(scoreList).length==0){
        conn.query(
            {
@@ -658,6 +669,7 @@ libs.get({
     }
      //   console.log('test1');
     var scorePass = pages.scorePass(rr.data);
+        //console.log(scorePass);
         libs.reGet({
             url:config.urls.scoreFail,
             j: r.j
@@ -789,29 +801,39 @@ updates.curriculum = function(o,cb){
         url: config.urls.major
     },function(e,r){
         if(e){
+            libs.rePost(
+                {
+                    url:'http://202.115.47.141/logout.do',
+                    form:{
+                        'loginType':"platformLogin"
+                    },
+                    j: e.j
+                },function(eeee,rrrr) {
 
-            if(e.code == 2001){
+                    if (e.code == 2001) {
 
 
-                conn.query({
-                        sql: "update `scu_user` set error=1 where id=" + o.studentId
-                    }, function (eeee, rrrr) {
-                        if (eeee) {
-                            cb(code.mysqlError);
-                            console.log(eeee);
-                            return;
-                        }
-                        cb(code.passwordError);
-                        console.log(o.studentId+'的帐号密码有问题');
-                        return;
+                        conn.query({
+                                sql: "update `scu_user` set error=1 where id=" + o.studentId
+                            }, function (eeee, rrrr) {
+                                if (eeee) {
+                                    cb(code.mysqlError);
+                                    console.log(eeee);
+                                    return;
+                                }
+                                cb(code.passwordError);
+                                console.log(o.studentId + '的帐号密码有问题');
+                                return;
+                            }
+                        );
                     }
-                );
-            }
-            cb(e);
+                    cb(e);
 
-            console.log(e);
-            return;
-        }       // console.log(b);
+                    console.log(e);
+                });
+                    return;
+                }
+             // console.log(b);
         //console.log(r);
 
         libs.rePost(
@@ -934,25 +956,33 @@ updates.exam = function(o,cb){
         if(e){
             //console.log('11');
             //console.log(e);
-
-            if(e.code == 2001){
-                conn.query({
-                        sql: "update `scu_user` set error=1 where id=" + o.studentId
-                    }, function (eeee, rrrr) {
-                        if (eeee) {
-                            cb(code.mysqlError);
-                            console.log(eeee);
-                            return;
-                        }
-                        cb(code.passwordError);
-                        console.log(o.studentId+'的帐号密码有问题');
+            libs.rePost(
+                {
+                    url:'http://202.115.47.141/logout.do',
+                    form:{
+                        'loginType':"platformLogin"
+                    },
+                    j: e.j
+                },function(eeee,rrrr) {
+                    if (e.code == 2001) {
+                        conn.query({
+                                sql: "update `scu_user` set error=1 where id=" + o.studentId
+                            }, function (eeee, rrrr) {
+                                if (eeee) {
+                                    cb(code.mysqlError);
+                                    console.log(eeee);
+                                    return;
+                                }
+                                cb(code.passwordError);
+                                console.log(o.studentId + '的帐号密码有问题');
+                                return;
+                            }
+                        );
                         return;
                     }
-                );
-                return;
-            }
 
-            cb(e);
+                    cb(e);
+                });
 
             return;
         }       // console.log(b);

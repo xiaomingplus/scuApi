@@ -27,7 +27,7 @@ check.password = function(o,cb,debug){
           return;
       }else{
           
-          console.log(r);
+          //console.log(r);
           if(r.length==0) {
 
               //cb(code.notFoundStudentId);
@@ -49,7 +49,7 @@ check.password = function(o,cb,debug){
                       }
 
 
-                  request(config.queryUrl+'/?name='+o.field+'&opt=put&data={"studentId":' + o.studentId + ',"password":"' +password + '","appId":' + o.appId + '}', function (eee, rrr) {
+                  request(config.queryUrl+'/?name='+o.field+'&opt=put&data={"studentId":' + o.studentId + ',"password":"' +aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":' + o.appId + '}', function (eee, rrr) {
 
                           if (eee) {
                               cb(code.requestError);
@@ -84,7 +84,7 @@ check.password = function(o,cb,debug){
                               return;
                           }
 
-                          request(config.queryUrl+'/?name=' + o.field + '&opt=put&data={"studentId":' + o.studentId + ',"password":"' + password + '","appId":' + o.appId + '}', function (eee, rrr) {
+                          request(config.queryUrl+'/?name=' + o.field + '&opt=put&data={"studentId":' + o.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":' + o.appId + '}', function (eee, rrr) {
 
                                   if (eee) {
                                       cb(code.requestError);
@@ -101,6 +101,8 @@ check.password = function(o,cb,debug){
                       return;
                   });
               }else{
+                  
+
 
 
                if(password==r[0].password){
@@ -187,7 +189,7 @@ check.libraryPassword = function(o,cb,debug){
                         }
 
 
-                        request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + o.studentId + ',"password":"' +password + '","appId":"'+ o.appId? o.appId:0+'"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + o.studentId + ',"password":"' +aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":"'+ o.appId? o.appId:0+'"}', function (eee, rrr) {
 
                                 if (eee) {
                                     cb(code.requestError);
@@ -222,7 +224,7 @@ check.libraryPassword = function(o,cb,debug){
                                 return;
                             }
 
-                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + o.studentId + ',"password":"' + password + '","appId":"' + o.appId? o.appId:0+ '"}', function (eee, rrr) {
+                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + o.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":"' + o.appId? o.appId:0+ '"}', function (eee, rrr) {
 
                                     if (eee) {
                                         cb(code.requestError);

@@ -82,8 +82,24 @@ var code={
         message:"首次查询成绩,正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
     },
     'scorePasswordUpdateQuerySuccess':{
-        code:2011,
+        code:2010,
         message:"密码有更改,正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
+    },
+    'majorInitQuerySuccess':{
+        code:2010,
+        message:"首次查询课表，正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
+    },
+    'libraryInitQuerySuccess':{
+        code:2010,
+        message:"首次查询图书列表，正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
+    },
+    'examInitQuerySuccess':{
+        code:2010,
+        message:"首次查询考表，正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
+    },
+    'libraryUpdatePasswordQuerySuccess':{
+        code:2010,
+        message:"图书馆密码有更改,正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
     },
     'passwordError':{
         code:2012,
@@ -138,14 +154,7 @@ var code={
         code:2027,
         message:"参数违法"
     },
-    'majorInitQuerySuccess':{
-        code:2028,
-        message:"首次查询课表，正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
-    },
-    'libraryInitQuerySuccess':{
-        code:2029,
-        message:"首次查询图书列表，正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
-    },
+
     'passwordMustString':{
         code:2030,
         message:"参数 password 必须为String 类型"
@@ -154,14 +163,7 @@ var code={
         code:2031,
         message:"缺少参数 template"
     },
-    'examInitQuerySuccess':{
-        code:2032,
-        message:"首次查询考表，正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
-    },
-    'libraryUpdatePasswordQuerySuccess':{
-        code:2033,
-        message:"图书馆密码有更改,正在拼命获取最新数据，大约需要3分钟，更新成功后会推送到你填写的callback网址中"
-    },
+
     'lackParamsBookId':{
         code:2034,
         message:"缺少参数 bookId"
