@@ -167,6 +167,7 @@ api.update = function(req,res){
 
 //输出成绩
 api.score = function(req,res){
+    console.log(req.query);
 req.query.field = 'score';
 check.student(req.query,function(e,r){
    if(e){

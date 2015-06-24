@@ -312,7 +312,6 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                             return;
                                         }
                                         //console.log(user.id + '已加入图书队列');
-                                        autos.queryBookProducer({start: o.start + 1});
 
                                         for(var i=0;i< rows.length;i++){
                                             if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
@@ -331,6 +330,8 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
 
                                         }
+                                        autos.queryBookProducer({start: o.start + 1});
+
                                         return;
                                     }
                                 );
@@ -348,28 +349,29 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                             return;
                                         }
                                         console.log(user.id + '的图书貌似没有变化，然而也加入了队列'+new Date());
+                                        for(var i=0;i< rows.length;i++){
+                                            if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
+                                                request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                        if (eee) {
+                                                            console.log(eee);
+                                                            return;
+                                                        }
+                                                        //console.log('续借成功');
+                                                        return;
+                                                    }
+                                                );
+
+
+                                            }
+
+
+                                        }
 
                                         autos.queryBookProducer({start: o.start + 1});
                                         return;
                                     }
                                 );
-                                for(var i=0;i< rows.length;i++){
-                                    if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + user.password + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
-                                                if (eee) {
-                                                    console.log(eee);
-                                                    return;
-                                                }
-                                                //console.log('续借成功');
-                                                return;
-                                            }
-                                        );
 
-
-                                    }
-
-
-                                }
 
 
                                 return;

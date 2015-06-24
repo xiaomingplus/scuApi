@@ -1,6 +1,3 @@
-/**
- * Created by lanhao on 14/12/26.
- */
 var AES128 = {};
 var crypto = require('crypto');
 
