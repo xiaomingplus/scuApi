@@ -27,7 +27,8 @@ var form = {
 
 
 callback.post = function(o,cb){
-    console(o);
+    console.log(o);
+
     if(!o.callback){
         cb(code.lackParamsCallback);
         return;
@@ -44,6 +45,7 @@ request.post(
             time:common.time()
         }
     },function(e,r,b){
+        console.log(e,b);
         if(e){
             cb(code.requestCallbackError);
             //console.log(e);
