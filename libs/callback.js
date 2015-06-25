@@ -56,7 +56,7 @@ callback.post = function(o,cb){
             studentId: o.studentId? o.studentId:"",
             time:common.time()
         }
-    },);
+    });
     request.post(
     {
         url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
