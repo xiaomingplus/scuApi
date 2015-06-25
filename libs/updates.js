@@ -640,22 +640,61 @@ libs.get({
     var scoreList = pages.scoreList(r.data);
  //console.log(scoreList)
    if(Object.keys(scoreList).length==0){
+
+
+
        conn.query(
            {
-               sql:"update `scu_user` set `scoreVersion`=scoreVersion+1,scoreCount=0,scoreUpdateAt="+common.time()+" where id="+ o.studentId
-           },function(eeeeee){
-               if(eeeeee){
-                   cb(code.mysqlError);
-                   console.log(eeeeee);
-                   return;
-               }else{
-                   cb(null);
-                   return;
+               sql:"select scoreCount,scoreVersion from `scu_user` where id="+ o.studentId
+           },function(e9,r9){
 
+               if(e9){
+                   console.log(e9);
+                   cb(code.mysqlError);
+                   return;
                }
+               
+               
+               if(r9.length>0){
+
+
+                   if(r9[0].scoreVersion>0 && r9[0].scoreCount==0){
+                       cb(code.CountZeroLikeTheLastTime);
+                       return;
+                   }
+                   conn.query(
+                       {
+                           sql:"update `scu_user` set `scoreVersion`=scoreVersion+1,scoreCount=0,scoreUpdateAt="+common.time()+" where id="+ o.studentId
+                       },function(eeeeee){
+                           if(eeeeee){
+                               cb(code.mysqlError);
+                               console.log(eeeeee);
+                               return;
+                           }else{
+                               cb(null);
+                               return;
+
+                           }
+                       }
+                   );
+
+
+                   return;
+               }
+
+
+
+               cb(code.noUser);
+
+               return;
+
+
+
            }
-       );
-       return;
+       )
+
+
+
    }
 
     libs.reGet({
@@ -916,23 +955,60 @@ updates.curriculum = function(o,cb){
                 }else{
 
 
-
                     conn.query(
                         {
-                            sql: "update `scu_user` set `majorVersion`=majorVersion+1,majorCount=" + list.length + ",majorUpdateAt=" + common.time() + " where id=" + o.studentId
-                        }, function (eeeeee, rrrrrr) {
-                            if (eeeeee) {
-                                cb(code.mysqlError);
-                                console.log(eeeeee);
-                                return;
-                            } else {
-                                cb(null);
-                                console.log('成功更新');
-                                return;
+                            sql:"select majorCount,majorVersion from `scu_user` where id="+ o.studentId
+                        },function(e9,r9){
 
+                            if(e9){
+                                console.log(e9);
+                                cb(code.mysqlError);
+                                return;
                             }
+
+
+                            if(r9.length>0){
+
+
+                                if(r9[0].majorVersion>0 && r9[0].majorCount==0){
+                                    cb(code.CountZeroLikeTheLastTime);
+                                    return;
+                                }
+
+
+                                conn.query(
+                                    {
+                                        sql: "update `scu_user` set `majorVersion`=majorVersion+1,majorCount=" + list.length + ",majorUpdateAt=" + common.time() + " where id=" + o.studentId
+                                    }, function (eeeeee, rrrrrr) {
+                                        if (eeeeee) {
+                                            cb(code.mysqlError);
+                                            console.log(eeeeee);
+                                            return;
+                                        } else {
+                                            cb(null);
+                                            console.log('成功更新');
+                                            return;
+
+                                        }
+                                    }
+                                );
+
+
+                                return;
+                            }
+
+
+
+                            cb(code.noUser);
+
+                            return;
+
+
+
                         }
-                    );
+                    )
+
+
 
                 }
 
@@ -1065,23 +1141,63 @@ updates.exam = function(o,cb){
                 }else{
 
 
-
                     conn.query(
                         {
-                            sql: "update `scu_user` set `examVersion`=examVersion+1,examCount=" + list.length + ",examUpdateAt=" + common.time() + " where id=" + o.studentId
-                        }, function (eeeeee, rrrrrr) {
-                            if (eeeeee) {
-                                cb(code.mysqlError);
-                                console.log(eeeeee);
-                                return;
-                            } else {
-                                cb(null);
-                                console.log('成功更新');
-                                return;
+                            sql:"select examCount,examVersion from `scu_user` where id="+ o.studentId
+                        },function(e9,r9){
 
+                            if(e9){
+                                console.log(e9);
+                                cb(code.mysqlError);
+                                return;
                             }
+
+
+                            if(r9.length>0){
+
+
+                                if(r9[0].examVersion>0 && r9[0].examCount==0){
+                                    cb(code.CountZeroLikeTheLastTime);
+                                    return;
+                                }
+
+
+                                conn.query(
+                                    {
+                                        sql: "update `scu_user` set `examVersion`=examVersion+1,examCount=" + list.length + ",examUpdateAt=" + common.time() + " where id=" + o.studentId
+                                    }, function (eeeeee, rrrrrr) {
+                                        if (eeeeee) {
+                                            cb(code.mysqlError);
+                                            console.log(eeeeee);
+                                            return;
+                                        } else {
+                                            cb(null);
+                                            console.log('成功更新');
+                                            return;
+
+                                        }
+                                    }
+                                );
+
+
+                                return;
+                            }
+
+
+
+                            cb(code.noUser);
+
+                            return;
+
+
+
                         }
-                    );
+                    )
+
+
+
+
+
 
                 }
 
@@ -1193,25 +1309,66 @@ updates.library = function(o,cb){
                 });
 
             }else{
-                //console.log("update `scu_library` set `count`=0,`version`=version+1"  + ",updateAt=" + common.time() + " where id='" + o.studentId+"'");
+
+
+
+
                 conn.query(
                     {
-                        sql: "update `scu_library` set `count`=0,`version`=version+1"  + ",updateAt=" + common.time() + " where id='" + o.studentId+"'"
-                    }, function (eeeeee, rrrrrr) {
-                        if (eeeeee) {
-                            cb(code.mysqlError);
-                            console.log(eeeeee);
-                            return;
-                        } else {
-                            //console.log('222');
-                            cb(null);
-                            console.log(o.studentId + '的图书成功更新到版本');
-                            return;
+                        sql:"select count,version from `scu_library` where id='"+ o.studentId+"'"
+                    },function(e9,r9){
 
+                        if(e9){
+                            console.log(e9);
+                            cb(code.mysqlError);
+                            return;
                         }
+
+
+                        if(r9.length>0){
+
+
+                            if(r9[0].version>0 && r9[0].count==0){
+                                cb(code.CountZeroLikeTheLastTime);
+                                return;
+                            }
+                            conn.query(
+                                {
+                                    sql: "update `scu_library` set `count`=0,`version`=version+1"  + ",updateAt=" + common.time() + " where id='" + o.studentId+"'"
+                                }, function (eeeeee, rrrrrr) {
+                                    if (eeeeee) {
+                                        cb(code.mysqlError);
+                                        console.log(eeeeee);
+                                        return;
+                                    } else {
+                                        //console.log('222');
+                                        cb(null);
+                                        console.log(o.studentId + '的图书成功更新到版本');
+                                        return;
+
+                                    }
+                                }
+                            );
+
+                            return;
+                        }
+
+
+
+                        cb(code.noUser);
+
+                        return;
+
+
+
                     }
-                );
-                return;
+                )
+
+
+
+
+
+
             }
         });
     })

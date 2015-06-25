@@ -171,6 +171,14 @@ var code={
     'lackParamsBorrowId':{
         code:2035,
         message:"缺少参数 borrowId"
+    },
+    'CountZeroLikeTheLastTime':{
+        code:2036,
+        message:"目前结果与上次更新相比没有任何变化"
+    },
+    'noUser':{
+        code :2037,
+        message:"没有该用户"
     }
 
 
