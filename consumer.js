@@ -334,7 +334,7 @@ consumer.renewQuery= function(){
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
