@@ -291,7 +291,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                         barcode[i]="'"+r[i].barcode+"'";
                     }
 //console.log("select id from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version);
-                    console.log("select * from scu_book where studentId='"+user.id+"' and barcode in ("+ barcode.join(',')+") and version = "+user.version);
+//                    console.log("select * from scu_book where studentId='"+user.id+"' and barcode in ("+ barcode.join(',')+") and version = "+user.version);
                     conn.query(
                         {
                             sql:"select * from scu_book where studentId='"+user.id+"' and barcode in ("+ barcode.join(',')+") and version = "+user.version
@@ -357,8 +357,8 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                     newBooks[r[i].barcode]=r[i].deadline
                                 }
                                 
-                                console.log(newBooks);
-                                console.log(rows);
+                                //console.log(newBooks);
+                                //console.log(rows);
                                 
 
                                 for(var i=0;i< rows.length;i++){
@@ -367,7 +367,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                         flag=true;
                                     }
                                 }
-console.log(flag);
+//console.log(flag);
                                 if(flag){
                                     request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
                                             if (eee) {
