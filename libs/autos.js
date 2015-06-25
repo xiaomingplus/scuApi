@@ -283,11 +283,18 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
                         return;
                     }
+
+
+                    var barcode=[];
+
+                    for(var i=0;i< r.length;i++){
+                        barcode[i]=r[i].barcode;
+                    }
 //console.log("select id from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version);
-                    console.log("select * from scu_book where studentId='"+user.id+"' and barcode in ("+ r.join(',')+") and version = "+user.version);
+                    console.log("select * from scu_book where studentId='"+user.id+"' and barcode in ("+ barcode.join(',')+") and version = "+user.version);
                     conn.query(
                         {
-                            sql:"select * from scu_book where studentId='"+user.id+"' and barcode in ("+ r.join(',')+") and version = "+user.version
+                            sql:"select * from scu_book where studentId='"+user.id+"' and barcode in ("+ barcode.join(',')+") and version = "+user.version
                         },function(err,rows) {
 
                             if(err){
@@ -342,35 +349,59 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                 return;
 
                             } else {
-                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
-                                        if (eee) {
-                                            autos.queryBookProducer({start: o.start + 1});
-                                            console.log(eee);
-                                            return;
-                                        }
-                                        console.log(user.id + '的图书貌似没有变化，然而也加入了队列'+new Date());
-                                        for(var i=0;i< rows.length;i++){
-                                            if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                                request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
-                                                        if (eee) {
-                                                            console.log(eee);
+
+                                var flag=false;//图书是否有更新
+
+                                var newBooks ={};
+                                for(var i=0;i< r.length;i++){
+                                    newBooks[r[i].barcode]=r[i].deadline
+                                }
+
+                                for(var i=0;i< rows.length;i++){
+
+                                    if(rows[i].deadline!=newBooks[rows[i].barcode]){
+                                        flag=true;
+                                    }
+                                }
+
+                                if(flag){
+                                    request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                                            if (eee) {
+                                                autos.queryBookProducer({start: o.start + 1});
+                                                console.log(eee);
+                                                return;
+                                            }
+                                            for(var i=0;i< rows.length;i++){
+                                                if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
+                                                    request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                            if (eee) {
+                                                                console.log(eee);
+                                                                return;
+                                                            }
+                                                            console.log('续借成功=---');
                                                             return;
                                                         }
-                                                        //console.log('续借成功');
-                                                        return;
-                                                    }
-                                                );
+                                                    );
+
+
+                                                }
 
 
                                             }
 
-
+                                            autos.queryBookProducer({start: o.start + 1});
+                                            return;
                                         }
+                                    );
+                                }else{
+                                    autos.queryBookProducer({start: o.start + 1});
+                                    console.log(user.id + '的图书没有变化'+new Date());
 
-                                        autos.queryBookProducer({start: o.start + 1});
-                                        return;
-                                    }
-                                );
+                                }
+
+
+
+
 
 
 
@@ -464,7 +495,7 @@ autos.queryBookProducer(
     },6*60*60*1000);
     
 
-},6*1000);
+},6*60*60*1000);
 
 
 

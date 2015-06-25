@@ -662,8 +662,11 @@ pages.bookIds = function(html){
     var table = $(".sheet");
     var data = [];
     for(var i=0;i<table.length;i++){
-        data[i] = "'"+$($(table[i]).find("table tr td")[5]).find("input[name=barcode]").val()+"'";
-    }
+        data[i] = {
+            barcode: "'" + $($(table[i]).find("table tr td")[5]).find("input[name=barcode]").val() + "'",
+            deadline: parseInt(new Date(date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2) + " 0:0:0:0").getTime() / 1000)
+        }
+        }
     return data;
 
 };
