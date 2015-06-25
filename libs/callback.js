@@ -27,6 +27,7 @@ var form = {
 
 
 callback.post = function(o,cb){
+    console(o);
     if(!o.callback){
         cb(code.lackParamsCallback);
         return;

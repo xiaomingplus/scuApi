@@ -102,6 +102,6 @@ var config= require('../config.js');
 
 
 request(
-    'http://localhost:9231/api/score?appId=10000&appSecret=scuinfo&studentId=2012141442026&password='+aes.encode('10000','scuinfo','lxy21..++'),function(e,r,b){
-        //console.log(e,b);
+    'http://localhost:9231/api/update?type=score&appId=10000&appSecret=scuinfo&studentId=2012141442026&password='+aes.encode('10000','scuinfo','lxy21..++'),function(e,r,b){
+        console.log(e,b);
     });
