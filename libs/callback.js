@@ -46,19 +46,7 @@ callback.post = function(o,cb){
     var arr = [appSecret, timestamp, nonce].sort();
     shasum.update(arr.join(''));
     var signature = shasum.digest('hex');
-    console.log('222');
-    console.log('appSecret'+appSecret);
-    console.log({
-        url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
-        form:{
-            appId: o.appId? o.appId:0,
-            code: o.code? o.code:0,
-            message: o.message? o.message:"no Data",
-            type: o.action? o.action:"",
-            studentId: o.studentId? o.studentId:"",
-            time:common.time()
-        }
-    });
+
     request.post(
     {
         url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
@@ -71,7 +59,7 @@ callback.post = function(o,cb){
             time:common.time()
         }
     },function(e,r,b){
-        console.log(e,b);
+        //console.log(e,b);
         if(e){
             cb(code.requestCallbackError);
             //console.log(e);
