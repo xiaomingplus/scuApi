@@ -9,7 +9,7 @@ var consumer = {
     name:"消费者"
 };
 consumer.scoreQuery= function(){
-    console.log('update score');
+    // console.log('update score');
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {
@@ -25,8 +25,6 @@ consumer.scoreQuery= function(){
             }catch(e){
                 var user = {}
             }
-
-
             
             if(Object.keys(user).length>0) {
 
@@ -76,7 +74,7 @@ callback.post({
     studentId: user.studentId
 
 },function(e,r){
-    console.log(e,r);
+    // console.log(e,r);
 });
                     }
 
