@@ -260,7 +260,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
                                 
                                 if(rows.length == 0){
-                                    console.log(user.id+'没有变化');
+                                    console.log(user.id+'没有变化为0');
                                     autos.queryBookProducer({start: o.start + 1});
                                     return;
                                 }
