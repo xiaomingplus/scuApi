@@ -475,12 +475,12 @@ autos.queryExamProducer = function(o){
 
 setTimeout(function(){
 
-autos.queryBookProducer(
-    {
-        start: 0
-    }
-);
-    
+
+    autos.queryBookProducer(
+        {
+            start: 0
+        }
+    );
     setTimeout(function(){
        autos.queryMajorProducer(
            {
@@ -495,7 +495,7 @@ autos.queryBookProducer(
     },6*60*60*1000);
     
 
-},6*60*60*1000);
+},6*1000);
 
 
 
