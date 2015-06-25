@@ -288,7 +288,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                     var barcode=[];
 
                     for(var i=0;i< r.length;i++){
-                        barcode[i]=r[i].barcode;
+                        barcode[i]="'"+r[i].barcode+"'";
                     }
 //console.log("select id from scu_book where barcode in ("+ r.join(',')+") and version = "+user.version);
                     console.log("select * from scu_book where studentId='"+user.id+"' and barcode in ("+ barcode.join(',')+") and version = "+user.version);
