@@ -76,7 +76,7 @@ callback.post({
     studentId: user.studentId
 
 },function(e,r){
-    console.log(e,r;
+    console.log(e,r);
 });
                     }
 
