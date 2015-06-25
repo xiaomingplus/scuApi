@@ -6,6 +6,7 @@ var callback= require('./callback.js');
 var aes = require('./aes128.js');
 var libs= require('./libs.js');
 var config= require('../config.js');
+var crypto = require('crypto');
 /// /var t = {
 //appid:"IZqpBTVRmWL0phxNtAxWA64PlVwNMJN1",
 //    appkey:"K6davkJJTazmXOTH1P3N",
@@ -101,7 +102,23 @@ var config= require('../config.js');
 //});
 
 
-request(
-    'http://localhost:9231/api/update?type=score&appId=10000&appSecret=scuinfo&studentId=2012141442026&password='+aes.encode('10000','scuinfo','lxy21..++'),function(e,r,b){
-        console.log(e,b);
-    });
+//request(
+//    'http://localhost:9231/api/update?type=score&appId=10000&appSecret=scuinfo&studentId=2012141442026&password='+aes.encode('10000','scuinfo','lxy21..++'),function(e,r,b){
+//        console.log(e,b);
+//    });
+//    signature	微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
+//timestamp	时间戳
+//    nonce	随机数
+//    echostr
+//加密/校验流程如下：
+//1. 将token、timestamp、nonce三个参数进行字典序排序
+//2. 将三个参数字符串拼接成一个字符串进行sha1加密
+//3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+
+
+
+console.log(timestamp);
+
+console.log(nonce);
+
+console.log(signature);

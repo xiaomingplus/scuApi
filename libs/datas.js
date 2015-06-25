@@ -82,7 +82,8 @@ datas.loadApp = function(){
         if(r.length>0){
             for(var i=0;i< r.length;i++){
                 datas.app[r[i].id]={
-                    callback:r[i].callback
+                    callback:r[i].callback,
+                    appSecret:r[i].appkey
                 }
             }
             datas.status.appStatus=true;

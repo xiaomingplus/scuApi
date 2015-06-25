@@ -10,7 +10,7 @@ var dbs = {
  * @param cb
  */
 dbs.getAppInfo = function(cb){
-    var sql = 'SELECT id,callback from scu_app_info';
+    var sql = 'SELECT id,callback,appkey from scu_app_info';
     conn.query(
         {
             sql:sql
