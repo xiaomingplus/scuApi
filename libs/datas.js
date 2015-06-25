@@ -86,6 +86,7 @@ datas.loadApp = function(){
                     appSecret:r[i].appkey
                 }
             }
+            console.log(datas.app);
             datas.status.appStatus=true;
         }else{
             console.log('no App ');

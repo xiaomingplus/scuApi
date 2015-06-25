@@ -46,7 +46,7 @@ consumer.scoreQuery= function(){
                         });
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -68,7 +68,7 @@ consumer.scoreQuery= function(){
 });
 callback.post({
     callback:user.appId?datas.app[user.appId].callback:"",
-    appSecret:user.app?datas.app[user.appId].appSecret:"",
+    appSecret:user.appId?datas.app[user.appId].appSecret:"",
     appId: user.appId,
     code: 200,
     message:user.studentId+'的成绩已更新到最新版',
@@ -124,7 +124,7 @@ consumer.majorQuery= function(){
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -137,7 +137,7 @@ consumer.majorQuery= function(){
                     }else{
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: 200,
                             message:user.studentId+'的课表已更新到最新版',
@@ -194,7 +194,7 @@ consumer.examQuery= function(){
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -206,7 +206,7 @@ consumer.examQuery= function(){
                     }else{
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: 200,
                             message:user.studentId+'的考表已更新到最新版',
@@ -264,7 +264,7 @@ consumer.bookQuery= function(){
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -277,7 +277,7 @@ consumer.bookQuery= function(){
                     }else{
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
-                            appSecret:user.app?datas.app[user.appId].appSecret:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: 200,
                             message:user.studentId+'借的图书列表已更新到最新版',
@@ -345,7 +345,7 @@ consumer.renewQuery= function(){
                             //console.log(e,r);
                             callback.post({
                                 callback:user.appId?datas.app[user.appId].callback:"",
-                                appSecret:user.app?datas.app[user.appId].appSecret:"",
+                                appSecret:user.appId?datas.app[user.appId].appSecret:"",
                                 appId: user.appId,
                                 code: 200,
                                 message:user.studentId+'的续借操作已成功',
