@@ -487,6 +487,6 @@ setInterval(function() {
     //         {start: 0});
 
     },6*60*60*1000);
-},7*1000);
+// },7*1000);
 
 module.exports = autos;
