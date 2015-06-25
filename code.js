@@ -172,7 +172,7 @@ var code={
         code:2035,
         message:"缺少参数 borrowId"
     },
-    'CountZeroLikeTheLastTime':{
+    'countZeroLikeTheLastTime':{
         code:2036,
         message:"目前结果与上次更新相比没有任何变化"
     },

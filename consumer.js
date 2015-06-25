@@ -9,7 +9,7 @@ var consumer = {
     name:"消费者"
 };
 consumer.scoreQuery= function(){
-    // console.log('update score');
+     console.log('update score');
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {

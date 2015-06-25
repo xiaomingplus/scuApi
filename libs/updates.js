@@ -659,7 +659,7 @@ libs.get({
 
 
                    if(r9[0].scoreVersion>0 && r9[0].scoreCount==0){
-                       cb(code.CountZeroLikeTheLastTime);
+                       cb(code.countZeroLikeTheLastTime);
                        return;
                    }
                    conn.query(
@@ -971,7 +971,7 @@ updates.curriculum = function(o,cb){
 
 
                                 if(r9[0].majorVersion>0 && r9[0].majorCount==0){
-                                    cb(code.CountZeroLikeTheLastTime);
+                                    cb(code.countZeroLikeTheLastTime);
                                     return;
                                 }
 
@@ -1151,13 +1151,9 @@ updates.exam = function(o,cb){
                                 cb(code.mysqlError);
                                 return;
                             }
-
-
                             if(r9.length>0){
-
-
                                 if(r9[0].examVersion>0 && r9[0].examCount==0){
-                                    cb(code.CountZeroLikeTheLastTime);
+                                    cb(code.countZeroLikeTheLastTime);
                                     return;
                                 }
 
@@ -1329,7 +1325,7 @@ updates.library = function(o,cb){
 
 
                             if(r9[0].version>0 && r9[0].count==0){
-                                cb(code.CountZeroLikeTheLastTime);
+                                cb(code.countZeroLikeTheLastTime);
                                 return;
                             }
                             conn.query(
