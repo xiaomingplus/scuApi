@@ -508,18 +508,18 @@ autos.queryBookProducer(
         start: 0
     }
 );
-    
-    setTimeout(function(){
-       autos.queryMajorProducer(
-           {
-               start:0
-           }
-       );
-       autos.queryScoreProducer(
+    autos.queryMajorProducer(
         {
             start:0
         }
     );
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
+    setTimeout(function(){
+
     },6*60*60*1000);
 
     },12*60*60*1000);
