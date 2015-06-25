@@ -356,6 +356,10 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                 for(var i=0;i< r.length;i++){
                                     newBooks[r[i].barcode]=r[i].deadline
                                 }
+                                
+                                console.log(newBooks);
+                                console.log(rows);
+                                
 
                                 for(var i=0;i< rows.length;i++){
 
@@ -363,7 +367,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                         flag=true;
                                     }
                                 }
-
+console.log(flag);
                                 if(flag){
                                     request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
                                             if (eee) {
@@ -371,6 +375,8 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                                 console.log(eee);
                                                 return;
                                             }
+                                            
+                                            console.log('插入图书队列');
                                             for(var i=0;i< rows.length;i++){
                                                 if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
                                                     request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
