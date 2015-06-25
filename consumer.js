@@ -9,6 +9,7 @@ var consumer = {
     name:"消费者"
 };
 consumer.scoreQuery= function(){
+    console.log('update score');
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {
@@ -75,7 +76,7 @@ callback.post({
     studentId: user.studentId
 
 },function(e,r){
-    console.log(e,r+new Date());
+    console.log(e,r;
 });
                     }
 
