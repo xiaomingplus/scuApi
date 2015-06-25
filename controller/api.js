@@ -19,7 +19,7 @@ api.apiPermission = function(req,res,next){
         //console.log(err,app_permission);
 
         if(err){
-            console.log(err+new Date());
+            console.log(err);
             res.dump('redisError');
             return;
         }
@@ -73,7 +73,7 @@ api.update = function(req,res){
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee+new Date());
+                                console.log(eee);
                                 return;
                             }
                             res.dump('scoreUpdateQuerySuccess');
@@ -120,7 +120,7 @@ api.update = function(req,res){
 
                                     if (eee) {
                                         res.dump('requestError');
-                                        console.log(eee+new Date());
+                                        console.log(eee);
                                         return;
                                     }
                                     res.dump('libraryUpdateQuerySuccess');
@@ -144,7 +144,7 @@ api.update = function(req,res){
 
                         if (eee) {
                             res.dump('requestError');
-                            console.log(eee+new Date());
+                            console.log(eee);
                             return;
                         }
                         res.dump('examUpdateQuerySuccess');
@@ -226,7 +226,7 @@ check.student(req.query,function(e,r){
 
                         if (eee) {
                             res.dump('requestError');
-                            console.log(eee+new Date());
+                            console.log(eee);
                             return;
                         }
                         res.dump('scoreInitQuerySuccess');
@@ -308,7 +308,7 @@ api.exam = function(req,res){
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee+new Date());
+                                console.log(eee);
                                 return;
                             }
                             res.dump('examInitQuerySuccess');
@@ -394,7 +394,7 @@ req.query.field = 'major';
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee+new Date());
+                                console.log(eee);
                                 return;
                             }
                             res.dump('majorInitQuerySuccess');
@@ -427,7 +427,7 @@ api.book = function(req,res){
                 sql:"select * from scu_book where studentId="+ req.query.studentId+" and version="+ r.version
             },function(ee,rr){
                 if(ee){
-                    console.log(ee+new Date());
+                    console.log(ee);
                     res.dump('mysqlError');
                     return;
                 }
@@ -484,7 +484,7 @@ api.book = function(req,res){
 
                             if (eee) {
                                 res.dump('requestError');
-                                console.log(eee+new Date());
+                                console.log(eee);
                                 return;
                             }
                             res.dump('libraryInitQuerySuccess');
@@ -517,7 +517,7 @@ api.renew = function(req,res){
         request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}', function (eee, rrr) {
                 if (eee) {
                     res.dump('requestLibError');
-                    console.log(eee+new Date());
+                    console.log(eee);
                     return;
                 }
                 res.end(JSON.stringify({

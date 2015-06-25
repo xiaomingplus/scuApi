@@ -54,6 +54,6 @@ setInterval(function(){
   datas.load();
 },1000*60*600);
 process.on('uncaughtException', function(err) {
-  console.log('Caught exception: ' + err+new Date());
+  console.log('Caught exception: ' + err);
 });
 module.exports = app;

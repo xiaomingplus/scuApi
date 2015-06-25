@@ -13,7 +13,7 @@ consumer.scoreQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err+new Date());
+                console.log(err);
                 setTimeout(function(){
                     consumer.scoreQuery();
                 },1000);
@@ -36,7 +36,7 @@ consumer.scoreQuery= function(){
                 //console.log('队列开始第一项了');
                 updates.score(user, function (ee) {
                     if (ee) {
-                        console.log('更新成绩错误'+user.studentId+new Date());
+                        console.log('更新成绩错误'+user.studentId);
                         console.log({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -55,7 +55,7 @@ consumer.scoreQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r+new Date());
+                            console.log(e,r);
                         });
                     }else{
                         console.log({
@@ -104,7 +104,7 @@ consumer.majorQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=major&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err+new Date());
+                console.log(err);
                 setTimeout(function(){
                     consumer.majorQuery();
                 },1000);
@@ -121,7 +121,7 @@ consumer.majorQuery= function(){
                 user.password = aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.curriculum(user, function (ee) {
                     if (ee) {
-                        console.log(ee+new Date());
+                        console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -170,7 +170,7 @@ consumer.examQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=exam&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err+new Date());
+                console.log(err);
                 setTimeout(function(){
                     consumer.examQuery();
                 },1000);
@@ -189,7 +189,7 @@ consumer.examQuery= function(){
                 user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.exam(user, function (ee) {
                     if (ee) {
-                        console.log(ee+new Date());
+                        console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -235,7 +235,7 @@ consumer.bookQuery= function(){
         //console.log(config.queryUrl+'/?name=book&opt=get');
         request(config.queryUrl+'/?name=book&opt=get',function(err,response,body) {
             if (err) {
-                console.log(err+new Date());
+                console.log(err);
                 setTimeout(function(){
                     consumer.bookQuery();
                 },1000);
@@ -257,7 +257,7 @@ consumer.bookQuery= function(){
 
                 updates.library(user, function (ee) {
                     if (ee) {
-                        console.log(ee+new Date());
+                        console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -304,7 +304,7 @@ consumer.renewQuery= function(){
         request(config.queryUrl+'/?name=renew&opt=get',function(err,response,body) {
             //console.log(err,body);
             if (err) {
-                console.log(err+new Date());
+                console.log(err);
                 setTimeout(function(){
                     consumer.renewQuery();
                 },1000);
@@ -325,7 +325,7 @@ consumer.renewQuery= function(){
                 //console.log('队列开始第一项了');
                 updates.renew(user, function (ee) {
                     if (ee) {
-                        console.log(ee+new Date());
+                        console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appId: user.appId,
@@ -389,14 +389,14 @@ consumer.init();
 
 
 process.on('uncaughtException', function(err) {
-    console.log('Caught exception: ' + err+new Date());
+    console.log('Caught exception: ' + err);
 });
 /**
  * 每n分钟自动载入数据
  */
 datas.load();
 setInterval(function(){
-    console.log('查看是否全局数据是否有更新'+new Date());
+    console.log('查看是否全局数据是否有更新');
     datas.load();
 },1000*60*600);
 module.exports = consumer;
