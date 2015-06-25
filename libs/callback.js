@@ -46,7 +46,8 @@ callback.post = function(o,cb){
     var arr = [appSecret, timestamp, nonce].sort();
     shasum.update(arr.join(''));
     var signature = shasum.digest('hex');
-    console.log(appSecret);
+    console.log('222');
+    console.log('appSecret'+appSecret);
     console.log({
         url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
         form:{
