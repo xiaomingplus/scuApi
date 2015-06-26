@@ -114,11 +114,29 @@ var crypto = require('crypto');
 //1. 将token、timestamp、nonce三个参数进行字典序排序
 //2. 将三个参数字符串拼接成一个字符串进行sha1加密
 //3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+//
+//
+//
+//console.log(timestamp);
+//
+//console.log(nonce);
+//
+//console.log(signature);
+
+var q=encodeURIComponent('{"studentId":2013141091031,"password":"n2HlchNmH%2BFW%2FWAbezlUfw%3D%3D","appId":10000}');
+
+console.log(decodeURIComponent(q));
+var p=decodeURIComponent(q);
+
+var xx=JSON.parse(p);
+
+var x=aes.encode(config.querySecret.appId,config.querySecret.appSecret,'202119');
+
+console.log(x);
+
+var z='n2HlchNmH%20FW%2FWAbezlUfw%3D%3D'
+var y=aes.decode(config.querySecret.appId,config.querySecret.appSecret, xx.password);
+
+console.log(y);
 
 
-
-console.log(timestamp);
-
-console.log(nonce);
-
-console.log(signature);

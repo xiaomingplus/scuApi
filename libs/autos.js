@@ -61,7 +61,7 @@ autos.queryScoreProducer = function(o){
                     }
 
                     if (r != user.scoreCount) {
-                        request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + user.id + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","appId":"10000"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=score&opt=put&data='+encodeURIComponent('{"studentId":' + user.id + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","appId":"10000"}'), function (eee, rrr) {
 
                                 if(eee){
                                     autos.queryScoreProducer({start:o.start+1});
@@ -145,7 +145,7 @@ autos.queryMajorProducer = function(o){
                     //console.log(r);
 
                     if (r != user.majorCount) {
-                        request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + user.id + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=major&opt=put&data='+encodeURIComponent('{"studentId":' + user.id + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}'), function (eee, rrr) {
 
                                 if(eee){
                                     autos.queryMajorProducer({start:o.start+1});
@@ -231,7 +231,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
                         if(user.version==0){
 
-                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                            request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}'), function (eee, rrr) {
 
                                     if (eee) {
                                         autos.queryBookProducer({start: o.start + 1});
@@ -264,7 +264,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                     autos.queryBookProducer({start: o.start + 1});
                                     return;
                                 }
-                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                                request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}'), function (eee, rrr) {
 
                                         if (eee) {
                                             autos.queryBookProducer({start: o.start + 1});
@@ -310,7 +310,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
 
 
-                                request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                                request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}'), function (eee, rrr) {
 
                                         if (eee) {
                                             autos.queryBookProducer({start: o.start + 1});
@@ -322,7 +322,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
                                         for(var i=0;i< rows.length;i++){
                                             if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                                request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}'), function (eee, rrr) {
                                                         if (eee) {
                                                             console.log(eee);
                                                             return;
@@ -369,7 +369,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                 }
 //console.log(flag);
                                 if(flag){
-                                    request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                                    request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}'), function (eee, rrr) {
                                             if (eee) {
                                                 autos.queryBookProducer({start: o.start + 1});
                                                 console.log(eee);
@@ -379,7 +379,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                             console.log('插入图书队列');
                                             for(var i=0;i< rows.length;i++){
                                                 if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                                    request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}', function (eee, rrr) {
+                                                    request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}'), function (eee, rrr) {
                                                             if (eee) {
                                                                 console.log(eee);
                                                                 return;
@@ -448,7 +448,7 @@ autos.queryExamProducer = function(o){
             if (rrr.length > 0) {
                 var user = rrr[0];
                 user.order = o.start;
-                        request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + user.id + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=exam&opt=put&data='+encodeURIComponent('{"studentId":' + user.id + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '"}'), function (eee, rrr) {
                                 if(eee){
                                     autos.queryExamProducer({start:o.start+1});
                                     console.log(eee);

@@ -69,7 +69,7 @@ api.update = function(req,res){
             return;
         }
 
-                    request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee, rrr) {
+                    request(config.queryUrl+'/?name=score&opt=put&data='+encodeURIComponent('{"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee, rrr) {
 
                             if (eee) {
                                 res.dump('requestError');
@@ -92,7 +92,7 @@ api.update = function(req,res){
                     res.end(JSON.stringify(e));
                     return;
                 }
-                            request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
+                            request(config.queryUrl+'/?name=major&opt=put&data='+encodeURIComponent('{"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee) {
 
                                     if (eee) {
                                         res.dump('requestError');
@@ -116,7 +116,7 @@ api.update = function(req,res){
                     return;
                 }
 
-                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
+                            request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee) {
 
                                     if (eee) {
                                         res.dump('requestError');
@@ -140,7 +140,7 @@ api.update = function(req,res){
                     res.end(JSON.stringify(e));
                     return;
                 }
-                request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
+                request(config.queryUrl+'/?name=exam&opt=put&data='+encodeURIComponent('{"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee) {
 
                         if (eee) {
                             res.dump('requestError');
@@ -171,7 +171,8 @@ check.student(req.query,function(e,r){
        res.end(JSON.stringify(e));
        return;
    }
-    //console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
+    //console.log(r);
+    console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
     conn.query(
         {
             sql:"select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion+" order by id desc"
@@ -221,8 +222,7 @@ check.student(req.query,function(e,r){
                     });
                     return;
                 }
-
-                request(config.queryUrl+'/?name=score&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee, rrr) {
+                request(config.queryUrl+'/?name=score&opt=put&data='+encodeURIComponent('{"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee, rrr) {
 
                         if (eee) {
                             res.dump('requestError');
@@ -304,7 +304,7 @@ api.exam = function(req,res){
 
 
 
-                    request(config.queryUrl+'/?name=exam&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":"'+req.query.appId+'"}', function (eee) {
+                    request(config.queryUrl+'/?name=exam&opt=put&data='+encodeURIComponent('{"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":"'+req.query.appId+'"}'), function (eee) {
 
                             if (eee) {
                                 res.dump('requestError');
@@ -390,7 +390,7 @@ req.query.field = 'major';
 
 
 
-                    request(config.queryUrl+'/?name=major&opt=put&data={"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
+                    request(config.queryUrl+'/?name=major&opt=put&data='+encodeURIComponent('{"studentId":' + req.query.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee) {
 
                             if (eee) {
                                 res.dump('requestError');
@@ -480,7 +480,7 @@ api.book = function(req,res){
 
 
 
-                    request(config.queryUrl+'/?name=book&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}', function (eee) {
+                    request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","appId":'+req.query.appId+'}'), function (eee) {
 
                             if (eee) {
                                 res.dump('requestError');
@@ -514,7 +514,7 @@ api.renew = function(req,res){
             res.end(JSON.stringify(e));
             return;
         }
-        request(config.queryUrl+'/?name=renew&opt=put&data={"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}', function (eee, rrr) {
+        request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}'), function (eee, rrr) {
                 if (eee) {
                     res.dump('requestLibError');
                     console.log(eee);
