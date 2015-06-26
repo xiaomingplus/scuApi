@@ -38,7 +38,7 @@ consumer.scoreQuery= function(){
                 console.log(user);
                 
                 updates.score(user, function (ee) {
-                    console.log(ee);
+                    //console.log(ee);
                     if (ee) {
                         console.log('更新成绩错误'+user.studentId);
                         console.log({
@@ -385,10 +385,10 @@ consumer.renewQuery= function(){
 consumer.init = function(){
     if(datas.status.appStatus) {
         consumer.scoreQuery();
-         consumer.bookQuery();
-        consumer.majorQuery();
-        consumer.renewQuery();
-        consumer.examQuery();
+        // consumer.bookQuery();
+        //consumer.majorQuery();
+        //consumer.renewQuery();
+        //consumer.examQuery();
     }else{
 
         setTimeout(function(){

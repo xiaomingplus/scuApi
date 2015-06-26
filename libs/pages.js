@@ -275,8 +275,22 @@ pages.scoreList = function(html){
             data[term[k]].push(item1);
         }
     }
+
+    var flag=false;
+    for(var i in data){
+        if(data[i].length>0){
+            flag=true;
+        }
+    }
+
+    if(flag){
+        return data;
+
+    }else{
+        data={};
+        return data;
+    }
     //console.log(data);
-    return data;
 
 };
 

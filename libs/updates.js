@@ -637,12 +637,10 @@ libs.get({
         //console.log(e);
         return;
     }
+    //console.log(r.data);
     var scoreList = pages.scoreList(r.data);
  //console.log(scoreList)
    if(Object.keys(scoreList).length==0){
-
-
-
        conn.query(
            {
                sql:"select scoreCount,scoreVersion from `scu_user` where id="+ o.studentId
@@ -654,6 +652,7 @@ libs.get({
                    return;
                }
                
+
                
                if(r9.length>0){
 
@@ -770,6 +769,8 @@ libs.get({
                         {
                             sql:"select scoreVersion from scu_user where id="+ o.studentId
                         },function(eee1,rrr1){
+                            
+                            console.log(eee1,rrr1);
                             if(eee1){
                                 console.log(eee1);
                                 cb(code.mysqlError);
@@ -786,6 +787,8 @@ libs.get({
                             }
             var sql;
             var scoreSql = [];
+                            
+                            console.log(scores);
             for (var i = 0; i < scores.length; i++) {
                 scoreSql[i] = "('"+scores[i].courseId+"','"+(scores[i].name)+"','"+common.mysqlEscape(scores[i].englishName)+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
             }
@@ -794,12 +797,13 @@ libs.get({
 
 
             sql = "insert into scu_score (`courseId`,`name`,`englishName`,`orderId`,`credit`,`score`,`propertyId`,`studentId`,`reason`,`termId`,`version`) VALUES " + scoreSql.join(',');
-            // console.log(sql);
+             console.log(sql);
             conn.query(
                 {
                     sql: sql
                 }, function (eeeee) {
                     if (eeeee) {
+                        console.log('222');
                         cb(code.mysqlError);
                         console.log(eeeee);
                         return;
