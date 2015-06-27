@@ -9,7 +9,7 @@ var consumer = {
     name:"消费者"
 };
 consumer.scoreQuery= function(){
-     console.log('update score');
+     //console.log('update score');
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {
@@ -35,7 +35,7 @@ consumer.scoreQuery= function(){
                 //console.log('队列开始第一项了');
                 //console.log(encodeURIComponent(user.password));
                 
-                console.log(user);
+                //console.log(user);
                 
                 updates.score(user, function (ee) {
                     //console.log(ee);

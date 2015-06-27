@@ -788,7 +788,7 @@ libs.get({
             var sql;
             var scoreSql = [];
                             
-                            console.log(scores);
+                            //console.log(scores);
             for (var i = 0; i < scores.length; i++) {
                 scoreSql[i] = "('"+scores[i].courseId+"','"+(scores[i].name)+"','"+common.mysqlEscape(scores[i].englishName)+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
             }
@@ -797,13 +797,13 @@ libs.get({
 
 
             sql = "insert into scu_score (`courseId`,`name`,`englishName`,`orderId`,`credit`,`score`,`propertyId`,`studentId`,`reason`,`termId`,`version`) VALUES " + scoreSql.join(',');
-             console.log(sql);
+             //console.log(sql);
             conn.query(
                 {
                     sql: sql
                 }, function (eeeee) {
                     if (eeeee) {
-                        console.log('222');
+                        //console.log('222');
                         cb(code.mysqlError);
                         console.log(eeeee);
                         return;
