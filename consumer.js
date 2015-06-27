@@ -251,16 +251,21 @@ consumer.bookQuery= function(){
                 },1000);
                 return;
             }
-            //console.log(body);
+
             try {
                 var user = JSON.parse(decodeURIComponent(body));
 
             }catch(e){
                 var user = {}
             }
-            //console.log(user);
 
-            if(Object.keys(user).length>0) {
+
+             if(typeof(user)!='object'){
+
+                 setTimeout(function(){
+                     consumer.bookQuery();
+                 },1000);
+             }else if(Object.keys(user).length>0) {
 
                 //console.log('队列开始第一项了');
                 user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
@@ -384,11 +389,11 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-        consumer.scoreQuery();
+        //consumer.scoreQuery();
          consumer.bookQuery();
-        consumer.majorQuery();
-        consumer.renewQuery();
-        consumer.examQuery();
+        //consumer.majorQuery();
+        //consumer.renewQuery();
+        //consumer.examQuery();
     }else{
 
         setTimeout(function(){
