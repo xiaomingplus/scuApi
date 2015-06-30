@@ -20,6 +20,7 @@ router.use(function (req,res,next) {
   next();
 });
 
+
 router.get('/',function(req,res,next){
   res.dump('ok',null,"欢迎使用飞扬开放平台四川大学校园api,请访问 http://open.fyscu.com 查看详细文档");
 });

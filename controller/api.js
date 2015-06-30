@@ -261,7 +261,7 @@ api.exam = function(req,res){
                     return;
                 }
                 //console.log(rr);
-                
+
                 //console.log(datas.termById);
                 if(rr.length>0) {
                     var list = [];
@@ -514,7 +514,8 @@ api.renew = function(req,res){
             res.end(JSON.stringify(e));
             return;
         }
-        request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.bookId+'","appId":'+req.query.appId+'}'), function (eee, rrr) {
+        console.log(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.borrowId+'","appId":'+req.query.appId+'}'));
+        request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,r.password) + '","barcode":"'+ req.query.bookId+'","borId":"'+ req.query.borrowId+'","appId":'+req.query.appId+'}'), function (eee, rrr) {
                 if (eee) {
                     res.dump('requestLibError');
                     console.log(eee);

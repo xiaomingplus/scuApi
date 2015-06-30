@@ -616,6 +616,9 @@ libs.get({
                 },
                 j: e.j
             },function(eeee,rrrr){
+                
+                console.log(e);
+                console.log('h');
         cb(e);
 
         //密码错误
@@ -633,6 +636,8 @@ libs.get({
                 }
             );
         }
+
+                return;
             });
         //console.log(e);
         return;
@@ -692,7 +697,7 @@ libs.get({
            }
        )
 
-
+return;
 
    }
 
@@ -701,6 +706,7 @@ libs.get({
         j: r.j
     },function(ee,rr){
     if(ee){
+        console.log('k');
         cb(ee);
         console.log(ee);
         return;
@@ -713,6 +719,7 @@ libs.get({
             j: r.j
         },function(eee,rrr) {
             if (eee) {
+                console.log('ll');
                 cb(eee);
                 console.log(eee);
                 return;
@@ -1416,7 +1423,7 @@ updates.renew = function(o,cb){
                     url:"http://mc.m.5read.com/user/logout/logout.jspx",
                     jar:r
                 },function(eee,rrr,bbb) {
-                    //console.log(eee, rrr.statusCode);
+                    console.log(eee, rrr.statusCode);
                     if (ee) {
                         cb(code.requestLibError);
                         console.log(ee);

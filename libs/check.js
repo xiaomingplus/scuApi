@@ -26,7 +26,7 @@ check.password = function(o,cb,debug){
          cb(code.mysqlError);
           return;
       }else{
-          
+
           //console.log(r);
           if(r.length==0) {
 
@@ -101,7 +101,7 @@ check.password = function(o,cb,debug){
                       return;
                   });
               }else{
-                  
+
 
 
 

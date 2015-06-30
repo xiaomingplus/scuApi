@@ -45,6 +45,7 @@ lib.check = function (o,cb){
 
         //console.log(err,response.body);
         if(err){
+            console.log('check的时候错误');
 
             cb({code:code.requestError.code,message:code.requestError.message});
             console.log(err+new Date());
@@ -78,6 +79,9 @@ lib.get = function (o,cb){
 
     lib.check(o,function(err,j){
         if(err) {
+            
+            console.log(err);
+            console.log('i');
             cb(err);
             return;
         }
@@ -94,6 +98,8 @@ lib.get = function (o,cb){
             //console.log(opts);
             //console.log(r.body);
             if(err){
+                
+                console.log('第一次get错误');
                 cb({code:code.requestError.code,message:code.requestError.message,j:j});
                 console.log(err);
                 return;
@@ -169,6 +175,8 @@ lib.reGet = function (o,cb){
             return;
         }
         if(r.statusCode!=200){
+            console.log('再次get请求错误');
+            console.log(r.body);
             cb({code:code.requestError.code,message:code.requestError.message});
             return;
         }
@@ -195,6 +203,8 @@ lib.rePost = function (o,cb){
             return;
         }
         if(r.statusCode!=200){
+            console.log('再次请求错误');
+            console.log(r.body);
             cb({code:code.requestError.code,message:code.requestError.message});
             return;
         }

@@ -50,6 +50,9 @@ consumer.scoreQuery= function(){
                             studentId: user.studentId
 
                         });
+                        
+                        console.log('1');
+                        
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appSecret:user.appId?datas.app[user.appId].appSecret:"",
@@ -62,6 +65,8 @@ consumer.scoreQuery= function(){
                         },function(e,r){
                             console.log(e,r);
                         });
+                        
+                        console.log('222');
                     }else{
                         console.log({
     callback:user.appId?datas.app[user.appId].callback:"",
@@ -335,12 +340,13 @@ consumer.renewQuery= function(){
             }
 
 
-
             if(Object.keys(user).length>0) {
                 user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
+                console.log(user);
 
                 //console.log('队列开始第一项了');
                 updates.renew(user, function (ee) {
+                    console.log(ee);
                     if (ee) {
                         console.log(ee);
                         callback.post({
@@ -366,16 +372,21 @@ consumer.renewQuery= function(){
                             },function(e,r){
                                 //console.log(e,r);
                             });
+                            setTimeout(function(){
+                                consumer.renewQuery();
+                            },1000);
+                            return;
                         })
                     }else{
-
+                        setTimeout(function(){
+                            consumer.renewQuery();
+                        },1000);
+                        return;
                     }
                     //console.log(user.studentId+'续借成功');
                 });
 
-                setTimeout(function(){
-                    consumer.renewQuery();
-                },1000);
+
             }else{
                 setTimeout(function(){
                     consumer.renewQuery();
