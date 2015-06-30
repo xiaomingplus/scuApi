@@ -378,6 +378,11 @@ consumer.renewQuery= function(){
                             return;
                         })
                     }else{
+
+                        request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","appId":'+user.appId+'}'), function (eee) {
+
+                            }
+                        );
                         setTimeout(function(){
                             consumer.renewQuery();
                         },1000);

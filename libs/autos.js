@@ -303,7 +303,6 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                 return;
                             }
 
-                            //todo 不能只根据这个来做是否更新的判断，还需要有每一个书的续借时间的变化
 
                             if (r.length != rows.length) {
 
@@ -322,7 +321,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
 
                                         for(var i=0;i< rows.length;i++){
                                             if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
-                                                request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'"}'), function (eee, rrr) {
+                                                request(config.queryUrl+'/?name=renew&opt=put&data='+encodeURIComponent('{"studentId":"' + user.id + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","barcode":"'+ rows[i].barcode+'","borId":"'+ rows[i].borId+'","appId":"10000"}'), function (eee, rrr) {
                                                         if (eee) {
                                                             console.log(eee);
                                                             return;
