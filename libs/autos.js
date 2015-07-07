@@ -19,7 +19,7 @@ autos.queryScoreProducer = function(o){
 //console.log(o);
     conn.query(
         {
-            sql:"select `id`,`password`,`scoreVersion`,`scoreCount` from scu_user where error=0 order by ai limit "+ o.start+",1 "
+            sql:"select `id`,`password`,`scoreVersion`,`scoreCount` from scu_user where error=0 order by ai desc limit "+ o.start+",1 "
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -487,11 +487,11 @@ setTimeout(function(){
         }
     );
 
-    autos.queryMajorProducer(
-        {
-            start:0
-        }
-    );
+    //autos.queryMajorProducer(
+    //    {
+    //        start:0
+    //    }
+    //);
     autos.queryScoreProducer(
         {
             start:0
