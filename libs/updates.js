@@ -797,7 +797,7 @@ return;
                             
                             //console.log(scores);
             for (var i = 0; i < scores.length; i++) {
-                scoreSql[i] = "('"+scores[i].courseId+"','"+(scores[i].name)+"','"+common.mysqlEscape(scores[i].englishName)+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
+                scoreSql[i] = "('"+scores[i].courseId+"','"+common.mysqlEscape((scores[i].name))+"','"+common.mysqlEscape(scores[i].englishName)+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
             }
 
 
