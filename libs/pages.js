@@ -252,10 +252,12 @@ pages.scoreList = function(html){
     for(var i= 2,k=0;i<$("table.displayTag").length;i+=3,k++){
 
         for(var m = 1;m<$($("table.displayTag")[i]).find('tr').length-1;m++){
+            var propertyId=$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[2]).text().trim();
+
             item0={
                 'termId':datas.term[term[k]].termId,
                 'courseId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim(),
-                'propertyId':datas.property[$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[2]).text().trim()].propertyId,
+                'propertyId':propertyId?datas.property[propertyId].propertyId:"未知",
                 'score':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim(),
                 'date':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[4]).text().trim(),
                 'name':common.mysqlEscape($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[1]).text().trim())
@@ -357,6 +359,9 @@ pages.scoreFail = function(html){
 
     for(var i= 0,k=0;i<$("table.displayTag").length;i++,k++) {
         for(var m = 1;m<$($("table.displayTag")[i]).find('tr').length;m++){
+            
+            console.log($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim());
+            
             item={
                 'courseId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim(),
                 'orderId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[1]).text().trim(),
@@ -370,8 +375,10 @@ pages.scoreFail = function(html){
         }
 
     }
+    //console.log(data);
+
     return data;
-     //console.log(data);
+
     //
     //  var t=$($($($("table.displayTag")[0]).find('tr')[1]).find('td')[0]).text().trim()
 //console.log(t);

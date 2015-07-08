@@ -644,7 +644,7 @@ libs.get({
     }
     //console.log(r.data);
     var scoreList = pages.scoreList(r.data);
- //console.log(scoreList)
+ //console.log(scoreList);return;
    if(Object.keys(scoreList).length==0){
        conn.query(
            {
@@ -713,11 +713,13 @@ return;
     }
      //   console.log('test1');
     var scorePass = pages.scorePass(rr.data);
-        //console.log(scorePass);
+        //console.log(scorePass);return;
         libs.reGet({
             url:config.urls.scoreFail,
             j: r.j
         },function(eee,rrr) {
+            
+            //console.log(rrr);
             if (eee) {
                 console.log('ll');
                 cb(eee);
@@ -732,7 +734,7 @@ return;
                     },
                     j: r.j
                 },function(eeee,rrrr){
-
+//console.log(rrrr);
             var scoreFail = pages.scoreFail(rrr.data);
             for (var i in scoreList){
                 for(var k=0;k<scoreList[i].length;k++){
@@ -795,20 +797,25 @@ return;
             var sql;
             var scoreSql = [];
                             
-                            //console.log(scores);
+
             for (var i = 0; i < scores.length; i++) {
+                //console.log(i);
+                //console.log(scores[i]);
                 scoreSql[i] = "('"+scores[i].courseId+"','"+common.mysqlEscape((scores[i].name))+"','"+common.mysqlEscape(scores[i].englishName)+"','"+scores[i].orderId+"',"+scores[i].credit+","+scores[i].score+",'"+scores[i].propertyId+"',"+o.studentId+",'"+scores[i].reason+"','"+scores[i].termId+"'," + (parseInt(rrr1[0].scoreVersion) + 1) + ")";
+           //console.log('yes');
             }
 
 
 
 
             sql = "insert into scu_score (`courseId`,`name`,`englishName`,`orderId`,`credit`,`score`,`propertyId`,`studentId`,`reason`,`termId`,`version`) VALUES " + scoreSql.join(',');
-             //console.log(sql);
+             //console.log(sql);return;
             conn.query(
                 {
                     sql: sql
-                }, function (eeeee) {
+                }, function (eeeee,rrrrr) {
+                    
+                    console.log(eeeee,rrrrr);
                     if (eeeee) {
                         //console.log('222');
                         cb(code.mysqlError);

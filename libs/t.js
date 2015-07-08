@@ -7,6 +7,7 @@ var aes = require('./aes128.js');
 var libs= require('./libs.js');
 var config= require('../config.js');
 var crypto = require('crypto');
+var updates = require('./updates.js');
 /// /var t = {
 //appid:"IZqpBTVRmWL0phxNtAxWA64PlVwNMJN1",
 //    appkey:"K6davkJJTazmXOTH1P3N",
@@ -123,20 +124,35 @@ var crypto = require('crypto');
 //
 //console.log(signature);
 
-var q=encodeURIComponent('{"studentId":2013141091031,"password":"n2HlchNmH%2BFW%2FWAbezlUfw%3D%3D","appId":10000}');
+//var q=encodeURIComponent('{"studentId":2013141091031,"password":"n2HlchNmH%2BFW%2FWAbezlUfw%3D%3D","appId":10000}');
+//
+//console.log(decodeURIComponent(q));
+//var p=decodeURIComponent(q);
+//
+//var xx=JSON.parse(p);
+//
+//var x=aes.encode(config.querySecret.appId,config.querySecret.appSecret,'202119');
+//
+//console.log(x);
+//
+//var z='n2HlchNmH%20FW%2FWAbezlUfw%3D%3D'
+//var y=aes.decode(config.querySecret.appId,config.querySecret.appSecret, xx.password);
+//
+//console.log(y);
 
-console.log(decodeURIComponent(q));
-var p=decodeURIComponent(q);
+var user ={
+    studentId:2012141441105,
+    password:"123456"
+};
 
-var xx=JSON.parse(p);
+datas.load();
+setTimeout(function () {
+    updates.score(user, function (ee,rr) {
 
-var x=aes.encode(config.querySecret.appId,config.querySecret.appSecret,'202119');
+        console.log(ee,rr);
 
-console.log(x);
+    });
+},3000);
 
-var z='n2HlchNmH%20FW%2FWAbezlUfw%3D%3D'
-var y=aes.decode(config.querySecret.appId,config.querySecret.appSecret, xx.password);
-
-console.log(y);
 
 
