@@ -10,9 +10,10 @@ var datas = require('../libs/datas.js');
 var request = require('request');
 var libs = require('../libs/libs.js');
 var common =require('../libs/common.js');
+var pages = require('../libs/pages.js');
 api.apiPermission = function(req,res,next){
     res.setHeader('content-type','application/json; charset=UTF-8');
-    var id = req.query.appId;
+    var id = req.query.appId?req.query.appId:req.query.appid;
     //console.log(id);
     //根据appid读取app权限信息
     services.app_permission_model.findOne({appid:id},function(err,app_permission){
@@ -27,7 +28,7 @@ api.apiPermission = function(req,res,next){
             res.dump('appIdError');
         }else{
             //判断appkey是否正确
-            var key = req.query.appSecret;
+            var key = req.query.appSecret?req.query.appSecret:req.query.appsecret;
             if(key!=app_permission.appkey){
                 res.dump('appKeyError');
             }else{
@@ -172,7 +173,7 @@ check.student(req.query,function(e,r){
        return;
    }
     //console.log(r);
-    console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
+    //console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
     conn.query(
         {
             sql:"select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion+" order by id desc"
@@ -535,6 +536,74 @@ api.renew = function(req,res){
 
 };
 
+
+api.currentScore = function(req,res){
+
+
+    if(!req.query.studentId){
+        res.dump('lackParamsStudentId');
+        return;
+    }
+
+    if(!req.query.password){
+        res.dump('lackParamsPassword');
+     return;
+    }
+
+    if(req.query.debug){
+        var password = req.query.password;
+    }else {
+        var password = aes128.decode(req.query.appId, req.query.appSecret, "" + req.query.password + "");
+    }
+
+
+        libs.get(
+            {
+                studentId: req.query.studentId,
+                password: password,
+                url: "http://202.115.47.141/bxqcjcxAction.do?totalrows=16&pageSize=300"
+            }, function (e, r) {
+                if (e) {
+
+                    res.end(JSON.stringify(e));
+                    return;
+                    //libs.rePost(
+                    //    {
+                    //        url: 'http://202.115.47.141/logout.do',
+                    //        form: {
+                    //            'loginType': "platformLogin"
+                    //        },
+                    //        j: e.j
+                    //    }, function (ee, rr) {
+                    //        res.end(JSON.stringify(e));
+                    //        return;
+                    //    });
+                } else {
+                    var scores = pages.currentScore(r.data);
+                    res.dump('ok', scores);
+
+                    //
+                    //libs.rePost(
+                    //    {
+                    //        url: 'http://202.115.47.141/logout.do?totalrows=300&pageSize=300',
+                    //        form: {
+                    //            'loginType': "platformLogin"
+                    //        },
+                    //        j: r.j
+                    //    }, function (ee, rr) {
+                    //        var scores = pages.currentScore(r.data);
+                    //        res.dump('ok', scores);
+                    //    });
+
+                }
+
+
+            }
+        );
+
+
+
+};
 
 
 module.exports = api;

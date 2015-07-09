@@ -12,7 +12,9 @@ var app = express();
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.set('env','production');
-app.use(logger('pro'));
+//app.set('env','development');
+
+//app.use(logger('dev'));
 app.use('/', routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

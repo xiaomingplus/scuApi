@@ -40,12 +40,10 @@ lib.check = function (o,cb){
         form:{zjh: o.studentId,mm:""+o.password+""},
         jar:j
     };
-    //console.log(options);
     request(options,function(err,response){
 
         //console.log(err,response.body);
         if(err){
-            console.log('check的时候错误');
 
             cb({code:code.requestError.code,message:code.requestError.message});
             console.log(err+new Date());
@@ -351,4 +349,6 @@ lib.getBookId = function(o,cb){
 
 
 };
+
+
 module.exports = lib;

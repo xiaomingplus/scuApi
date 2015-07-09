@@ -8,6 +8,7 @@ var libs= require('./libs.js');
 var config= require('../config.js');
 var crypto = require('crypto');
 var updates = require('./updates.js');
+var pages = require('./pages.js');
 /// /var t = {
 //appid:"IZqpBTVRmWL0phxNtAxWA64PlVwNMJN1",
 //    appkey:"K6davkJJTazmXOTH1P3N",
@@ -140,19 +141,22 @@ var updates = require('./updates.js');
 //
 //console.log(y);
 
-var user ={
-    studentId:2012141441105,
-    password:"123456"
-};
+//var user ={
+//    studentId:2014141091035,
+//    password:"290020"
+//};
+//
+////datas.load();
+//setTimeout(function () {
+//    updates.score(user, function (ee,rr) {
+//
+//        console.log(ee,rr);
+//
+//    });
+//},3000);
 
-datas.load();
-setTimeout(function () {
-    updates.score(user, function (ee,rr) {
 
-        console.log(ee,rr);
 
-    });
-},3000);
 
 
 

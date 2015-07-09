@@ -33,6 +33,13 @@ router.get('/api/update',function(req,res){
   api.update(req,res);
 });
 
+router.get('/api/score/latest',function(req,res){
+
+  api.currentScore(req,res);
+
+});
+
+
 router.get('/api/score',function(req,res){
   api.score(req,res);
 });
@@ -57,7 +64,6 @@ router.get('/api/major',function(req,res){
 router.get('/api/news/teaching',function(req,res){
 api.newsTeaching(req,res);
 });
-
 
 
 

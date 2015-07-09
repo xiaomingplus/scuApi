@@ -809,7 +809,7 @@ return;
 
 
             sql = "insert into scu_score (`courseId`,`name`,`englishName`,`orderId`,`credit`,`score`,`propertyId`,`studentId`,`reason`,`termId`,`version`) VALUES " + scoreSql.join(',');
-             //console.log(sql);return;
+             console.log(sql);return;
             conn.query(
                 {
                     sql: sql
