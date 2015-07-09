@@ -580,7 +580,7 @@ api.currentScore = function(req,res){
                     //    });
                 } else {
                     var scores = pages.currentScore(r.data);
-                    res.dump('ok', scores);
+                    res.dump('ok', {scores:scores});
 
                     //
                     //libs.rePost(
