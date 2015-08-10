@@ -633,28 +633,28 @@ autos.queryExamProducer = function(o){
 setTimeout(function(){
 
 
-    //autos.queryBookProducer(
-    //    {
-    //        start: 0
-    //    }
-    //);
-    //
-    ////autos.queryMajorProducer(
-    ////    {
-    ////        start:0
-    ////    }
-    ////);
-    //autos.queryScoreProducer(
-    //    {
-    //        start:0
-    //    }
-    //);
+    autos.queryBookProducer(
+        {
+            start: 0
+        }
+    );
 
-    autos.delete(
+    autos.queryMajorProducer(
         {
             start:0
         }
-    )
+    );
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
+
+    //autos.delete(
+    //    {
+    //        start:0
+    //    }
+    //)
 
     
 
@@ -664,26 +664,26 @@ setTimeout(function(){
 
 
 
-//setInterval(function() {
-//
-//autos.queryBookProducer(
-//    {
-//        start: 0
-//    }
-//);
-//    autos.queryMajorProducer(
-//        {
-//            start:0
-//        }
-//    );
-//    autos.queryScoreProducer(
-//        {
-//            start:0
-//        }
-//    );
-//
-//
-//    },12*60*60*1000);
+setInterval(function() {
+
+autos.queryBookProducer(
+    {
+        start: 0
+    }
+);
+    autos.queryMajorProducer(
+        {
+            start:0
+        }
+    );
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
+
+
+    },12*60*60*1000);
 
 
 module.exports = autos;
