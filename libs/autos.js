@@ -12,6 +12,138 @@ var autos={
 name:"自动"
 };
 
+//删除无效user信息
+autos.delete = function(o){
+//console.log(o);
+    conn.query(
+        {
+            sql:"select `id`,`scoreVersion`,`majorVersion`,`examVersion`,`extendVersion` from scu_user where error=0 order by ai desc limit "+ o.start+",1 "
+        },function(eee,rrr) {
+//console.log(rrr);
+            if (eee) {
+                autos.delete({start:o.start+1});
+                console.log(eee);
+                return;
+            }
+
+
+            //console.log(rrr.length);return;
+            if (rrr.length > 0) {
+                var user = rrr[0];
+                user.order = o.start;
+                //console.log(user);
+                
+                if(user.scoreVersion>1){
+                    
+                    //console.log("delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion);
+                    conn.query({
+                            sql: "delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion
+                        }, function (eeee, rrrr) {
+                            console.log(eeee,rrrr);
+                        }
+                    );
+                }
+
+
+                if(user.majorVersion>1){
+                    conn.query({
+                            sql: "delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion
+                        }, function (eeee, rrrr) {
+                            console.log(eeee,rrrr);
+                        }
+                    );
+                }
+
+
+                if(user.examVersion>1){
+                    conn.query({
+                            sql: "delete from `scu_exam` where studentId="+user.id+" and version<" + user.examVersion
+                        }, function (eeee, rrrr) {
+                            console.log(eeee,rrrr);
+                        }
+                    );
+                }
+
+
+
+                if(user.extendVersion>1){
+                    conn.query({
+                            sql: "delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion
+                        }, function (eeee, rrrr) {
+                            console.log(eeee,rrrr);
+                        }
+                    );
+                }
+
+
+                setTimeout(
+                    function(){
+                        autos.delete({start:o.start+1})
+                    },1000
+                );
+
+
+                return;
+
+
+            }else{
+                console.log('已走完一遍');
+
+            }
+        });
+
+};
+
+//删除无效图书信息
+autos.deleteBook = function(o) {
+//console.log(o);
+    console.log("select `id`,`version` from scu_library where error=0 order by ai desc limit " + o.start + ",1 ");
+    //return;
+    conn.query(
+        {
+            sql: "select `id`,`version` from scu_library where error=0 order by ai desc limit " + o.start + ",1 "
+        }, function (eee, rrr) {
+            if (eee) {
+                autos.deleteBook({start: o.start + 1});
+                console.log(eee);
+                return;
+            }
+
+            //console.log(rrr.length);return;
+            if (rrr.length > 0) {
+                var user = rrr[0];
+                user.order = o.start;
+                //console.log(user);
+
+                if (user.version > 1) {
+
+                    //console.log("delete from `scu_book` where studentId='" + user.id + "' and version<" + user.version);
+                    conn.query({
+                            sql: "delete from `scu_book` where studentId='" + user.id + "' and version<" + user.version
+                        }, function (eeee, rrrr) {
+                            console.log(eeee, rrrr);
+
+                            autos.deleteBook({
+                                start: o.start+1
+                            })
+
+                        }
+                    );
+                }else{
+                    //console.log('此人版本为0');
+                    autos.deleteBook({
+                        start: o.start+1
+                    })
+                }
+
+            } else {
+
+                console.log('已走完一遍');
+
+            }
+        }
+    );
+};
 
 
 //添加到成绩队列生产者，根据scoreCount字段
@@ -481,51 +613,57 @@ autos.queryExamProducer = function(o){
 setTimeout(function(){
 
 
-    autos.queryBookProducer(
-        {
-            start: 0
-        }
-    );
-
-    //autos.queryMajorProducer(
+    //autos.queryBookProducer(
+    //    {
+    //        start: 0
+    //    }
+    //);
+    //
+    ////autos.queryMajorProducer(
+    ////    {
+    ////        start:0
+    ////    }
+    ////);
+    //autos.queryScoreProducer(
     //    {
     //        start:0
     //    }
     //);
-    autos.queryScoreProducer(
+
+    autos.deleteBook(
         {
             start:0
         }
-    );
+    )
 
     
 
-},6*1000);
+},3*1000);
 
 
 
 
 
-setInterval(function() {
-
-autos.queryBookProducer(
-    {
-        start: 0
-    }
-);
-    autos.queryMajorProducer(
-        {
-            start:0
-        }
-    );
-    autos.queryScoreProducer(
-        {
-            start:0
-        }
-    );
-
-
-    },12*60*60*1000);
+//setInterval(function() {
+//
+//autos.queryBookProducer(
+//    {
+//        start: 0
+//    }
+//);
+//    autos.queryMajorProducer(
+//        {
+//            start:0
+//        }
+//    );
+//    autos.queryScoreProducer(
+//        {
+//            start:0
+//        }
+//    );
+//
+//
+//    },12*60*60*1000);
 
 
 module.exports = autos;
