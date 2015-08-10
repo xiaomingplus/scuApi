@@ -97,7 +97,7 @@ autos.delete = function(o){
 //删除无效图书信息
 autos.deleteBook = function(o) {
 //console.log(o);
-    console.log("select `id`,`version` from scu_library where error=0 order by ai desc limit " + o.start + ",1 ");
+//    console.log("select `id`,`version` from scu_library where error=0 order by ai desc limit " + o.start + ",1 ");
     //return;
     conn.query(
         {
@@ -113,11 +113,11 @@ autos.deleteBook = function(o) {
             if (rrr.length > 0) {
                 var user = rrr[0];
                 user.order = o.start;
-                //console.log(user);
+                console.log(user);
 
                 if (user.version > 1) {
 
-                    //console.log("delete from `scu_book` where studentId='" + user.id + "' and version<" + user.version);
+                    console.log("delete from `scu_book` where studentId='" + user.id + "' and version<" + user.version);
                     conn.query({
                             sql: "delete from `scu_book` where studentId='" + user.id + "' and version<" + user.version
                         }, function (eeee, rrrr) {
