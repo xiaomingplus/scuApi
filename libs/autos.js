@@ -630,7 +630,7 @@ setTimeout(function(){
     //    }
     //);
 
-    autos.deleteBook(
+    autos.delete(
         {
             start:0
         }
