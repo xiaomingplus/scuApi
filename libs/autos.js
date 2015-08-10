@@ -31,11 +31,11 @@ autos.delete = function(o){
             if (rrr.length > 0) {
                 var user = rrr[0];
                 user.order = o.start;
-                //console.log(user);
+                console.log(user);
                 
                 if(user.scoreVersion>1){
                     
-                    //console.log("delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion);
+                    console.log("delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion);
                     conn.query({
                             sql: "delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion
                         }, function (eeee, rrrr) {
@@ -46,6 +46,8 @@ autos.delete = function(o){
 
 
                 if(user.majorVersion>1){
+                    console.log("delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion);
+                    
                     conn.query({
                             sql: "delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion
                         }, function (eeee, rrrr) {
@@ -56,6 +58,9 @@ autos.delete = function(o){
 
 
                 if(user.examVersion>1){
+                    
+                    console.log("delete from `scu_exam` where studentId="+user.id+" and version<" + user.examVersion);
+                    
                     conn.query({
                             sql: "delete from `scu_exam` where studentId="+user.id+" and version<" + user.examVersion
                         }, function (eeee, rrrr) {
@@ -67,6 +72,8 @@ autos.delete = function(o){
 
 
                 if(user.extendVersion>1){
+                    
+                    console.log("delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion);
                     conn.query({
                             sql: "delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion
                         }, function (eeee, rrrr) {
