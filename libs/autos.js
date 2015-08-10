@@ -17,7 +17,7 @@ autos.delete = function(o){
 //console.log(o);
     conn.query(
         {
-            sql:"select `id`,`scoreVersion`,`majorVersion`,`examVersion`,`extendVersion` from scu_user where error=0 order by ai desc limit "+ o.start+",1 "
+            sql:"select `id`,`scoreVersion`,`majorVersion`,`examVersion`,`extendVersion` from scu_user order by ai desc limit "+ o.start+",1 "
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -79,7 +79,7 @@ autos.delete = function(o){
                 setTimeout(
                     function(){
                         autos.delete({start:o.start+1})
-                    },1000
+                    },2000
                 );
 
 
@@ -101,7 +101,7 @@ autos.deleteBook = function(o) {
     //return;
     conn.query(
         {
-            sql: "select `id`,`version` from scu_library where error=0 order by ai desc limit " + o.start + ",1 "
+            sql: "select `id`,`version` from scu_library order by ai desc limit " + o.start + ",1 "
         }, function (eee, rrr) {
             if (eee) {
                 autos.deleteBook({start: o.start + 1});
