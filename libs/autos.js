@@ -32,6 +32,17 @@ autos.delete = function(o){
                 var user = rrr[0];
                 user.order = o.start;
                 console.log(user);
+
+
+                if(user.scoreVersion<2 && user.examVersion<2 && user.majorVersion<2 && user.extendVersion<2){
+                    autos.delete(
+                        {
+                            start: o.start+1
+                        }
+                    );
+                    return;
+                }
+
                 
                 if(user.scoreVersion>1){
                     
@@ -74,6 +85,8 @@ autos.delete = function(o){
                 if(user.extendVersion>1){
                     
                     console.log("delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion);
+
+
                     conn.query({
                             sql: "delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion
                         }, function (eeee, rrrr) {
@@ -86,7 +99,7 @@ autos.delete = function(o){
                 setTimeout(
                     function(){
                         autos.delete({start:o.start+1})
-                    },2000
+                    },1000
                 );
 
 
