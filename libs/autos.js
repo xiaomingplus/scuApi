@@ -661,9 +661,6 @@ setTimeout(function(){
 },3*1000);
 
 
-
-
-
 setInterval(function() {
 
 autos.queryBookProducer(
