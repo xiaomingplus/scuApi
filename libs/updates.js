@@ -779,7 +779,7 @@ return;
                             sql:"select scoreVersion from scu_user where id="+ o.studentId
                         },function(eee1,rrr1){
                             
-                            console.log(eee1,rrr1);
+                            //console.log(eee1,rrr1);
                             if(eee1){
                                 console.log(eee1);
                                 cb(code.mysqlError);
@@ -809,13 +809,13 @@ return;
 
 
             sql = "insert into scu_score (`courseId`,`name`,`englishName`,`orderId`,`credit`,`score`,`propertyId`,`studentId`,`reason`,`termId`,`version`) VALUES " + scoreSql.join(',');
-             console.log(sql);return;
+             //console.log(sql);return;
             conn.query(
                 {
                     sql: sql
                 }, function (eeeee,rrrrr) {
                     
-                    console.log(eeeee,rrrrr);
+                    //console.log(eeeee,rrrrr);
                     if (eeeee) {
                         //console.log('222');
                         cb(code.mysqlError);

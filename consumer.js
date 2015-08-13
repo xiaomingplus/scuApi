@@ -51,8 +51,7 @@ consumer.scoreQuery= function(){
 
                         });
                         
-                        console.log('1');
-                        
+
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appSecret:user.appId?datas.app[user.appId].appSecret:"",
@@ -66,7 +65,6 @@ consumer.scoreQuery= function(){
                             console.log(e,r);
                         });
                         
-                        console.log('222');
                     }else{
                         console.log({
     callback:user.appId?datas.app[user.appId].callback:"",
