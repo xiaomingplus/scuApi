@@ -360,7 +360,7 @@ pages.scoreFail = function(html){
     for(var i= 0,k=0;i<$("table.displayTag").length;i++,k++) {
         for(var m = 1;m<$($("table.displayTag")[i]).find('tr').length;m++){
             
-            console.log($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim());
+            //console.log($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim());
 
             item={
                 'courseId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim(),
