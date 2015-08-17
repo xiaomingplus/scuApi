@@ -1,162 +1,147 @@
-
-var request = require('request');
-var common= require('./common');
-var datas= require('./datas');
-var callback= require('./callback.js');
-var aes = require('./aes128.js');
-var libs= require('./libs.js');
-var config= require('../config.js');
-var crypto = require('crypto');
-var updates = require('./updates.js');
-var pages = require('./pages.js');
-/// /var t = {
-//appid:"IZqpBTVRmWL0phxNtAxWA64PlVwNMJN1",
-//    appkey:"K6davkJJTazmXOTH1P3N",
-//    appId:"1013",
-//    appSecret:"scuinfo"
-//};
-//var aes128 = require('./aes128.js');
-//var request = require('request');
-//var config=require('../config.js');
+var libs = require("./libs.js");
+var config = require("../config.js");
+var pages = require("./pages.js");
+var async = require("async");
+var conn = require('../mysql.js');
+//var u = require("./updates.js");
 //
-//t.bind = function(){
-//    request(
-//        {
-//            url:"https://api.yangcong.com/v1/GetLoginCode",
-//            form:{
-//                appid: t.appid,
-//                appkey: t.appkey
-//            }
-//        },function(e,r){
-//            console.log(e, r.body);
-//        }
-//    )
-//};
+var datas = require("./datas.js");
+//
+datas.load();
+setTimeout(function(){
 //
 //
-//t.encode = function(o){
-//    return aes128.encode(t.appId, t.appSecret,o);
-//};
-//
-//t.score = function(o){
-//
-//    request.get({
-//        url:"http://localhost:9231/api/score?appId="+ t.appId+"&appSecret="+ t.appSecret+"&studentId=2012141442029&password="+'013991&debug=1'
-//    },function(e,r,b){
-//        console.log(e,b);
-//    })
-//};
-//var user={
-//    id:2012141442029,
-//    password:"013991",
-//    scoreVersion:1,
-//
-//}
-//
-//request(config.queryUrl+'/?name=score&opt=put&data={"appId":"10000","studentId":' + user.id + ',"password":"' + user.password + '","version":' + user.scoreVersion + '}', function (eee, rrr) {
-//
-//        if(eee){
-//            console.log(eee);
-//            return;
-//        }
-//        console.log(user.id+'已加入成绩队列');
-//        return;
-//    }
-//);
-
-
-//t.score();
-
-//t.bind();
-
-
-
-//datas.load();
-//
-//setTimeout(function(){
-//
-//    console.log(common.todayStartTimestamp());
-//
-//    console.log(datas.firstDay);
-//
-//    console.log(datas.firstDay[datas.currentTerm.termId]);
-//
-//    var week =  (parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
-//    console.log(week);
-////},2000);
-//
-//callback.post({
-//    callback:"http://localhost:8120/api/updateCallback",
-//    appId: 10000,
-//    code: 200,
-//    message:'成功',
-//    action: 'exam',
-//    studentId: 2012141442029
-//},function(e,r){
-//    //console.log(e,r);
-//})
-
-//libs.getBookId({
-//    studentId: '1141047034',
-//    password: '888'
-//}, function (e, r) {
+//u.teacher(function(e,r){
 //    console.log(e,r);
 //});
+//
+
+var oo = {
+    //请求课程列表
+    url: config.urls.classroomFreeGet,
+    studentId: 2012141442029,
+    password: "013991"
+};
 
 
-//request(
-//    'http://localhost:9231/api/update?type=score&appId=10000&appSecret=scuinfo&studentId=2012141442026&password='+aes.encode('10000','scuinfo','lxy21..++'),function(e,r,b){
-//        console.log(e,b);
-//    });
-//    signature	微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
-//timestamp	时间戳
-//    nonce	随机数
-//    echostr
-//加密/校验流程如下：
-//1. 将token、timestamp、nonce三个参数进行字典序排序
-//2. 将三个参数字符串拼接成一个字符串进行sha1加密
-//3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
-//
-//
-//
-//console.log(timestamp);
-//
-//console.log(nonce);
-//
-//console.log(signature);
+libs.get(oo,function(e,r){
 
-//var q=encodeURIComponent('{"studentId":2013141091031,"password":"n2HlchNmH%2BFW%2FWAbezlUfw%3D%3D","appId":10000}');
-//
-//console.log(decodeURIComponent(q));
-//var p=decodeURIComponent(q);
-//
-//var xx=JSON.parse(p);
-//
-//var x=aes.encode(config.querySecret.appId,config.querySecret.appSecret,'202119');
-//
-//console.log(x);
-//
-//var z='n2HlchNmH%20FW%2FWAbezlUfw%3D%3D'
-//var y=aes.decode(config.querySecret.appId,config.querySecret.appSecret, xx.password);
-//
-//console.log(y);
-
-//var user ={
-//    studentId:2014141091035,
-//    password:"290020"
-//};
-//
-////datas.load();
-//setTimeout(function () {
-//    updates.score(user, function (ee,rr) {
-//
-//        console.log(ee,rr);
-//
-//    });
-//},3000);
+    if(e){
+        console.log(e);
+        return;
+    }
+    var dates = [];
+    var k;
+    for(var i=1;i<25;i++){
+        for(var j=1;j<8;j++){
+            if(j==7){
+                k=0;
+            }else{
+                k=j;
+            }
+            dates.push(
+                {
+                    weekId:i,
+                    week:j,
+                    start:datas.firstDay['2015-2016-1-1']+(i-1)*7*24*60*60+(k*24*60*60),
+                    end:datas.firstDay['2015-2016-1-1']+(i-1)*7*24*60*60+(k*24*60*60)+(24*60*60)
+                }
+            )
+        }
+    }
+    
 
 
+    async.eachSeries(dates, function (date, cbb) {
+    libs.rePost({
+        url: config.urls.classroomFreePost,
+        form:{
+            page:1,
+                pageSize:"20",
+            zxZc:date.weekId,//周
+            zxxnxq:"2015-2016-1-1",
+            zxxq:date.week//星期几
+        },
+        j: r.j
+    },function(ee,data) {
 
 
+                var teacherCount = data.data.substring(data.data.lastIndexOf("共") + 1, data.data.indexOf("项", data.data.lastIndexOf("共")));
+
+                var teacherPageCount;
+                if((teacherCount % config.params.teacherListPageSize)==0){
+                    teacherPageCount = parseInt(teacherCount / config.params.teacherListPageSize);
+                }else{
+                    teacherPageCount = parseInt(teacherCount / config.params.teacherListPageSize) + 1;
+                }
+                var urls = [], url = {};
+                for (var i = 0; i < teacherPageCount; i++) {
+                    url = {
+                        url: config.urls.classroomFreePost,
+                        form:{
+                            page:i+1,
+                            pageSize:"300",
+                            zxZc:date.weekId,//周
+                            zxxnxq:"2015-2016-1-1",
+                            zxxq:date.week//星期几
+                        },
+                        start:date.start,
+                        end:date.end,
+                        j: r.j
+                    };
+                    urls.push(url);
+                }
+                
+                async.eachSeries(urls, function (url, cb) {
+
+                    
+                    libs.rePost(url, function (eee, rrr) {
+                        if (eee) {
+                            console.log(eee);
+                            return;
+                        }
+                       var rrrr = {data: pages.classroom(rrr.data)};
+                            //console.log('test');
+                            var sql;
+                            var teacherSql = [];
+                            for (var i = 0; i < rrrr.data.length; i++) {
+                                teacherSql[i] = "("+url.start+","+url.end+",\"" + rrrr.data[i].campusId+ "\"," + rrrr.data[i].buildId + ",\"" +rrrr.data[i].building + "\",\"" + rrrr.data[i].classroomId+ "\",'"+rrrr.data[i].classroom + "','"+rrrr.data[i].type+"',"+(rrrr.data[i].count?rrrr.data[i].count:80)+")";
+                            }
+                            sql = "insert into scu_classroom (`start`,`end`,`campusId`,`buildId`,`building`,`classroomId`,`classroom`,`type`,`count`) VALUES " + teacherSql.join(',');
+                        conn.query(
+                                {
+                                    sql: sql
+                                }, function (eeeee) {
+                                    if (eeeee) {
+                                        cb(code.mysqlError);
+                                        console.log(eeeee);
+                                        return;
+                                    }
+                                    cb(null);
+                                }
+                            )
+                    });
+                }, function (eeeeee) {
+                    if (eeeeee) {
+                        console.log(eeeeee);
+                        return;
+                    }
+                    cbb(null)
+                    console.log('yes.'+new Date(date.start*1000)+teacherCount+"weekId"+date.weekId+"week"+date.week);
+                });
+        //console.log(classroom);
+        
+        
+    });
+    }, function (eeeeeee) {
+        if (eeeeeee) {
+            console.log(eeeeeee);
+            return;
+        }
+        console.log('ok.');
+    });
 
 
+});
+
+},2000);

@@ -57,6 +57,7 @@ lib.check = function (o,cb){
         //console.log(loginCallback);
         var $ = cheerio.load(loginCallback);
         if($('title').text().trim()=="学分制综合教务"){
+            
             cb(null,j);
         }else{
             //console.log('222');
@@ -141,8 +142,11 @@ lib.post = function (o,cb){
             //form: o.form,
             jar:j
         };
+        
 
             request(opts,function(err,r){
+                
+                
                 if(err){
                     console.log(err);
                     cb({code:code.requestError.code,message:code.requestError.message});
@@ -152,6 +156,7 @@ lib.post = function (o,cb){
                     cb({code:code.requestError.code,message:code.requestError.message});
                     return;
                 }
+                
                 cb(null, {code:0, j:j,data:iconv.decode(new Buffer(r.body, 'binary'), 'GBK')});
             });
 

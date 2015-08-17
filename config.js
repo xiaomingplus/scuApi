@@ -25,7 +25,10 @@ var config = {
         "scoreFail":"http://202.115.47.141/gradeLnAllAction.do?type=ln&oper=bjg",
         "logout":"http://202.115.47.141/logout.do",
         "major":"http://202.115.47.141/xkAction.do?actionType=6",
-        'exam':"http://202.115.47.141/ksApCxAction.do?oper=getKsapXx"
+        'exam':"http://202.115.47.141/ksApCxAction.do?oper=getKsapXx",
+        "classroomFreeGet":"http://202.115.47.141/xszxcxAction.do?oper=xszxcx_lb",
+        "classroomFreePost":"http://202.115.47.141/xszxcxAction.do?oper=tjcx",
+        "building":"http://202.115.47.141/xszxcxAction.do?oper=ld"
     },
     params:{
        "term" :"2014-2015-2-1",

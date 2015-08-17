@@ -13,6 +13,7 @@ var datas={
         campusStatus:false,
         propertyStatus:false,
         collegeStatus:false,
+        buildingStatus:false,
         termStatus:false,
         typeStatus:false,
         appStatus:false,
@@ -24,6 +25,7 @@ var datas={
         campusUpdate:false,
         propertyUpdate:false,
         collegeUpdate:false,
+        buildingUpdate:false,
         termUpdate:false,
         typeUpdate:false,
         firstDayStatus:false
@@ -42,6 +44,12 @@ var datas={
 
     },
     collegeById:{
+
+    },
+    building:{
+
+    },
+    buildingById:{
 
     },
     property:{
@@ -136,6 +144,7 @@ datas.loadVersion = function(cb){
         datas.version.accountVersion = r.accountVersion;
         datas.version.termVersion = r.termVersion;
         datas.version.typeVersion = r.typeVersion;
+        datas.version.buildingVersion = r.buildingVersion;
         datas.version.collegeLatestVersion = r.collegeLatestVersion;
         datas.version.courseLatestVersion = r.courseLatestVersion;
         datas.version.teacherLatestVersion = r.teacherLatestVersion;
@@ -144,6 +153,8 @@ datas.loadVersion = function(cb){
         datas.version.accountLatestVersion = r.accountLatestVersion;
         datas.version.termLatestVersion = r.termLatestVersion;
         datas.version.typeLatestVersion = r.typeLatestVersion;
+        datas.version.buildingLatestVersion = r.buildingLatestVersion;
+
         datas.status.versionStatus = true;
         console.log('version信息载入完成');
         cb(null);
@@ -224,6 +235,9 @@ datas.loadCollege = function(){
 
     }
 };
+
+
+
 
 /**
  * 载入属性信息

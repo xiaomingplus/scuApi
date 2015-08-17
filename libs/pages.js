@@ -13,6 +13,9 @@ pages.teacherList = function(html,cb){
     var trs = $(html).find("table.titleTop2 table#user tbody tr");
     var item =null;
     var teacherIdTd;
+    
+    console.log(trs);
+
     trs.each(function(i,v){
     teacherIdTd=$($(v).find('td')[4]).find("img").attr('onclick');
         item = {
@@ -714,6 +717,29 @@ pages.currentScore = function(html){
     return data;
 
 
+};
+
+
+pages.classroom = function(html){
+    var data =[];
+    var $ = cheerio.load(html);
+    var trs = $(html).find("table.titleTop2 table#user tbody tr");
+    var item =null;
+    var link = undefined;
+    trs.each(function(i,v){
+        link=$($(v).find('td')[6]).find("img").attr('onclick');
+item = {
+    campusId:datas.campus[$($(v).find('td')[1]).text().trim()].campusId,
+    buildId:link.substring(link.indexOf('jxlh=')+5,link.indexOf('&jxlm')),
+    building: $($(v).find('td')[2]).text().trim(),
+    classroom:$($(v).find('td')[3]).text().trim(),
+    classroomId:link.substring(link.indexOf('jash=')+5,link.indexOf('&jasm')),
+    type:$($(v).find('td')[4]).text().trim(),
+    count:$($(v).find('td')[5]).text().trim()
+};
+        data.push(item);
+    });
+    return data;
 };
 
 module.exports = pages;

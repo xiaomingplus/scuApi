@@ -58,7 +58,7 @@ dbs.getFirstDay = function(cb){
 dbs.getVersion = function(cb){
     conn.query(
         {
-            sql:"select `typeVersion`,`typeLatestVersion`,`termVersion`,`termLatestVersion`,`accountVersion`,`campusVersion`,`propertyVersion`,`collegeVersion`,`courseVersion`,`teacherVersion`,`accountLatestVersion`,`campusLatestVersion`,`propertyLatestVersion`,`collegeLatestVersion`,`courseLatestVersion`,`teacherLatestVersion` from scu_version where id=1"
+            sql:"select `buildingVersion`,`buildingLatestVersion`,`typeVersion`,`typeLatestVersion`,`termVersion`,`termLatestVersion`,`accountVersion`,`campusVersion`,`propertyVersion`,`collegeVersion`,`courseVersion`,`teacherVersion`,`accountLatestVersion`,`campusLatestVersion`,`propertyLatestVersion`,`collegeLatestVersion`,`courseLatestVersion`,`teacherLatestVersion` from scu_version where id=1"
         },function(err,rows){
             if(err){
                 console.log(err);
@@ -75,6 +75,7 @@ dbs.getVersion = function(cb){
                     propertyLatestVersion:rows[0].propertyLatestVersion,
                     accountLatestVersion:rows[0].accountLatestVersion,
                     typeLatestVersion:rows[0].typeLatestVersion,
+                    buildingLatestVersion:rows[0].buildingLatestVersion,
                     typeVersion:rows[0].typeVersion,
                     collegeVersion:rows[0].collegeVersion,
                     courseVersion:rows[0].courseVersion,
@@ -82,7 +83,8 @@ dbs.getVersion = function(cb){
                     campusVersion:rows[0].campusVersion,
                     propertyVersion:rows[0].propertyVersion,
                     accountVersion:rows[0].accountVersion,
-                    termVersion:rows[0].termVersion
+                    termVersion:rows[0].termVersion,
+                    buildingVersion:rows[0].buildingVersion
                 }
             );
         }

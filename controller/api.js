@@ -606,4 +606,133 @@ api.currentScore = function(req,res){
 };
 
 
+api.building = function(req,res){
+
+    conn.query(
+        {
+            sql:"select * from scu_building where version=1"
+        },function(e,r){
+            if(e){
+                console.log(e);
+                res.dump('mysqlError');
+                return;
+            }
+
+
+            var data = {
+
+                "01":{
+                    name:"望江",
+                    buildings:[
+
+                    ]
+                },
+                "02":{
+                    name:"华西",
+                    buildings:[
+                    ]
+                },
+                "03":{
+                    name:"江安",
+                    buildings:[
+                    ]
+                }
+            };
+
+
+            if(r.length==0){
+                res.dump('ok',[]);
+            }else{
+
+
+                for(var i=0;i< r.length;i++){
+                    if(r[i].campusId=='01'){
+                        data['01'].buildings.push({
+                            id:r[i].buildingId,
+                            name:r[i].name
+                        })
+
+                    }else if(r[i].campusId=='02'){
+                        data['02'].buildings.push({
+                            id:r[i].buildingId,
+                            name:r[i].name
+                        })
+                    }else{
+                        data['03'].buildings.push({
+                            id:r[i].buildingId,
+                            name:r[i].name
+                        })
+                    }
+                }
+
+
+                res.dump('ok',data)
+            }
+
+
+
+        }
+    )
+};
+
+
+api.classroom = function(req,res){
+
+
+    if(!req.query.start){
+        req.query.start = common.todayStartTimestamp();
+    }
+
+    if(!req.query.end){
+        req.query.end = common.todayStartTimestamp()+24*60*60
+    }
+
+
+    var page,pageSize,sql,start,end;
+
+    if(!req.query.page){
+        page = 1;
+    }else{
+        page = req.query.page;
+    }
+
+    if(!req.query.pageSize){
+        pageSize = 15;
+    }else{
+        pageSize=req.query.pageSize;
+    }
+
+    start = (page-1)*pageSize;
+
+    end = pageSize;
+
+
+    if(!req.query.campusId){
+        sql="select * from scu_classroom where start>="+req.query.start+" and end<="+req.query.end+" limit "+start+","+end;
+    }else if(!req.query.buildingId){
+        sql="select * from scu_classroom where campusId='"+req.query.campusId+"' and start>="+req.query.start+" and end<="+req.query.end+" limit "+start+","+end;
+
+    }else if(!req.query.classroomId){
+        sql="select * from scu_classroom where campusId='"+req.query.campusId+"' and buildingId='"+req.query.buildingId+"' and start>="+req.query.start+" and end<="+req.query.end+" limit "+start+","+end;
+
+    }else{
+        sql="select * from scu_classroom where campusId='"+req.query.campusId+"' and buildingId='"+req.query.buildingId+"' and classroomId='"+req.query.classroomId+"' and start>="+req.query.start+" and end<="+req.query.end+" limit "+start+","+end;
+
+    }
+  conn.query(
+      {
+          sql:sql
+      },function(e,r){
+
+          if(e){
+              console.log(e);
+              res.dump('mysqlError');
+              return;
+          }
+res.dump('ok',r);
+      }
+  )
+};
+
+
 module.exports = api;
