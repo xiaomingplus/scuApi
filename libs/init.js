@@ -83,13 +83,13 @@ datas.load();
  * 根据参数更新课程信息
  * 全部课程
  */
-//setTimeout(function(){
-//    updates.updateCourse({
-//        version:0,
-//        courseBasePage: 1,
-//        courseBaseKey:  -1,
-//        courseDetailPage: 0,
-//        courseDetailKey: -1
-//    },function(e,r){
-//    });
-//},2000);
+setTimeout(function(){
+    updates.updateCourse({
+        version:0,
+        courseBasePage: 1,
+        courseBaseKey:  -1,
+        courseDetailPage: 0,
+        courseDetailKey: -1
+    },function(e,r){
+    });
+},2000);

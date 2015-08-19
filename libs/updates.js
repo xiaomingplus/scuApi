@@ -652,8 +652,8 @@ options.courseDetailPage = parseInt(options.courseDetailPage);
                         var courseList = pages.courseList(rrr.data, options.courseBaseKey);
                         options.courseBaseKey = -1;
                         async.eachSeries(courseList, function (courseBase, cb3) {
-                            o.url = config.urls.courseDetailCount + "&kch=" + courseBase.courseId + "&pageSize=" + config.params.currentCoursePageSize;
-                            ;
+                            //o.url = config.urls.courseDetailCount + "&kch=" + courseBase.courseId + "&pageSize=" + config.params.currentCoursePageSize;
+                            //;
                             //console.log(o.url);
                             libs.rePost({
                                 url: config.urls.courseDetailCount + "&kch=" + courseBase.courseId + "&pageSize=" + config.params.currentCoursePageSize,

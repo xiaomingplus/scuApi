@@ -80,6 +80,10 @@ router.get('/classroom',function(req,res){
   api.classroom(req,res);
 });
 
+router.get('/course',function(req,res){
+  api.course(req,res);
+});
+
 router.get('/api/news/teaching',function(req,res){
 api.newsTeaching(req,res);
 });

@@ -179,6 +179,10 @@ var code={
     'noUser':{
         code :2037,
         message:"没有该用户"
+    },
+    'lackParamsName':{
+        code:2038,
+        message:"缺少参数 name"
     }
 
 

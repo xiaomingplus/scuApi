@@ -735,4 +735,28 @@ res.dump('ok',r);
 };
 
 
+api.course = function(req,res){
+    if(!req.query.name){
+
+        res.dump('lackParamsName');
+
+        return;
+    }
+    
+    console.log("select * from scu_course where teacher = '张兵'");
+
+    conn.query(
+        {
+            sql:"select * from scu_course where teacher = :name",
+            params:{
+                name:req.query.name
+            }
+        },function(e,r) {
+            console.log(e,r);
+            
+            res.dump('ok',r);
+        });
+
+};
+
 module.exports = api;
