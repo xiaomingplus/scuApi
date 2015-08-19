@@ -743,7 +743,6 @@ api.course = function(req,res){
         return;
     }
     
-    console.log("select * from scu_course where teacher = '张兵'");
 
     conn.query(
         {

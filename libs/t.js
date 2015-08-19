@@ -1,19 +1,13 @@
-function getNthFibonacci( count )
-{
-    if ( count <= 1 ){
-        return 1;
-    } else {
-        var num1 = 1, num2 = 1, t;
-        for ( var i = 0; i < count-1; i++ ) {
-            t = num1 + num2;
-            num1 = num2;
-            num2 = t;
+var conn = require("../mysql");
+
+
+conn.query(
+    {
+        sql:"select * from scu_course where teacher = '胡万华'",
+        params:{
+            name:'张兵'
         }
-        return num2;
-    }
-}
+    },function(e,r) {
+        console.log(e, r);
 
-
-console.log(getNthFibonacci(4));
-
-
+    });
