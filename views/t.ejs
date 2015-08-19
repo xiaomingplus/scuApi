@@ -1,866 +1,174 @@
-
-
-
-
-
-
-
-
-
-
+<!doctype html>
 <html>
-<head>
-    <title>列表</title>
-    <link href="/css/newcss/project.css" rel="stylesheet" type="text/css">
-</head>
+<style>
+    body {
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+    .auto_hidden {
+        width:204px;border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+        border-left: 1px solid #333;
+        border-right: 1px solid #333;
+        position:absolute;
+        display:none;
+    }
+    .auto_show {
+        width:204px;
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+        border-left: 1px solid #333;
+        border-right: 1px solid #333;
+        position:absolute;
+        z-index:9999; /* 设置对象的层叠顺序 */
+        display:block;
+    }
+    .auto_onmouseover{
+        color:#ffffff;
+        background-color:highlight;
+        width:100%;
+    }
+    .auto_onmouseout{
+        color:#000000;
+        width:100%;
+        background-color:#ffffff;
+    }
+</style>
 <script language="javascript">
-    function xzzc(url, swidth, sheight) {
-        if (swidth == undefined) swidth = "300";
-        if (sheight == undefined) sheight = "240";
-        var a = new Array;
-        a = showModalDialog(url, window,
-                "dialogWidth:" + swidth + "px;dialogHeight:" + sheight + "px;help:no;status:no");
-        //var b=a.join();
-        //alert(b);
-        if(a== null){
-        }else{
-            var xs = zcXs(a);
-            document.zxForm.zxZc.value = xs;
-        }
-
+    <!--
+    var $ = function (id) {
+        return "string" == typeof id ? document.getElementById(id) : id;
     }
-
-    // 节次
-    function xzjc(url, swidth, sheight) {
-        if (swidth == undefined) swidth = "300";
-        if (sheight == undefined) sheight = "220";
-        var a = new Array;
-        a = showModalDialog(url, window,
-                "dialogWidth:" + swidth + "px;dialogHeight:" + sheight + "px;help:no;status:no");
-        //var b=a.join();
-        //alert(b);
-        if(a == null){
-        }else{
-            var xs = zcXs(a);
-            document.zxForm.zxJc.value = xs;
+    var Bind = function(object, fun) {
+        return function() {
+            return fun.apply(object, arguments);
         }
     }
-
-    // 星期
-    function xzxq(url, swidth, sheight) {
-        if (swidth == undefined) swidth = "300";
-        if (sheight == undefined) sheight = "220";
-        var a = new Array;
-        a = showModalDialog(url, window,
-                "dialogWidth:" + swidth + "px;dialogHeight:" + sheight + "px;help:no;status:no");
-        //var b=a.join();
-        //alert(b);
-        if(a== null){
-        }else{
-            var xs = zcXs(a);
-            document.zxForm.zxxq.value = xs;
-        }
-
+    function AutoComplete(obj,autoObj,arr){
+        this.obj=$(obj);        //输入框
+        this.autoObj=$(autoObj);//DIV的根节点
+        this.value_arr=arr;        //不要包含重复值
+        this.index=-1;          //当前选中的DIV的索引
+        this.search_value="";   //保存当前搜索的字符
     }
-
-    // 拼接显示
-    function zcXs(zcList) {
-        var xs = "";
-        for (var i = 0; i < zcList.length; i++) {
-            if(i==0){
-                xs += zcList[0];
-            }else{
-                xs += ",";
-                xs += zcList[i];
+    AutoComplete.prototype={
+        //初始化DIV的位置
+        init: function(){
+            this.autoObj.style.left = this.obj.offsetLeft + "px";
+            this.autoObj.style.top  = this.obj.offsetTop + this.obj.offsetHeight + "px";
+            this.autoObj.style.width= this.obj.offsetWidth - 2 + "px";//减去边框的长度2px
+        },
+        //删除自动完成需要的所有DIV
+        deleteDIV: function(){
+            while(this.autoObj.hasChildNodes()){
+                this.autoObj.removeChild(this.autoObj.firstChild);
+            }
+            this.autoObj.className="auto_hidden";
+        },
+        //设置值
+        setValue: function(_this){
+            return function(){
+                _this.obj.value=this.seq;
+                _this.autoObj.className="auto_hidden";
+            }
+        },
+        //模拟鼠标移动至DIV时，DIV高亮
+        autoOnmouseover: function(_this,_div_index){
+            return function(){
+                _this.index=_div_index;
+                var length = _this.autoObj.children.length;
+                for(var j=0;j<length;j++){
+                    if(j!=_this.index ){
+                        _this.autoObj.childNodes[j].className='auto_onmouseout';
+                    }else{
+                        _this.autoObj.childNodes[j].className='auto_onmouseover';
+                    }
+                }
+            }
+        },
+        //更改classname
+        changeClassname: function(length){
+            for(var i=0;i<length;i++){
+                if(i!=this.index ){
+                    this.autoObj.childNodes[i].className='auto_onmouseout';
+                }else{
+                    this.autoObj.childNodes[i].className='auto_onmouseover';
+                    this.obj.value=this.autoObj.childNodes[i].seq;
+                }
             }
         }
-        return xs;
-    }
-
-    function temp(url, swidth, sheight){
-        document.zxForm.action=url;
-        document.zxForm.submit();
-    }
-
-    // 把周次显示置空
-    function qkZc(){
-        document.zxForm.zxZc.value = "";
-    }
-
-    // 清空节次
-    function qkJc()	{
-        document.zxForm.zxJc.value = "";
-    }
-
-    // 清空节次
-    function qkxq()	{
-        document.zxForm.zxxq.value = "";
-    }
-
-    // 条件查询
-    function tjcx(){
-        var flag = false;
-        if(document.zxForm.zxZc.value )flag = true;
-        if(document.zxForm.zxJc.value )flag = true;
-        if(document.zxForm.zxxq.value )flag = true;
-        if(flag){
-            document.zxForm.action="xszxcxAction.do?oper=tjcx";
-            document.zxForm.submit();
-        }else{
-            alert("至少选择一个时间查询条件");
+        ,
+        //响应键盘
+        pressKey: function(event){
+            var length = this.autoObj.children.length;
+            //光标键"↓"
+            if(event.keyCode==40){
+                ++this.index;
+                if(this.index>length){
+                    this.index=0;
+                }else if(this.index==length){
+                    this.obj.value=this.search_value;
+                }
+                this.changeClassname(length);
+            }
+            //光标键"↑"
+            else if(event.keyCode==38){
+                this.index--;
+                if(this.index<-1){
+                    this.index=length - 1;
+                }else if(this.index==-1){
+                    this.obj.value=this.search_value;
+                }
+                this.changeClassname(length);
+            }
+            //回车键
+            else if(event.keyCode==13){
+                this.autoObj.className="auto_hidden";
+                this.index=-1;
+            }else{
+                this.index=-1;
+            }
+        },
+        //程序入口
+        start: function(event){
+            if(event.keyCode!=13&&event.keyCode!=38&&event.keyCode!=40){
+                this.init();
+                this.deleteDIV();
+                this.search_value=this.obj.value;
+                var valueArr=this.value_arr;
+                valueArr.sort();
+                if(this.obj.value.replace(/(^\s*)|(\s*$)/g,'')==""){ return; }//值为空，退出
+                try{ var reg = new RegExp("(" + this.obj.value + ")","i");}
+                catch (e){ return; }
+                var div_index=0;//记录创建的DIV的索引
+                for(var i=0;i<valueArr.length;i++){
+                    if(reg.test(valueArr[i])){
+                        var div = document.createElement("div");
+                        div.className="auto_onmouseout";
+                        div.seq=valueArr[i];
+                        div.onclick=this.setValue(this);
+                        div.onmouseover=this.autoOnmouseover(this,div_index);
+                        div.innerHTML=valueArr[i].replace(reg,"<strong>$1</strong>");//搜索到的字符粗体显示
+                        this.autoObj.appendChild(div);
+                        this.autoObj.className="auto_show";
+                        div_index++;
+                    }
+                }
+            }
+            this.pressKey(event);
+            window.onresize=Bind(this,function(){this.init();});
         }
-
     }
-
-    // 联动显示
-    function changelocation(jxlh)
-    {
-        var xsh = xsh;
-        document.zxForm.action="xszxcxAction.do?oper=ld";
-        document.zxForm.target="_self";
-        document.zxForm.submit();
-    }
-
-
-    <!--决定二级select显示的函数-->
-
-    function changelocationClassroom(xqh,jxlh)
-
-    {
-
-        var locationid=locationid;
-        var i;
-        document.zxForm.action="xszxcxAction.do?oper=ld&xqh="+xqh+"&jxlh="+jxlh+"";
-        document.zxForm.target="_self";
-        document.zxForm.submit();
-
-    }
-
-    // 教室占用情况
-    function jaszy(url){
-        document.zxForm.action=url;
-        document.zxForm.submit();
-    }
-
-</script>
-<script language="javascript" src="js/date/calendar.js"></script>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="overflow:auto;">
-<form action="" name="zxForm" method="post">
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-            <td class="Linetop"></td>
-        </tr>
-    </table>
-    <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="title" id="tblHead">
-        <tr>
-            <td width="50%" >
-                <table border="0" align="left" cellpadding="0" cellspacing="0" >
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td valign="middle">&nbsp;
-                            <b>列表</b>&nbsp;
-                        </td>
-                    </tr>
-                </table>
-        </tr>
-    </table>
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"  >
-        <tr>
-            <td class="Linetop"></td>
-        </tr>
-    </table>
-    <table border="0" cellpadding="0" cellspacing="0" class="titleTop1">
-        <tr>
-            <td>
-                <table border="0" cellpadding="0" cellspacing="0"  class="titleTop1">
-                    <tr>
-                        <td>
-                            <table border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td class="fieldName">学年学期:
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td>
-                                        <select name="zxxnxq" class="select">
-                                            <option value=""></option>
-                                            <option value="2011-2012-1-1" >2011-2012学年秋(两学期)</option>
-                                            <option value="2011-2012-2-1" >2011-2012学年春(两学期)</option>
-                                            <option value="2012-2013-1-1" >2012-2013学年秋(两学期)</option>
-                                            <option value="2012-2013-2-1" >2012-2013学年春(两学期)</option>
-                                            <option value="2013-2014-1-1" >2013-2014学年秋(两学期)</option>
-                                            <option value="2013-2014-2-1" >2013-2014学年春(两学期)</option>
-                                            <option value="2014-2015-1-1" >2014-2015学年秋(两学期)</option>
-                                            <option value="2014-2015-2-1" >2014-2015学年春(两学期)</option>
-                                            <option value="2015-2016-1-1" >2015-2016学年秋(两学期)</option>
-                                        </select>
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td class="fieldName"></td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td height="3" colspan="7"></td>
-                                </tr>
-                                <tr>
-                                    <td class="fieldName" >校区:</td>
-                                    <td>&nbsp;</td>
-                                    <td>
-                                        <select name="zxXaq" class="select" style="width:160" onChange="changelocation(document.zxForm.zxXaq.options[document.zxForm.zxXaq.selectedIndex].value)">
-                                            <option value="">请选择</option>
-                                            <option value="01" >望江</option>
-                                            <option value="02" >华西</option>
-                                            <option value="03" >江安</option>
-                                        </select>
-                                    </td>
-                                    <td width="30">&nbsp;</td>
-                                    <td class="fieldName">教学楼:&nbsp;</td>
-                                    <td>
-                                        <select name="zxJxl" class="select" style="width:130" onChange="changelocationClassroom(document.zxForm.zxXaq.options[document.zxForm.zxXaq.selectedIndex].value,document.zxForm.zxJxl.options[document.zxForm.zxJxl.selectedIndex].value)">
-                                            <option value="" >请选择</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td height="3" colspan="7"></td>
-                                </tr>
-                                <tr>
-                                    <td class="fieldName">周次:
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td>
-                                        <input type="text" name="zxZc" readonly="true" value="">&nbsp;
-
-                                        <img src="/img/icon/calendar.jpg"
-                                             onclick="xzzc('/xszxcxAction.do?oper=xzzc');" style="cursor:hand;" title="选择周次">&nbsp&nbsp
-
-                                        <img src="/img/icon/delete.gif" onclick="qkZc();" style="cursor:hand;" title="清空周次">
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td class="fieldName">
-                                        节次:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input type="text" name="zxJc" readonly="true" value="">&nbsp;
-
-                                        <img src="/img/icon/calendar.jpg"
-                                             onclick="xzjc('/xszxcxAction.do?oper=xzjc');" style="cursor:hand;" title="选择节次">
-                                        <img src="/img/icon/delete.gif" onclick="qkJc();" style="cursor:hand;" title="清空节次">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td height="3" colspan="7"></td>
-                                </tr>
-                                <tr>
-                                    <td class="fieldName">星期:
-                                    </td>
-                                    <td>&nbsp;</td>
-                                    <td>
-                                        <input type="text" name="zxxq" readonly="true" value="">&nbsp;
-
-                                        <img src="/img/icon/calendar.jpg"
-                                             onclick="xzxq('/xszxcxAction.do?oper=xzxq');" style="cursor:hand;" title="选择星期">&nbsp&nbsp
-
-                                        <img src="/img/icon/delete.gif" onclick="qkxq();" style="cursor:hand;" title="清空星期">
-                                    </td>
-                                </tr>
-                            </table>
-                            <table align="center" border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td height="10"></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="/img/search.gif" onclick="tjcx();" id="btnSearch" style="cursor:hand;" title="">
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <!-- 分割线 -->
-    <table width="99%" border="0" align="center" cellpadding="0"
-           cellspacing="0">
-        <tr>
-            <td class="Line"></td>
-        </tr>
-    </table>
-    <!-- 列表开始 -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="titleTop2">
-        <tr>
-            <td class="pageAlign">
-                <table cellpadding="0" width="100%" class="displayTag" cellspacing="1" border="0" id="user">
-                    <thead>
-                    <tr>
-                        <th width="40" class="sortable">序号</th>
-                        <th width="40" class="sortable">校区</th>
-                        <th width="100" class="sortable">教学楼</th>
-                        <th width="100" class="sortable">教室</th>
-                        <th width="100" class="sortable">类型</th>
-                        <th width="122" class="sortable">座位数</th>
-                        <th width="50" class="sortable" >查看</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            1
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            103
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=103&jasm=103&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            2
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            104
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            80
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=104&jasm=104&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            3
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            105
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=105&jasm=105&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            4
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            106
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=106&jasm=106&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            5
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            107
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            160
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=107&jasm=107&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            6
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            108
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=108&jasm=108&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            7
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            109
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=109&jasm=109&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            8
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            201
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            80
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=201&jasm=201&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            9
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            202
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=202&jasm=202&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            10
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            203
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            80
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=203&jasm=203&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            11
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            204
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=204&jasm=204&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            12
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            205
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            80
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=205&jasm=205&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            13
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            206
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=206&jasm=206&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            14
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            207
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=207&jasm=207&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            15
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            209
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=209&jasm=209&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            16
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            210
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=210&jasm=210&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            17
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            301
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            80
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=301&jasm=301&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            18
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            302
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=302&jasm=302&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            19
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            303
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            80
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=303&jasm=303&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    <tr class="odd" onMouseOut="this.className='even';" onMouseOver="this.className='evenfocus';">
-                        <td>
-
-                            20
-                        </td>
-                        <td>
-                            望江
-                        </td>
-                        <td>
-                            一教
-                        </td>
-                        <td>
-                            304
-                        </td>
-                        <td>
-                            专用教室
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <img src="/img/icon/view.gif"
-                                 onClick="jaszy('/jaszyAction.do?zxjxjhh=null&zxjxjhm=&xqh=01&jxlh=101&jxlm=一教&jash=304&jasm=304&xqm=望江');"
-                                 style="cursor:hand;" title="教室占用信息查看">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <!-- 列表结束 -->
-    <div align="right">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0" >
-            <tr>
-                <td align="right">共175项&nbsp;&nbsp;第1/9页&nbsp;&nbsp;
-                    <img title="第一页" src="/img/icon/noDownDM2.gif"style="vertical-align:center;" width="11" height="11" />&nbsp;
-                    <img title="前一页" src="/img/icon/noDownDM_2.gif"style="vertical-align:center;" width="11" height="11" />
-                    <img onclick="pagination(2)" title="下一页" src="/img/icon/upDM_2.gif"style="cursor:hand;vertical-align:center;" width="11" height="11" />&nbsp;
-                    <img onclick="pagination(9)" title="最后一页" src="/img/icon/upDM2.gif"style="cursor:hand;vertical-align:center;" width="11" height="11" />&nbsp;&nbsp;每页显示的记录数&nbsp;
-                    <select name="pageSize" onchange="pageSizeChange()">
-                        <option value="10" >10项</option>
-                        <option value="20" selected='selected'>20项</option>
-                        <option value="30" >30项</option>
-                        <option value="40" >40项</option>
-                        <option value="50" >50项</option>
-                        <option value="100" >100项</option>
-                        <option value="200" >200项</option>
-                        <option value="300" >300项</option>
-                    </select>
-                    <input   name="page"   type="hidden"   id="page" value="1">&nbsp;
-                    <input   name="currentPage"   type="hidden"   id="currentPage" value="1">&nbsp;
-                    <input   name="pageNo"   type="text"   id="pageNo"   size="3"   onKeyPress="return   handleEnterOnPageNo();">&nbsp;
-                    <img src="/img/icon/go.gif"  name="goto"  id="goto" style="cursor:hand;" title="跳转到" onClick="forward();">
-                    <script   type   =   'text/javaScript'>
-                        function   forward(){     if(!(/^([1-9])(\d{0,})(\d{0,})$/.test(document.all.pageNo.value))){         alert("请输入合法的页号！");         document.all.pageNo.focus();         return false;     }     if(document.all.pageNo.value>9     ){     alert("输入的页数超过了总页数，请重新输入！");         document.all.pageNo.focus();         return false;     }         window.location.href="/xszxcxAction.do?totalrows=175&page="+   document.all.pageNo.value +"&pageSize="+document.all.pageSize.value;}function   handleEnterOnPageNo(){     if(event.keyCode   ==   13)     {         forward();         return   false;     }     return   true;}function pageSizeChange(){ window.location.href="/xszxcxAction.do?totalrows=175&pageSize="+document.all.pageSize.value;}function pagination(value){ window.location.href="/xszxcxAction.do?totalrows=175&page="+value+"&pageSize="+document.all.pageSize.value;}</script>
-                </td>
-            </tr>
-        </table>
-    </div>
-</form>
-
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    //-->
+</SCRIPT>
+<body>
+<h1 align="center">自动完成函数(Autocomplete Function)</h1>
+<div align="center"><input type="text" style="width:300px;height:20px;font-size:14pt;" id="o" onkeyup="autoComplete.start(event)"></div>
+<div class="auto_hidden" id="auto"><!--自动完成 DIV--></div>
+<script>
+    var autoComplete=new AutoComplete('o','auto',['b0','b12','b22','b3','b4','b5','b6','b7','b8','b2','abd','ab','acd','accd','b1','cd','ccd','cbcv','cxf']);
+</SCRIPT>
 </body>
 </html>
