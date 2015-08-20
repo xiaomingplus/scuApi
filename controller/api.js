@@ -736,20 +736,47 @@ res.dump('ok',r);
 
 
 api.course = function(req,res){
-    if(!req.query.name){
 
-        res.dump('lackParamsName');
 
-        return;
+
+
+    var page,pageSize,sql,start,end;
+
+    if(!req.query.page){
+        page = 1;
+    }else{
+        page = req.query.page;
     }
-    
 
+    if(!req.query.pageSize){
+        pageSize = 15;
+    }else{
+        pageSize=req.query.pageSize;
+    }
+
+    start = (page-1)*pageSize;
+
+    end = pageSize;
+
+    if(!req.query.name && !req.query.collegeId){
+        sql = "select * from scu_course limit "+start+","+end;
+
+    }else if(!req.query.name && req.query.collegeId){
+        sql = "select * from scu_course where collegeId ="+req.query.collegeId+" limit "+start+","+end;
+
+    }else if(req.query.name && !req.query.collegeId) {
+        sql = "select * from scu_course where teacher = '"+req.query.name+"' limit "+start+","+end;
+
+    }
+    else{
+        sql = "select * from scu_course where teacher = '"+req.query.name+"' and collegeId="+req.query.collegeId+" limit "+start+","+end;
+
+
+    }
+console.log(sql);
     conn.query(
         {
-            sql:"select * from scu_course where teacher = :name",
-            params:{
-                name:req.query.name
-            }
+            sql:sql
         },function(e,r) {
             console.log(e,r);
             
