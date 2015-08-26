@@ -338,9 +338,17 @@ api.examAgain = function(req,res){
         }
         //console.log(r);
 
+
+        if(!req.query.termId){
+
+            termId = datas.currentTerm.termId;
+        }else{
+            termId = req.query.termId;
+        }
+        
         conn.query(
             {
-                sql:"select * from scu_exam_again where studentId="+ req.query.studentId
+                sql:"select * from scu_exam_again where studentId="+ req.query.studentId+" and termId='"+termId+"'"
             },function(ee,rr){
 
                 if(ee){
