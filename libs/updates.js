@@ -17,6 +17,8 @@ var pages = require('./pages.js');
 var async = require('async');
 var code = require('../code.js');
 var request = require('request');
+var callback = require('./callback.js');
+
 var updates={
 
 };
@@ -1709,8 +1711,6 @@ var dateToTimestamp = function(string){
 };
 
 updates.examAgain = function(o){
-    
-    
     conn.query(
         {
             sql:"select * from scu_exam_temp limit "+ o.start+",1"
@@ -1742,8 +1742,8 @@ updates.examAgain = function(o){
                     classroom = r[0].place.substring((r[0].place.indexOf("楼")+1));
                 }
 
-                var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom) values ('" +
-                    r[0].examName+"',"+r[0].studentId+",'2015-2016-2-1',"+start+","+end+",'"+datas.campus[r[0].campus].campusId+"','"+r[0].name+"','"+building+"','"+classroom+"')";
+                var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom,username) values ('" +
+                    r[0].examName+"',"+r[0].studentId+",'2015-2016-2-1',"+start+","+end+",'"+datas.campus[r[0].campus].campusId+"','"+r[0].name+"','"+building+"','"+classroom+"','"+r[0].userName+"')";
                 conn.query(
                     {
                         sql:sql
@@ -1751,7 +1751,7 @@ updates.examAgain = function(o){
                         //console.log(ee,rr);
                         if(!ee) {
                             console.log(o.start+"完成");
-                            updates.test({
+                            updates.examAgain({
                                 start: o.start + 1
                             });
                         }else{
@@ -1763,17 +1763,6 @@ updates.examAgain = function(o){
 
 
 
-                //if(r[0].place.indexOf("教")>-1 || r[0].place.indexOf("楼")){
-                //    console.log(o.start);
-                //    console.log(r[0].place);
-                //    updates.test({
-                //        start: o.start+1
-                //    });
-                //
-                //}else{
-                //    console.log(r[0].place);
-                //    return;
-                //}
 
             }else{
                 console.log('over');
@@ -1784,7 +1773,83 @@ updates.examAgain = function(o){
     );
 };
 
+updates.examAgainNotice = function(o,cb) {
+    conn.query(
+        {
+            sql:"select * from scu_exam_again where studentId=2012141442029 limit "+ o.start+",1"
+        },function(e,r) {
+            
+            console.log(e,r);
+            if (e) {
+                console.log('error');
+                return;
+            }
 
+            if (r.length > 0) {
+                var studentId,username,name,place,time,first,remark;
+                if(r.length==1){
+                    studentId = r[0].studentId;
+                    username =r[0].username;
+                    name = r[0].name;
+                    place = datas.campusById[r[0].campusId].name+r[0].building+r[0].classroom;
+                    time = common.date(r[0].start*1000)+"开始";
+                    first = "你有1门"+r[0].examName+"要参加";
+                    remark = "点击查看详情,或者点击自定义菜单的「补缓考」来查看";
+                }else{
+                    var _name=[],_place=[];
+                    for(var i=0;i< r.length;i++){
+                        _name.push(r[i].name);
+                        _place.push(datas.campusById[r[i].campusId].name+r[i].building+r[i].classroom);
+                    }
+                    studentId = r[0].studentId;
+                    username =r[0].username;
+                    name = _name.join(',');
+                    place = _place.join(',');
+                    time = common.date(r[0].start)+"开始";
+                    first = "你有"+ r.length+"门补缓考要参加";
+                    remark = "点击查看详情,或者点击自定义菜单的「补缓考」来查看";
+
+                }
+
+                callback.p(
+                    {
+                        callback: "http://localhost:8120/api/examAgainNotice",
+                        appSecret: "scuinfo",
+                        form: {
+                            first:first,
+                            remark:remark,
+                            studentId: studentId,
+                            username: username,
+                            name: name,
+                            place: place,
+                            time: time
+                        }
+                    }, function (e, r) {
+                        console.log(e, r);
+                        updates.examAgainNotice({
+                            start: o.start+1
+                        },function(e,r){
+                            console.log(e,r);
+                        })
+                    }
+                );
+            }else{
+                console.log('over');
+            }
+        });
+
+};
+
+
+datas.load()
+setTimeout(function(){
+
+updates.examAgainNotice({
+    start:0
+},function(e,r){
+    console.log(e,r);
+});
+},2000);
 
 
 

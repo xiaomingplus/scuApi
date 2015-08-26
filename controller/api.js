@@ -369,9 +369,9 @@ api.examAgain = function(req,res){
                             end:rr[i].end?(rr[i].end):0,
                             name:rr[i].name,
                             campus:rr[i].campusId?datas.campusById[rr[i].campusId].name:"",
-                            week:rr[i].week,
+                            username:rr[i].username,
                             building:rr[i].building,
-                            classroom:rr[i].classroom,
+                            classroom:rr[i].classroom
                         }
 
                     }

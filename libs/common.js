@@ -16,7 +16,11 @@ common.time = function () {
     return parseInt(new Date().getTime()/1000);
 };
 
-common.date = function () {
+common.date = function (time) {
+    if(time){
+        return new Date(time).getFullYear().toString()+"-"+(new Date(time).getMonth()+1).toString()+"-"+new Date(time).getDate(time).toString()+" "+new Date(time).getHours().toString()+":"+new Date(time).getMinutes().toString()
+
+    }
     return new Date().getFullYear().toString()+"-"+(new Date().getMonth()+1).toString()+"-"+new Date().getDate().toString()+" "+new Date().getHours().toString()+":"+new Date().getMinutes().toString()
 };
 
