@@ -365,8 +365,8 @@ api.examAgain = function(req,res){
                         list[i] = {
                             term: datas.termById[rr[i].termId].name,
                             examName:rr[i].examName,
-                            start:rr[i].start?(rr[i].start-8*60*60):0,
-                            end:rr[i].end?(rr[i].end-8*60*60):0,
+                            start:rr[i].start?(rr[i].start):0,
+                            end:rr[i].end?(rr[i].end):0,
                             name:rr[i].name,
                             campus:rr[i].campusId?datas.campusById[rr[i].campusId].name:"",
                             week:rr[i].week,
