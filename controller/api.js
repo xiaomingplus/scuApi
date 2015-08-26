@@ -323,7 +323,75 @@ api.exam = function(req,res){
         )
 
     });
-}
+};
+
+
+
+//补考信息
+api.examAgain = function(req,res){
+
+    req.query.field = 'exam';
+    check.student(req.query,function(e,r){
+        if(e){
+            res.end(JSON.stringify(e));
+            return;
+        }
+        //console.log(r);
+
+        conn.query(
+            {
+                sql:"select * from scu_exam_again where studentId="+ req.query.studentId
+            },function(ee,rr){
+
+                if(ee){
+                    res.dump('mysqlError');
+                    return;
+                }
+                //console.log(rr);
+
+                //console.log(datas.termById);
+                if(rr.length>0) {
+                    var list = [];
+                    for (var i = 0; i < rr.length; i++) {
+                        //console.log(datas.termById[rr[i].termId]);
+                        list[i] = {
+                            term: datas.termById[rr[i].termId].name,
+                            examName:rr[i].examName,
+                            start:rr[i].start?(rr[i].start-8*60*60):0,
+                            end:rr[i].end?(rr[i].end-8*60*60):0,
+                            name:rr[i].name,
+                            campus:rr[i].campusId?datas.campusById[rr[i].campusId].name:"",
+                            week:rr[i].week,
+                            building:rr[i].building,
+                            classroom:rr[i].classroom,
+                        }
+
+                    }
+                    //console.log(r);
+
+                    res.dump('ok',{
+                        currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
+                        count: list.length,
+                        updateAt: 1440578923,
+                        version: 1,
+                        exams:list
+
+                    });
+                }else{
+                        res.dump('ok',{
+                            count: 0,
+                            updateAt: 1440578923,
+                            version: 1,
+                            exams:[]
+                        });
+                        return;
+
+                }
+            }
+        )
+
+    });
+};
 
 
 //输出课表

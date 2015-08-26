@@ -1698,6 +1698,94 @@ updates.newsLectures = function(o,cb){
 
 //todo 根据参数
 
+var dateToTimestamp = function(string){
+
+    var year = string.substring(0,4);
+    var month = string.substring(5,7);
+    var date = string.substring(8,10);
+
+    //console.log(year);
+    return year+"-"+month+"-"+date;
+};
+
+updates.examAgain = function(o){
+    
+    
+    conn.query(
+        {
+            sql:"select * from scu_exam_temp limit "+ o.start+",1"
+        },function(e,r){
+            //console.log(e,r);
+
+            if(e){
+                console.log('error');
+                return;
+            }
+
+            if(r.length>0){
+
+               var time1 =  r[0].time.substring(0, r[0].time.indexOf("-"));
+                var time2 = r[0].time.substring((r[0].time.indexOf("-")+1));
+
+                   var start = Date.parse(dateToTimestamp(r[0].date)+" "+time1)/1000;
+                var end = Date.parse(dateToTimestamp(r[0].date)+" "+time2)/1000;
+
+
+                var building = "";
+                var classroom = "";
+
+                if(r[0].place.indexOf("教")>-1){
+                    building = r[0].place.substring(0,(r[0].place.indexOf("教")+1));
+                    classroom = r[0].place.substring((r[0].place.indexOf("教")+1));
+                }else{
+                    building = r[0].place.substring(0,(r[0].place.indexOf("楼")+1));
+                    classroom = r[0].place.substring((r[0].place.indexOf("楼")+1));
+                }
+
+                var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom) values ('" +
+                    r[0].examName+"',"+r[0].studentId+",'2015-2016-2-1',"+start+","+end+",'"+datas.campus[r[0].campus].campusId+"','"+r[0].name+"','"+building+"','"+classroom+"')";
+                conn.query(
+                    {
+                        sql:sql
+                    },function(ee,rr){
+                        //console.log(ee,rr);
+                        if(!ee) {
+                            console.log(o.start+"完成");
+                            updates.test({
+                                start: o.start + 1
+                            });
+                        }else{
+                            console.log(ee);
+                        }
+                    }
+                );
+                
+
+
+
+                //if(r[0].place.indexOf("教")>-1 || r[0].place.indexOf("楼")){
+                //    console.log(o.start);
+                //    console.log(r[0].place);
+                //    updates.test({
+                //        start: o.start+1
+                //    });
+                //
+                //}else{
+                //    console.log(r[0].place);
+                //    return;
+                //}
+
+            }else{
+                console.log('over');
+
+
+            }
+        }
+    );
+};
+
+
+
 
 
 module.exports = updates;

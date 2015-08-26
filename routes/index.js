@@ -59,6 +59,10 @@ router.get('/api/exam',function(req,res){
   api.exam(req,res);
 });
 
+router.get('/api/examAgain',function(req,res){
+  api.examAgain(req,res);
+});
+
 router.get('/api/book',function(req,res){
   api.book(req,res);
 });
