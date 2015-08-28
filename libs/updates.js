@@ -1867,17 +1867,17 @@ updates.examAgainNotice = function(o,cb) {
         });
 
 };
-
-datas.load();
-
-setTimeout(function(){
-
-updates.examAgainNotice({
-    start:0
-},function(e,r){
-    //console.log(e,r);
-});
-},2000);
+//
+//datas.load();
+//
+//setTimeout(function(){
+//
+//updates.examAgainNotice({
+//    start:0
+//},function(e,r){
+//    //console.log(e,r);
+//});
+//},2000);
 
 
 
