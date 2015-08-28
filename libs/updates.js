@@ -1778,7 +1778,7 @@ updates.examAgainNotice = function(o,cb) {
 
     conn.query(
         {
-            sql:"select `id` from scu_user where error=0 order by ai limit "+ o.start+",1"
+            sql:"select `id` from scu_user where error=0 and studentId=2012141442029 order by ai limit "+ o.start+",1"
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
@@ -1808,7 +1808,7 @@ updates.examAgainNotice = function(o,cb) {
                                 username = r[0].username;
                                 name = r[0].name;
                                 place = datas.campusById[r[0].campusId].name + r[0].building + r[0].classroom;
-                                time = common.date(r[0].start * 1000) + "开始";
+                                time = common.date(r[0].start * 1000+8*60*60*1000) + "开始";
                                 first = "你有1门" + r[0].examName + "要参加";
                                 remark = "点击查看详情,或者点击自定义菜单中「我的」->「补考缓考」来查看";
                             } else {
@@ -1821,7 +1821,7 @@ updates.examAgainNotice = function(o,cb) {
                                 username = r[0].username;
                                 name = _name.join(',');
                                 place = _place.join(',');
-                                time = common.date(r[0].start * 1000) + "开始";
+                                time = common.date(r[0].start * 1000+8*60*60*1000) + "开始";
                                 first = "你有" + r.length + "门补缓考要参加";
                                 remark = "点击查看详情,或者点击自定义菜单中「我的」->「补考缓考」来查看";
 
