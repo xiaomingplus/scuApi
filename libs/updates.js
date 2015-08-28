@@ -1774,80 +1774,103 @@ updates.examAgain = function(o){
 };
 
 updates.examAgainNotice = function(o,cb) {
+
+
     conn.query(
         {
-            sql:"select * from scu_exam_again where studentId=2012141442029 limit "+ o.start+",1"
-        },function(e,r) {
-            
-            console.log(e,r);
-            if (e) {
-                console.log('error');
+            sql:"select `id` from scu_user where error=0 and id=2012141442029 order by ai  limit "+ o.start+",1"
+        },function(eee,rrr) {
+//console.log(rrr);
+            if (eee) {
+                updates.examAgainNotice({start:o.start+1});
+                console.log(eee);
                 return;
             }
 
-            if (r.length > 0) {
-                var studentId,username,name,place,time,first,remark;
-                if(r.length==1){
-                    studentId = r[0].studentId;
-                    username =r[0].username;
-                    name = r[0].name;
-                    place = datas.campusById[r[0].campusId].name+r[0].building+r[0].classroom;
-                    time = common.date(r[0].start*1000)+"开始";
-                    first = "你有1门"+r[0].examName+"要参加";
-                    remark = "点击查看详情,或者点击自定义菜单的「补缓考」来查看";
-                }else{
-                    var _name=[],_place=[];
-                    for(var i=0;i< r.length;i++){
-                        _name.push(r[i].name);
-                        _place.push(datas.campusById[r[i].campusId].name+r[i].building+r[i].classroom);
-                    }
-                    studentId = r[0].studentId;
-                    username =r[0].username;
-                    name = _name.join(',');
-                    place = _place.join(',');
-                    time = common.date(r[0].start)+"开始";
-                    first = "你有"+ r.length+"门补缓考要参加";
-                    remark = "点击查看详情,或者点击自定义菜单的「补缓考」来查看";
 
-                }
-
-                callback.p(
+            //console.log(rrr);//return;
+            if (rrr.length > 0) {
+                conn.query(
                     {
-                        callback: "http://localhost:8120/api/examAgainNotice",
-                        appSecret: "scuinfo",
-                        form: {
-                            first:first,
-                            remark:remark,
-                            studentId: studentId,
-                            username: username,
-                            name: name,
-                            place: place,
-                            time: time
-                        }
+                        sql: "select * from scu_exam_again where studentId="+rrr[0].id
                     }, function (e, r) {
-                        console.log(e, r);
-                        updates.examAgainNotice({
-                            start: o.start+1
-                        },function(e,r){
-                            console.log(e,r);
-                        })
-                    }
-                );
+
+                        //console.log(e,r);
+                        if (e) {
+                            console.log('error');
+                            return;
+                        }
+
+                        if (r.length > 0) {
+                            var studentId, username, name, place, time, first, remark;
+                            if (r.length == 1) {
+                                studentId = r[0].studentId;
+                                username = r[0].username;
+                                name = r[0].name;
+                                place = datas.campusById[r[0].campusId].name + r[0].building + r[0].classroom;
+                                time = common.date(r[0].start * 1000) + "开始";
+                                first = "你有1门" + r[0].examName + "要参加";
+                                remark = "点击查看详情,或者点击自定义菜单中「我的」->「补考缓考」来查看";
+                            } else {
+                                var _name = [], _place = [];
+                                for (var i = 0; i < r.length; i++) {
+                                    _name.push(r[i].name);
+                                    _place.push(datas.campusById[r[i].campusId].name + r[i].building + r[i].classroom);
+                                }
+                                studentId = r[0].studentId;
+                                username = r[0].username;
+                                name = _name.join(',');
+                                place = _place.join(',');
+                                time = common.date(r[0].start * 1000) + "开始";
+                                first = "你有" + r.length + "门补缓考要参加";
+                                remark = "点击查看详情,或者点击自定义菜单中「我的」->「补考缓考」来查看";
+
+                            }
+
+                            callback.p(
+                                {
+                                    //callback: "http://localhost:8120/api/examAgainNotice",
+                                    callback:"http://203.195.164.179:8120/api/examAgainNotice",
+                                    appSecret: "scuinfo",
+                                    form: {
+                                        first: first,
+                                        remark: remark,
+                                        studentId: studentId,
+                                        username: username,
+                                        name: name,
+                                        place: place,
+                                        time: time
+                                    }
+                                }, function (e, r) {
+                                    console.log(e, r);
+                                    updates.examAgainNotice({
+                                        start: o.start + 1
+                                    }, function (e, r) {
+                                        console.log(e,r);
+                                    })
+                                }
+                            );
+                        } else {
+                            console.log('没有补考');
+                        }
+                    });
+
             }else{
+                
                 console.log('over');
             }
         });
 
 };
 
+datas.load();
 
-datas.load()
 setTimeout(function(){
 
 updates.examAgainNotice({
     start:0
 },function(e,r){
-    console.log(e,r);
+    //console.log(e,r);
 });
 },2000);
 
