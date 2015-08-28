@@ -1855,7 +1855,7 @@ updates.examAgainNotice = function(o,cb) {
                             updates.examAgainNotice({
                                 start: o.start + 1
                             }, function (e, r) {
-                                console.log(e,r);
+                                //console.log(e,r);
                             })
                         }
                     });
