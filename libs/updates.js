@@ -1778,7 +1778,7 @@ updates.examAgainNotice = function(o,cb) {
 
     conn.query(
         {
-            sql:"select `id` from scu_user where error=0 and studentId=2012141442029 order by ai limit "+ o.start+",1"
+            sql:"select `id` from scu_user where error=0 and id=2012141442029 order by ai limit "+ o.start+",1"
         },function(eee,rrr) {
 //console.log(rrr);
             if (eee) {
