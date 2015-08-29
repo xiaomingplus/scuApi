@@ -639,16 +639,16 @@ setTimeout(function(){
         }
     );
 
-    autos.queryMajorProducer(
-        {
-            start:0
-        }
-    );
-    autos.queryScoreProducer(
-        {
-            start:0
-        }
-    );
+    //autos.queryMajorProducer(
+    //    {
+    //        start:0
+    //    }
+    //);
+    //autos.queryScoreProducer(
+    //    {
+    //        start:0
+    //    }
+    //);
 
     //autos.delete(
     //    {
@@ -668,16 +668,16 @@ autos.queryBookProducer(
         start: 0
     }
 );
-    autos.queryMajorProducer(
-        {
-            start:0
-        }
-    );
-    autos.queryScoreProducer(
-        {
-            start:0
-        }
-    );
+    //autos.queryMajorProducer(
+    //    {
+    //        start:0
+    //    }
+    //);
+    //autos.queryScoreProducer(
+    //    {
+    //        start:0
+    //    }
+    //);
 
 
     },12*60*60*1000);
