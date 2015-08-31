@@ -285,7 +285,7 @@ api.exam = function(req,res){
                     //console.log(r);
 
                     res.dump('ok',{
-                        currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
+                        currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
                         count: r.examCount,
                         updateAt: r.examUpdateAt,
                         version: r.examVersion,
@@ -378,7 +378,7 @@ api.examAgain = function(req,res){
                     //console.log(r);
 
                     res.dump('ok',{
-                        currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
+                        currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
                         count: list.length,
                         updateAt: 1440578923,
                         version: 1,
@@ -445,7 +445,7 @@ req.query.field = 'major';
 
                     }
                     res.dump('ok',{
-                        currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
+                        currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
                         count: r.majorCount,
                         updateAt: r.majorUpdateAt,
                         version: r.majorVersion,
@@ -456,7 +456,7 @@ req.query.field = 'major';
 
                     if(r.majorVersion > 0){
                         res.dump('ok',{
-                            currentWeek:(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1),
+                            currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
                             count: r.majorCount,
                             updateAt: r.majorUpdateAt,
                             version: r.majorVersion,

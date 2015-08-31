@@ -24,6 +24,17 @@ common.date = function (time) {
     return new Date().getFullYear().toString()+"-"+(new Date().getMonth()+1).toString()+"-"+new Date().getDate().toString()+" "+new Date().getHours().toString()+":"+new Date().getMinutes().toString()
 };
 
+common.currentWeek = function(firstDayTimestamp){
+    // ((parseInt(common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
+
+
+    if(common.todayStartTimestamp()-firstDayTimestamp<0){
+        return (parseInt((common.todayStartTimestamp()-firstDayTimestamp)/3600/24/7)-1);
+    }else{
+        return (parseInt((common.todayStartTimestamp()-firstDayTimestamp)/3600/24/7)+1);
+    }
+
+};
 /**
  * 输出格式化的json
  * @param code
