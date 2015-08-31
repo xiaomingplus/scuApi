@@ -1868,41 +1868,41 @@ updates.examAgainNotice = function(o,cb) {
 
 };
 
-datas.load();
-
-setTimeout(function(){
-    
-    
-    var b = common.todayStartTimestamp();
-    console.log(b);
-
-
-    var c = datas.firstDay[datas.currentTerm.termId];
-    
-    console.log(c);
-    
-    
-    var d = datas.currentTerm.termId;
-    console.log(d);
-
-
-    var e = datas.firstDay;
-    console.log(e);
-    
-    var f = ((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7);
-    
-    console.log(f);
-    
-    var a =(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
-    
-    console.log(a);
-
-
-    var g= common.currentWeek(datas.firstDay[datas.currentTerm.termId]);
-    console.log(g);
-    
-},2000);
-
+//datas.load();
+//
+//setTimeout(function(){
+//
+//
+//    var b = common.todayStartTimestamp();
+//    console.log(b);
+//
+//
+//    var c = datas.firstDay[datas.currentTerm.termId];
+//
+//    console.log(c);
+//
+//
+//    var d = datas.currentTerm.termId;
+//    console.log(d);
+//
+//
+//    var e = datas.firstDay;
+//    console.log(e);
+//
+//    var f = ((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7);
+//
+//    console.log(f);
+//
+//    var a =(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
+//
+//    console.log(a);
+//
+//
+//    var g= common.currentWeek(datas.firstDay[datas.currentTerm.termId]);
+//    console.log(g);
+//
+//},2000);
+//
 
 
 module.exports = updates;
