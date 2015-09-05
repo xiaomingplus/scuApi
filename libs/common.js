@@ -19,7 +19,7 @@ common.todayStartTimestamp =function(){
  */
 
 common.todayBeijingStartTimestamp =function(){
-    return parseInt(new Date(new Date(new Date().getTime()+8*60*60*1000).toLocaleDateString()).getTime()/1000);
+    return parseInt(((new Date(new Date(new Date().getTime()+8*60*60*1000).toLocaleDateString()).getTime())+8*60*60*1000)/1000);
 };
 //当前时间戳 10位
 common.time = function () {
