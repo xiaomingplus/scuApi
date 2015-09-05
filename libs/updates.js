@@ -1880,6 +1880,8 @@ setTimeout(function(){
     //console.log(new Date(new Date().toLocaleDateString()));
     
     console.log(new Date(new Date().getTime()+8*60*60*1000));
+    
+    console.log(new Date(new Date().getTime()+8*60*60*1000).toLocaleDateString());
 },3000);
 
 
