@@ -21,7 +21,7 @@ system.flushPermission = function(){
     system.db.query(sql,function(err,result){
         if(err)console.log(err);
         else{
-            //console.log(result);
+            console.log(result);
             var len = result.length;
             for(var i=0;i<len;i++){
                 var item= result[i];

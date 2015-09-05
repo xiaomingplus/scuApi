@@ -14,7 +14,7 @@ var pages = require('../libs/pages.js');
 api.apiPermission = function(req,res,next){
     res.setHeader('content-type','application/json; charset=UTF-8');
     var id = req.query.appId?req.query.appId:req.query.appid;
-    console.log(id);
+    //console.log(id);
     //根据appid读取app权限信息
     services.app_permission_model.findOne({appid:id},function(err,app_permission){
         console.log(err,app_permission);
@@ -39,6 +39,7 @@ api.apiPermission = function(req,res,next){
                 if(app_permission.p_list.indexOf(func)==-1){
                     res.dump('appPermissionError');
                 }else{
+                    console.log('permission ok');
                     next();
                 }
 
