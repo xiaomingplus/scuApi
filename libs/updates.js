@@ -1449,7 +1449,6 @@ updates.library = function(o,cb){
     //console.log(o);
     libs.checkLib(o,function(e,r){
         
-        //console.log(e,r);
         if(e){
             cb(e);
 
@@ -1476,7 +1475,7 @@ updates.library = function(o,cb){
             url:"http://mc.m.5read.com/cmpt/opac/opacLink.jspx?stype=1",
             jar:r
         },function(ee,rr,bb){
-            //console.log(bb)
+            //console.log(ee,bb)
             
             if(ee){
                 console.log(ee);
@@ -1868,41 +1867,18 @@ updates.examAgainNotice = function(o,cb) {
 
 };
 
-//datas.load();
-//
-//setTimeout(function(){
-//
-//
-//    var b = common.todayStartTimestamp();
-//    console.log(b);
-//
-//
-//    var c = datas.firstDay[datas.currentTerm.termId];
-//
-//    console.log(c);
-//
-//
-//    var d = datas.currentTerm.termId;
-//    console.log(d);
-//
-//
-//    var e = datas.firstDay;
-//    console.log(e);
-//
-//    var f = ((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7);
-//
-//    console.log(f);
-//
-//    var a =(parseInt((common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
-//
-//    console.log(a);
-//
-//
-//    var g= common.currentWeek(datas.firstDay[datas.currentTerm.termId]);
-//    console.log(g);
-//
-//},2000);
-//
+datas.load();
+
+setTimeout(function(){
+updates.library({
+    studentId:'2012141442029',
+    password:"013991"
+},function(e,r){
+    console.log(e,r);
+})
+
+},3000);
+
 
 
 module.exports = updates;
