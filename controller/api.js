@@ -168,7 +168,7 @@ api.update = function(req,res){
 //输出成绩
 api.score = function(req,res){
     
-    console.log(req.query);
+    //console.log(req.query);
     
 req.query.field = 'score';
 check.student(req.query,function(e,r){
@@ -176,7 +176,7 @@ check.student(req.query,function(e,r){
        res.end(JSON.stringify(e));
        return;
    }
-    console.log(r);
+    //console.log(r);
     //console.log("select termId,courseId,orderId,propertyId,credit,score,name,EnglishName,reason from scu_score where studentId="+ req.query.studentId+" and version="+ r.scoreVersion);
     conn.query(
         {
