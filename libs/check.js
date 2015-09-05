@@ -65,7 +65,7 @@ check.password = function(o,cb,debug){
               })
           }else{
               if(r[0].error==1){
-                  o.timeout=3000;
+                  //o.timeout=3000;
                   libs.check(o, function (ee) {
                       if (ee) {
                           cb(ee);
@@ -206,7 +206,7 @@ check.libraryPassword = function(o,cb,debug){
                 })
             }else{
                 if(r[0].error==1){
-                    o.timeout=3000;
+                    o.timeout=10000;
 
                     libs.checkLib(o, function (ee) {
                         if (ee) {
