@@ -20,7 +20,7 @@ check.password = function(o,cb,debug){
   conn.query({
       sql:"select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId
   },function(e,r){
-//console.log(e,r);
+console.log(e,r);
       if(e){
           console.log(e);
          cb(code.mysqlError);
