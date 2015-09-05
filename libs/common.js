@@ -28,10 +28,10 @@ common.currentWeek = function(firstDayTimestamp){
     // ((parseInt(common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
 
 
-    if(common.todayStartTimestamp()-firstDayTimestamp<0){
-        return (parseInt((common.todayStartTimestamp()-firstDayTimestamp)/3600/24/7)-1);
+    if((common.todayStartTimestamp()+(8*60*60))-firstDayTimestamp<0){
+        return (parseInt(((common.todayStartTimestamp()+(8*60*60))-firstDayTimestamp)/3600/24/7)-1);
     }else{
-        return (parseInt((common.todayStartTimestamp()-firstDayTimestamp)/3600/24/7)+1);
+        return (parseInt(((common.todayStartTimestamp()+(8*60*60))-firstDayTimestamp)/3600/24/7)+1);
     }
 
 };

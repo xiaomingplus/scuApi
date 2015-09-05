@@ -408,6 +408,7 @@ api.examAgain = function(req,res){
 
 //输出课表
 api.major = function(req,res){
+    //console.log(req.query);
 req.query.field = 'major';
     check.student(req.query,function(e,r){
         if(e){
@@ -448,6 +449,7 @@ req.query.field = 'major';
                         }
 
                     }
+                    
                     res.dump('ok',{
                         currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
                         count: r.majorCount,
@@ -459,6 +461,9 @@ req.query.field = 'major';
                 }else{
 
                     if(r.majorVersion > 0){
+
+                        console.log(datas.firstDay[datas.currentTerm.termId]);
+
                         res.dump('ok',{
                             currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
                             count: r.majorCount,
