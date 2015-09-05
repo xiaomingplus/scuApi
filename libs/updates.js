@@ -1878,6 +1878,8 @@ setTimeout(function(){
     console.log(datas.firstDay[datas.currentTerm.termId]);
     console.log(common.todayBeijingStartTimestamp());
     //console.log(new Date(new Date().toLocaleDateString()));
+    
+    console.log(new Date(new Date().getTime()+8*60*60*1000));
 },3000);
 
 
