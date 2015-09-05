@@ -462,7 +462,7 @@ req.query.field = 'major';
 
                     if(r.majorVersion > 0){
 
-                        console.log(datas.firstDay[datas.currentTerm.termId]);
+                        //console.log(datas.firstDay[datas.currentTerm.termId]);
 
                         res.dump('ok',{
                             currentWeek:common.currentWeek(datas.firstDay[datas.currentTerm.termId]),
