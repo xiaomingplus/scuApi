@@ -1870,13 +1870,12 @@ updates.examAgainNotice = function(o,cb) {
 datas.load();
 
 setTimeout(function(){
-updates.library({
-    studentId:'2012141442029',
-    password:"013991"
-},function(e,r){
-    console.log(e,r);
-})
 
+   var a =  common.currentWeek(datas.firstDay[datas.currentTerm.termId]);
+    
+    console.log(a);
+    
+    console.log(datas.firstDay[datas.currentTerm.termId]);
 },3000);
 
 
