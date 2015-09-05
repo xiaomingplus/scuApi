@@ -1876,6 +1876,7 @@ setTimeout(function(){
     console.log(a);
     
     console.log(datas.firstDay[datas.currentTerm.termId]);
+    console.log(common.todayStartTimestamp());
 },3000);
 
 
