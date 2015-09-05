@@ -17,7 +17,7 @@ api.apiPermission = function(req,res,next){
     //console.log(id);
     //根据appid读取app权限信息
     services.app_permission_model.findOne({appid:id},function(err,app_permission){
-        console.log(err,app_permission);
+        //console.log(err,app_permission);
 
         if(err){
             console.log(err);
@@ -39,7 +39,7 @@ api.apiPermission = function(req,res,next){
                 if(app_permission.p_list.indexOf(func)==-1){
                     res.dump('appPermissionError');
                 }else{
-                    console.log('permission ok');
+                    //console.log('permission ok');
                     next();
                 }
 
