@@ -38,7 +38,8 @@ lib.check = function (o,cb){
         url: 'http://202.115.47.141/loginAction.do?zjh='+ o.studentId+'&mm='+encodeURIComponent(o.password),
         encoding: 'binary',
         form:{zjh: o.studentId,mm:""+o.password+""},
-        jar:j
+        jar:j,
+        timeout: o.timeout? o.timeout:10000
     };
     request(options,function(err,response){
 
@@ -88,7 +89,8 @@ lib.get = function (o,cb){
             method:"get",
             url: o.url,
             encoding:"binary",
-            jar:j
+            jar:j,
+            timeout: o.timeout? o.timeout:10000
         };
         //console.log('222');
         //console.log(opts);
@@ -126,6 +128,9 @@ lib.post = function (o,cb){
     //test id:2012141442029
     //test password:013991
 
+    o.timeout=o.timeout? o.timeout:10000;
+
+
     lib.check(o,function(err,j){
        // console.log(o);
         if(err) {
@@ -140,7 +145,8 @@ lib.post = function (o,cb){
             url: o.url,
             encoding:"binary",
             //form: o.form,
-            jar:j
+            jar:j,
+            timeout: o.timeout? o.timeout:10000
         };
         
 
@@ -301,7 +307,8 @@ console.log(e1);
             username: o.studentId,
             password: ""+o.password+"",
             userType:0},
-        jar:j
+        jar:j,
+        timeout: o.timeout? o.timeout:10000
     };
     request.post(options,function(err,response,body){
         

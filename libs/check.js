@@ -20,13 +20,12 @@ check.password = function(o,cb,debug){
   conn.query({
       sql:"select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId
   },function(e,r){
-console.log(e,r);
+//console.log(e,r);
       if(e){
           console.log(e);
          cb(code.mysqlError);
           return;
       }else{
-
           //console.log(r);
           if(r.length==0) {
 
@@ -66,6 +65,7 @@ console.log(e,r);
               })
           }else{
               if(r[0].error==1){
+                  o.timeout=3000;
                   libs.check(o, function (ee) {
                       if (ee) {
                           cb(ee);
@@ -206,6 +206,8 @@ check.libraryPassword = function(o,cb,debug){
                 })
             }else{
                 if(r[0].error==1){
+                    o.timeout=3000;
+
                     libs.checkLib(o, function (ee) {
                         if (ee) {
                             cb(ee);
@@ -333,6 +335,7 @@ check.renewPassword = function(o,cb,debug){
                 })
             }else{
                 if(r[0].error==1){
+                    o.timeout = 3000;
                     libs.checkLib(o, function (ee) {
                         if (ee) {
                             cb(ee);
