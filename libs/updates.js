@@ -1876,8 +1876,8 @@ setTimeout(function(){
     console.log(a);
     
     console.log(datas.firstDay[datas.currentTerm.termId]);
-    console.log(common.todayStartTimestamp());
-    console.log(new Date(new Date().toLocaleDateString()));
+    console.log(common.todayBeijingStartTimestamp());
+    //console.log(new Date(new Date().toLocaleDateString()));
 },3000);
 
 

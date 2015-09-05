@@ -11,6 +11,16 @@ var common = {
 common.todayStartTimestamp =function(){
     return parseInt(new Date(new Date().toLocaleDateString()).getTime()/1000);
 };
+
+
+/**
+ * 东八区的0点时间戳
+ * @returns {Number}
+ */
+
+common.todayBeijingStartTimestamp =function(){
+    return parseInt(new Date(new Date(new Date().getTime()+8*60*60*1000).toLocaleDateString()).getTime()/1000);
+};
 //当前时间戳 10位
 common.time = function () {
     return parseInt(new Date().getTime()/1000);
@@ -28,10 +38,10 @@ common.currentWeek = function(firstDayTimestamp){
     // ((parseInt(common.todayStartTimestamp()-datas.firstDay[datas.currentTerm.termId])/3600/24/7)+1);
 
 
-    if((common.todayStartTimestamp()+(8*60*60))-firstDayTimestamp<0){
-        return (parseInt(((common.todayStartTimestamp()+(8*60*60))-firstDayTimestamp)/3600/24/7)-1);
+    if((common.todayBeijingStartTimestamp())-firstDayTimestamp<0){
+        return (parseInt(((common.todayBeijingStartTimestamp())-firstDayTimestamp)/3600/24/7)-1);
     }else{
-        return (parseInt(((common.todayStartTimestamp()+(8*60*60))-firstDayTimestamp)/3600/24/7)+1);
+        return (parseInt(((common.todayBeijingStartTimestamp())-firstDayTimestamp)/3600/24/7)+1);
     }
 
 };
