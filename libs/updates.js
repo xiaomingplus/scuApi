@@ -1484,6 +1484,8 @@ updates.library = function(o,cb){
             }
 
             var list = pages.library(bb);
+            
+            console.log(list);
             if(list.length>0) {
 
 
