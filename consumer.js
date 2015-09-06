@@ -403,11 +403,11 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-        //consumer.scoreQuery();
+        consumer.scoreQuery();
          consumer.bookQuery();
-        //consumer.majorQuery();
-        //consumer.renewQuery();
-        //consumer.examQuery();
+        consumer.majorQuery();
+        consumer.renewQuery();
+        consumer.examQuery();
     }else{
 
         setTimeout(function(){

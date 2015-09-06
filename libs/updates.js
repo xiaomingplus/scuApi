@@ -1485,7 +1485,7 @@ updates.library = function(o,cb){
 
             var list = pages.library(bb);
             
-            console.log(list);
+            //console.log(list);
             if(list.length>0) {
 
 
@@ -1654,7 +1654,7 @@ updates.renew = function(o,cb){
                     url:"http://mc.m.5read.com/user/logout/logout.jspx",
                     jar:r
                 },function(eee,rrr,bbb) {
-                    console.log(eee, rrr.statusCode);
+                    //console.log(eee, rrr.statusCode);
                     if (ee) {
                         cb(code.requestLibError);
                         console.log(ee);
