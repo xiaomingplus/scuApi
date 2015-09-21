@@ -408,7 +408,7 @@ api.examAgain = function(req,res){
 
 //输出课表
 api.major = function(req,res){
-    //console.log(req.query);
+    console.log(req.query);
 req.query.field = 'major';
     check.student(req.query,function(e,r){
         if(e){
