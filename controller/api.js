@@ -858,7 +858,7 @@ api.course = function(req,res){
 
 
     }
-console.log(sql);
+//console.log(sql);
     conn.query(
         {
             sql:sql
