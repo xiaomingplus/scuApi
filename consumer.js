@@ -340,11 +340,11 @@ consumer.renewQuery= function(){
 
             if(Object.keys(user).length>0) {
                 user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
-                console.log(user);
+                //console.log(user);
 
                 //console.log('队列开始第一项了');
                 updates.renew(user, function (ee) {
-                    console.log(ee);
+                    //console.log(ee);
                     if (ee) {
                         console.log(ee);
                         callback.post({
@@ -412,14 +412,16 @@ consumer.init = function(){
 
         setTimeout(function(){
             consumer.init()
-        },3000);
+        },6000);
 
     }
 };
 
 consumer.init();
 
-
+//setTimeout(function(){
+//    consumer.renewQuery();
+//},3000);
 
 process.on('uncaughtException', function(err) {
     console.log('Caught exception: ' + err);
@@ -428,6 +430,9 @@ process.on('uncaughtException', function(err) {
  * 每n分钟自动载入数据
  */
 datas.load();
+
+
+
 setInterval(function(){
     console.log('查看是否全局数据是否有更新');
     datas.load();

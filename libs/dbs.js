@@ -60,12 +60,13 @@ dbs.getVersion = function(cb){
         {
             sql:"select `typeVersion`,`typeLatestVersion`,`termVersion`,`termLatestVersion`,`accountVersion`,`campusVersion`,`propertyVersion`,`collegeVersion`,`courseVersion`,`teacherVersion`,`accountLatestVersion`,`campusLatestVersion`,`propertyLatestVersion`,`collegeLatestVersion`,`courseLatestVersion`,`teacherLatestVersion` from scu_version where id=1"
         },function(err,rows){
+            //console.log(err,rows);
             if(err){
                 console.log(err);
                 cb(err);
                 return;
             }
-           // console.log(rows[0]);
+            //console.log(rows[0]);
             cb(null,{
                     termLatestVersion:rows[0].termLatestVersion,
                     collegeLatestVersion:rows[0].collegeLatestVersion,

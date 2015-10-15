@@ -1618,6 +1618,7 @@ updates.library = function(o,cb){
 updates.renew = function(o,cb){
     //console.log(o);
     libs.checkLib(o,function(e,r){
+        //console.log(r);
         if(e){
             cb(e);
 
@@ -1638,18 +1639,25 @@ updates.renew = function(o,cb){
 
             return;
         }
+        
+
+
         request.post(
             {
                 url:"http://202.115.54.52:90/sms/opac/user/renew.action",
                 jar:r,
+                headers:{
+                    "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
+                    "Upgrade-Insecure-Requests":1
+                },
                 form:{
                     barcode:o.barcode,
                     bor_id:o.borId
                 }
 
             },function(ee,rr,bb){
-                
-                
+
+                //console.log(bb);
                 request.get({
                     url:"http://mc.m.5read.com/user/logout/logout.jspx",
                     jar:r
@@ -1661,23 +1669,31 @@ updates.renew = function(o,cb){
                         return;
                     }
                     var $ = cheerio.load(bb);
-                    var text = $(".boxBd").text().trim();
-                    //console.log(text);
+                    var text = $("#main").text().trim();
+
+                    var text2 = $(".box").text().trim();
+
                     var status = text.indexOf("续借操作不成功") >= 0;
+                    var status2 = text2.indexOf("目前借书:0")>=0;
                     if (status) {
-                        //console.log(o.studentId+"续借失败"+text.substr(12));
+                        console.log(o.studentId+"续借失败"+text.substr(12));
                         cb({
                             code: code.renewError.code,
                             message: text.substr(12)
                         });
                         return;
 
-                    } else {
-                        //成功
-                        console.log(o.studentId+"续借成功");
-                        cb(null);
+                    } else if(status2) {
+                        //console.log(status2);
+                        cb({
+                            code:code.renewError.code,
+                            message:"参数不正确"
+                        });
                         return;
 
+                    }else{
+                        cb(null);
+                        console.log('续借成功'+ o.studentId);
                     }
                 });
             }
@@ -1872,19 +1888,19 @@ updates.examAgainNotice = function(o,cb) {
 //datas.load();
 //
 //setTimeout(function(){
+//updates.renew(
+//    {
+//        studentId:"2012141442029",
+//        password:"013991",
+//        barcode:"90585402",
+//        borId:"U12005391"
 //
-//   var a =  common.currentWeek(datas.firstDay[datas.currentTerm.termId]);
-//
-//    console.log(a);
-//
-//    console.log(datas.firstDay[datas.currentTerm.termId]);
-//    console.log(common.todayBeijingStartTimestamp());
-//    //console.log(new Date(new Date().toLocaleDateString()));
-//
-//    console.log(new Date(new Date().getTime()+8*60*60*1000));
-//
-//    console.log(new Date(new Date().getTime()+8*60*60*1000).toLocaleDateString());
+//    },function(e,r){
+//        //console.log(e,r);
+//    }
+//)
 //},3000);
+
 
 
 
