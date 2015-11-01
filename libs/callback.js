@@ -27,7 +27,7 @@ var form = {
 
 
 callback.post = function(o,cb){
-    //console.log(o);
+    console.log(o);
 
     if(!o.callback){
         cb(code.lackParamsCallback);
@@ -46,7 +46,17 @@ callback.post = function(o,cb){
     var arr = [appSecret, timestamp, nonce].sort();
     shasum.update(arr.join(''));
     var signature = shasum.digest('hex');
-
+    console.log({
+        url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
+        form:{
+            appId: o.appId? o.appId:0,
+            code: o.code? o.code:0,
+            message: o.message? o.message:"no Data",
+            type: o.action? o.action:"",
+            studentId: o.studentId? o.studentId:"",
+            time:common.time()
+        }
+    });
     request.post(
     {
         url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,

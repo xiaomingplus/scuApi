@@ -276,6 +276,7 @@ consumer.bookQuery= function(){
                 updates.library(user, function (ee) {
                     if (ee) {
                         console.log(ee);
+                        //console.log('2222');
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
                             appSecret:user.appId?datas.app[user.appId].appSecret:"",
@@ -286,7 +287,7 @@ consumer.bookQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            //console.log(e,r);
+                            console.log(e,r);
                         })
                     }else{
                         callback.post({
@@ -358,24 +359,26 @@ consumer.renewQuery= function(){
 
                         },function(e,r){
                             //console.log(e,r);
-                            callback.post({
-                                callback:user.appId?datas.app[user.appId].callback:"",
-                                appSecret:user.appId?datas.app[user.appId].appSecret:"",
-                                appId: user.appId,
-                                code: 200,
-                                message:user.studentId+'的续借操作已成功',
-                                action: 'renew',
-                                studentId: user.studentId
 
-                            },function(e,r){
-                                //console.log(e,r);
-                            });
                             setTimeout(function(){
                                 consumer.renewQuery();
                             },1000);
-                            return;
-                        })
+                        });
                     }else{
+
+
+                        callback.post({
+                            callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
+                            appId: user.appId,
+                            code: 200,
+                            message:user.studentId+'的续借操作已成功',
+                            action: 'renew',
+                            studentId: user.studentId
+
+                        },function(e,r){
+                            //console.log(e,r);
+                        });
 
                         request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","appId":'+user.appId+'}'), function (eee) {
 

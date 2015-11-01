@@ -1448,7 +1448,6 @@ updates.exam = function(o,cb){
 updates.library = function(o,cb){
     //console.log(o);
     libs.checkLib(o,function(e,r){
-        
         if(e){
             cb(e);
 
@@ -1476,7 +1475,7 @@ updates.library = function(o,cb){
             jar:r
         },function(ee,rr,bb){
             //console.log(ee,bb)
-            
+            //return;
             if(ee){
                 console.log(ee);
                 cb(code.requestLibError);
@@ -1485,7 +1484,7 @@ updates.library = function(o,cb){
 
             var list = pages.library(bb);
             
-            //console.log(list);
+            console.log(list);
             if(list.length>0) {
 
 
@@ -1888,7 +1887,7 @@ updates.examAgainNotice = function(o,cb) {
 //datas.load();
 //
 //setTimeout(function(){
-//updates.renew(
+//updates.library(
 //    {
 //        studentId:"2012141442029",
 //        password:"013991",

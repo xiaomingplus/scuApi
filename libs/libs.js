@@ -300,7 +300,9 @@ console.log(e1);
        cb(code.requestLibError);
        return;
    }
-    var options = {
+
+
+        var options = {
         uri: 'http://mc.m.5read.com/irdUser/login/opac/opacLogin.jspx',
         form:{
             schoolid:395,
@@ -312,7 +314,7 @@ console.log(e1);
     };
     request.post(options,function(err,response,body){
         
-        //console.log(body);
+        //console.log(body);return;
         if(err){
 
             cb(code.requestLibError);
