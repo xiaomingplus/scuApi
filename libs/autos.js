@@ -622,11 +622,7 @@ autos.queryExamProducer = function(o){
 
 };
 
-// autos.queryExamProducer(
-//    {
-//        start: 0
-//    }
-// );
+
 
 
 
@@ -634,6 +630,11 @@ setTimeout(function(){
 
 
     autos.queryBookProducer(
+        {
+            start: 0
+        }
+    );
+    autos.queryExamProducer(
         {
             start: 0
         }
@@ -678,6 +679,11 @@ autos.queryBookProducer(
     //        start:0
     //    }
     //);
+    autos.queryExamProducer(
+        {
+            start: 0
+        }
+    );
 
 
     },12*60*60*1000);
