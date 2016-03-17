@@ -399,6 +399,8 @@ if(!datas.status.status){
 
         if(datas.status.firstDayStatus && datas.status.appStatus && datas.status.campusStatus && datas.status.collegeStatus && datas.status.propertyStatus && datas.status.accountStatus && datas.status.termStatus && datas.status.typeStatus){
             datas.status.status = true;
+
+            //console.log(datas);
         }
 
     }

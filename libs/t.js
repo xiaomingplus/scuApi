@@ -13,7 +13,7 @@ var callback = require('./callback.js');
 
 
 callback.post({
-    callback:'http://localhost:8120/api/updateCallback/',
+    callback:'http://115.159.97.90:8120/api/updateCallback/',
     appSecret:'scuinfo',
     appId: 10000,
     code: 200,

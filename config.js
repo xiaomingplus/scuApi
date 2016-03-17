@@ -2,7 +2,7 @@
  * Created by GuobaoYang on 15/3/8.
  */
 var config = {
-    queryUrl:"http://203.195.164.179:23333",
+    queryUrl:"http://queue.scuinfo.com",
 
     querySecret:{
 

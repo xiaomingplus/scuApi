@@ -226,10 +226,10 @@ updates.classroom = function(){
                     {
                         weekId:i,
                         week:j,
-                        start:datas.firstDay['2015-2016-1-1']+(i-1)*7*24*60*60+(k*24*60*60),
-                        end:datas.firstDay['2015-2016-1-1']+(i-1)*7*24*60*60+(k*24*60*60)+(24*60*60)
+                        start:datas.firstDay['2015-2016-2-1']+(i-1)*7*24*60*60+(k*24*60*60),
+                        end:datas.firstDay['2015-2016-2-1']+(i-1)*7*24*60*60+(k*24*60*60)+(24*60*60)
                     }
-                )
+                );
             }
         }
 
@@ -242,7 +242,7 @@ updates.classroom = function(){
                     page:1,
                     pageSize:"20",
                     zxZc:date.weekId,//周
-                    zxxnxq:"2015-2016-1-1",
+                    zxxnxq:"2015-2016-2-1",
                     zxxq:date.week//星期几
                 },
                 j: r.j
@@ -265,7 +265,7 @@ updates.classroom = function(){
                             page:i+1,
                             pageSize:"300",
                             zxZc:date.weekId,//周
-                            zxxnxq:"2015-2016-1-1",
+                            zxxnxq:"2015-2016-2-1",
                             zxxq:date.week//星期几
                         },
                         start:date.start,
@@ -290,7 +290,9 @@ updates.classroom = function(){
                         for (var i = 0; i < rrrr.data.length; i++) {
                             teacherSql[i] = "("+url.start+","+url.end+",\"" + rrrr.data[i].campusId+ "\"," + rrrr.data[i].buildId + ",\"" +rrrr.data[i].building + "\",\"" + rrrr.data[i].classroomId+ "\",'"+rrrr.data[i].classroom + "','"+rrrr.data[i].type+"',"+(rrrr.data[i].count?rrrr.data[i].count:80)+")";
                         }
-                        sql = "insert into scu_classroom (`start`,`end`,`campusId`,`buildId`,`building`,`classroomId`,`classroom`,`type`,`count`) VALUES " + teacherSql.join(',');
+                        sql = "insert into scu_classroom (`start`,`end`,`campusId`,`buildingId`,`building`,`classroomId`,`classroom`,`type`,`count`) VALUES " + teacherSql.join(',');
+
+                        //console.log(sql);return;
                         conn.query(
                             {
                                 sql: sql
@@ -1718,11 +1720,9 @@ updates.newsLectures = function(o,cb){
 
 var dateToTimestamp = function(string){
 
-    var year = string.substring(0,4);
-    var month = string.substring(5,7);
-    var date = string.substring(8,10);
-
-    //console.log(year);
+    var year = string.substring(0,string.indexOf('年'));
+    var month = string.substring(string.indexOf('年')+1,string.indexOf('月'));
+    var date = string.substring(string.indexOf('月')+1,string.indexOf('日'));
     return year+"-"+month+"-"+date;
 };
 
@@ -1731,61 +1731,67 @@ updates.examAgain = function(o){
         {
             sql:"select * from scu_exam_temp limit "+ o.start+",1"
         },function(e,r){
-            //console.log(e,r);
 
             if(e){
-                console.log('error');
+                console.log(e);
                 return;
             }
+            //console.log(r);
+            if(r.length>0) {
 
-            if(r.length>0){
+                if (!r[0].time) {
+                    console.log(o.start + "完成");
+                    updates.examAgain({
+                        start: o.start + 1
+                    });
+                } else {
 
-               var time1 =  r[0].time.substring(0, r[0].time.indexOf("-"));
-                var time2 = r[0].time.substring((r[0].time.indexOf("-")+1));
+                    var time1 = r[0].time.substring(r[0].time.indexOf("日") + 1, r[0].time.indexOf("-"));
+                    var time2 = r[0].time.substring((r[0].time.indexOf("-") + 1));
+                    r[0].date = r[0].time.substring(0, r[0].time.indexOf('日') + 1);
+                    var start = Date.parse(dateToTimestamp(r[0].date) + " " + time1) / 1000;
+                    var end = Date.parse(dateToTimestamp(r[0].date) + " " + time2) / 1000;
+                    var building = "";
+                    var classroom = "";
 
-                   var start = Date.parse(dateToTimestamp(r[0].date)+" "+time1)/1000;
-                var end = Date.parse(dateToTimestamp(r[0].date)+" "+time2)/1000;
+                    if (r[0].place.indexOf("楼") > -1) {
+                        building = r[0].place.substring(0, (r[0].place.indexOf("楼") + 1));
+                        classroom = r[0].place.substring((r[0].place.indexOf("楼") + 1));
+                    } else {
+                        building = r[0].place.substring(0, (r[0].place.indexOf("教") + 1));
+                        classroom = r[0].place.substring((r[0].place.indexOf("教") + 1));
+                    }
 
 
-                var building = "";
-                var classroom = "";
+                    var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom,username) values ('" +
+                        r[0].examName + "','" + r[0].studentId + "','2015-2016-2-1'," + start + "," + end + ",'" + datas.campus[r[0].campus].campusId + "','" + r[0].name + "','" + building + "','" + classroom + "','" + r[0].username + "')";
+                    //console.log(sql);return;
 
-                if(r[0].place.indexOf("教")>-1){
-                    building = r[0].place.substring(0,(r[0].place.indexOf("教")+1));
-                    classroom = r[0].place.substring((r[0].place.indexOf("教")+1));
-                }else{
-                    building = r[0].place.substring(0,(r[0].place.indexOf("楼")+1));
-                    classroom = r[0].place.substring((r[0].place.indexOf("楼")+1));
+                    conn.query(
+                        {
+                            sql: sql
+                        }, function (ee, rr) {
+                            //console.log(ee,rr);
+                            if (!ee) {
+                                console.log(o.start + "完成");
+                                updates.examAgain({
+                                    start: o.start + 1
+                                });
+                            } else {
+                                console.log(ee);
+                            }
+                        }
+                    );
+
                 }
 
-                var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom,username) values ('" +
-                    r[0].examName+"',"+r[0].studentId+",'2015-2016-2-1',"+start+","+end+",'"+datas.campus[r[0].campus].campusId+"','"+r[0].name+"','"+building+"','"+classroom+"','"+r[0].userName+"')";
-                conn.query(
-                    {
-                        sql:sql
-                    },function(ee,rr){
-                        //console.log(ee,rr);
-                        if(!ee) {
-                            console.log(o.start+"完成");
-                            updates.examAgain({
-                                start: o.start + 1
-                            });
-                        }else{
-                            console.log(ee);
-                        }
-                    }
-                );
-                
+                } else {
+                    console.log('over');
 
 
-
-
-            }else{
-                console.log('over');
-
-
+                }
             }
-        }
+
     );
 };
 
@@ -1884,21 +1890,28 @@ updates.examAgainNotice = function(o,cb) {
 
 };
 
-//datas.load();
-//
-//setTimeout(function(){
-//updates.library(
-//    {
-//        studentId:"2012141442029",
-//        password:"013991",
-//        barcode:"90585402",
-//        borId:"U12005391"
-//
-//    },function(e,r){
-//        //console.log(e,r);
-//    }
-//)
-//},3000);
+datas.load();
+
+setTimeout(function(){
+updates.curriculum(
+    {
+        studentId:"2014141453066",
+        password:"273814",
+        barcode:"90585402",
+        borId:"U12005391"
+
+    },function(e,r){
+        //console.log(e,r);
+    }
+);
+    //console.log(datas);
+    //
+    //updates.classroom({start:0},function(e,r){
+    //    console.log(e,r);
+    //})
+},3000);
+
+
 
 
 

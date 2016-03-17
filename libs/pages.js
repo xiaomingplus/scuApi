@@ -411,33 +411,14 @@ pages.curriculum = function(html){
     var $ = cheerio.load(html);
     var item={};
     var data=[];
-//console.log(html);
-   // $($($("table.displayTag")[1]).find("tr")[1]).find('td')[1]
     var teacher,weekHasLessonStr,weekHasLessonStart,weekHasLessonEnd,lessonStr,lessonStart,lessonEnd;
-//console.log($($("table.displayTag")[1]).find("tr").length-1);
     for(var i= 0,k=1;i<$($("table.displayTag")[1]).find("tr").length-1;i++,k++) {
         var tr = $($("table.displayTag")[1]).find("tr");
-        //console.log(tr.toString());
-        //console.log('11');
-        //console.log(k);
-        //console.log($($(tr[k]).find('td')[0]).text().trim());
-        
-        //console.log($($(tr[k-1]).find('td')[0]).text().trim());
-        //console.log('22');
         if(k>1 && $($(tr[k]).find('td')[0]).text().trim()!=$($(tr[1]).find('td')[0]).text().trim()){
-//console.log('x');
             var weekHasLesson = [];
-            teacher =[];
-            teacher = $($(tr[k]).find('td')[7]).text().trim().split(" ");
-            //console.log(teacher);
-
-            for (var n = 0; n < teacher.length; n++) {
-                teacher[n] = teacher[n].replace("*", "");
-            }
 
 
-            weekHasLessonStr = $($(tr[k]).find('td')[11]).text().trim();
-            //console.log(weekHasLessonStr);
+            weekHasLessonStr = $($(tr[k]).find('td')[0]).text().trim();
             if (!weekHasLessonStr) {
                 weekHasLesson = [];
             } else {
@@ -454,14 +435,14 @@ pages.curriculum = function(html){
                     weekHasLessonStart = parseInt(weekHasLessonStr.substring(0, weekHasLessonStr.indexOf("-")));
                     weekHasLessonEnd = parseInt(weekHasLessonStr.substring(weekHasLessonStr.indexOf("-") + 1, weekHasLessonStr.indexOf("周")));
 
-                    // console.log(weekHasLessonStart);console.log(weekHasLessonEnd);
+                     //console.log(weekHasLessonStart);console.log(weekHasLessonEnd);
                     for (var l = weekHasLessonStart; l <= weekHasLessonEnd; l++) {
                         weekHasLesson.push(parseInt(l));
                     }
                     //console.log(weekHasLesson);
                 }
             }
-            lessonStr = $($(tr[k]).find('td')[13]).text().trim();
+            lessonStr = $($(tr[k]).find('td')[2]).text().trim();
             var lesson = [];
             if (!lessonStr) {
                 lesson = [];
@@ -480,7 +461,8 @@ pages.curriculum = function(html){
                 }
             }
 
-            var week = $($(tr[k]).find('td')[12]).text().trim();
+            var week = $($(tr[k]).find('td')[1]).text().trim();
+            //console.log(week);
             if (week) {
                 week = parseInt(week);
 
@@ -488,8 +470,6 @@ pages.curriculum = function(html){
                 week = parseInt(0);
             }
 
-//console.log(data[i-1]);
-//console.log('111');
             item={
                 courseId:data[i-1].courseId,
                 orderId:data[i-1].orderId,
@@ -498,7 +478,7 @@ pages.curriculum = function(html){
                 status:data[i-1].status,
                 credit:data[i-1].credit,
                 weekHasLesson:weekHasLesson.join(','),
-                teacher:teacher.join(','),
+                teacher:data[i-1].teacher,
                 week:week,
                 lesson:lesson.join(','),
                 campusId:$($(tr[k]).find('td')[3]).text().trim()?datas.campus[$($(tr[k]).find('td')[3]).text().trim()].campusId:"",
@@ -506,15 +486,11 @@ pages.curriculum = function(html){
                 classroom:$($(tr[k]).find('td')[5]).text().trim()
 
             };
-            //console.log(item);
-            //console.log('222');
             data[i]=item;
-//console.log('333');
         }else {
             var weekHasLesson = [];
             teacher = [];
             teacher = $($(tr[k]).find('td')[7]).text().trim().split(" ");
-            //console.log(teacher);
 
             for (var n = 0; n < teacher.length; n++) {
                 teacher[n] = teacher[n].replace("*", "");
@@ -522,7 +498,6 @@ pages.curriculum = function(html){
 
 
             weekHasLessonStr = $($(tr[k]).find('td')[11]).text().trim();
-            //console.log(weekHasLessonStr);
             if (!weekHasLessonStr) {
                 weekHasLesson = [];
             } else {
@@ -539,11 +514,9 @@ pages.curriculum = function(html){
                     weekHasLessonStart = parseInt(weekHasLessonStr.substring(0, weekHasLessonStr.indexOf("-")));
                     weekHasLessonEnd = parseInt(weekHasLessonStr.substring(weekHasLessonStr.indexOf("-") + 1, weekHasLessonStr.indexOf("周")));
 
-                    // console.log(weekHasLessonStart);console.log(weekHasLessonEnd);
                     for (var l = weekHasLessonStart; l <= weekHasLessonEnd; l++) {
                         weekHasLesson.push(parseInt(l));
                     }
-                    //console.log(weekHasLesson);
                 }
             }
             lessonStr = $($(tr[k]).find('td')[13]).text().trim();
@@ -553,8 +526,6 @@ pages.curriculum = function(html){
             } else {
                 lessonStart = parseInt(lessonStr.substring(0, lessonStr.indexOf("~")));
                 lessonEnd = parseInt(lessonStr.substring((lessonStr.indexOf("~") + 1)));
-                //console.log(lessonStart);
-                //console.log(lessonEnd);
                 if (lessonStart == 0 && lessonEnd == 0) {
                     lesson = [];
                 } else {
@@ -581,12 +552,8 @@ pages.curriculum = function(html){
                 credit = 0;
             }
 
-//console.log($($(tr[k]).find('td')[5]).text().trim());
-//            console.log('1');
             var property = $($(tr[k]).find('td')[5]).text().trim();
-            //console.log(property);
 
-            //console.log('2');
 
             item = {
                 courseId: $($(tr[k]).find('td')[1]).text().trim(),
@@ -607,7 +574,6 @@ pages.curriculum = function(html){
             data[i] = item;
         }
         }
-
     return data;
 };
 
