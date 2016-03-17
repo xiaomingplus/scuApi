@@ -112,6 +112,7 @@ callback.post({
 consumer.majorQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=major&opt=get',function(err,response,body) {
+            console.log(body);
             if (err) {
                 console.log(err);
                 setTimeout(function(){
@@ -125,7 +126,7 @@ consumer.majorQuery= function(){
             }catch(e){
                 var user = {}
             }
-
+            console.log(user);
             if(Object.keys(user).length>0) {
                 user.password = aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.curriculum(user, function (ee) {
@@ -406,13 +407,14 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-        consumer.scoreQuery();
-         consumer.bookQuery();
+        console.log('init');
+        //consumer.scoreQuery();
+        // consumer.bookQuery();
         consumer.majorQuery();
-        consumer.renewQuery();
-        consumer.examQuery();
+        //consumer.renewQuery();
+        //consumer.examQuery();
     }else{
-
+        console.log('init2');
         setTimeout(function(){
             consumer.init()
         },6000);

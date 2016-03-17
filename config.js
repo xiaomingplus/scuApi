@@ -4,11 +4,26 @@
 var config = {
     queryUrl:"http://queue.scuinfo.com",
 
+    mongodbUrl:"mongodb://localhost/scuApi",
+
     querySecret:{
 
         appId:"99999999999999",
         appSecret:"dsgygb123456"
 
+    },
+    //mysql:{
+    //        'host':'scuinfo.cojlxhdpe4yp.ap-northeast-1.rds.amazonaws.com',
+    //       'user':'dsgygb',
+    //        'password':'www.scuinfo.com',
+    //         'database':'scuinfo'
+    //},
+
+    mysql:{
+        'host':'127.0.0.1',
+        'user':'root',
+        'password':'123456',
+        'database':'scuinfo'
     },
 
     urls:{

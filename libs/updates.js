@@ -1137,7 +1137,7 @@ updates.curriculum = function(o,cb){
                 
                 var list = pages.curriculum(r.data);
                 //console.log('2');
-                //console.log(list);
+                console.log(list);
 
                 if(list.length>0) {
 
@@ -1891,25 +1891,25 @@ updates.examAgainNotice = function(o,cb) {
 };
 
 datas.load();
-
-setTimeout(function(){
-updates.curriculum(
-    {
-        studentId:"2014141453066",
-        password:"273814",
-        barcode:"90585402",
-        borId:"U12005391"
-
-    },function(e,r){
-        //console.log(e,r);
-    }
-);
-    //console.log(datas);
-    //
-    //updates.classroom({start:0},function(e,r){
-    //    console.log(e,r);
-    //})
-},3000);
+//
+//setTimeout(function(){
+//updates.curriculum(
+//    {
+//        studentId:"2014141453066",
+//        password:"273814",
+//        barcode:"90585402",
+//        borId:"U12005391"
+//
+//    },function(e,r){
+//        //console.log(e,r);
+//    }
+//);
+//    //console.log(datas);
+//    //
+//    //updates.classroom({start:0},function(e,r){
+//    //    console.log(e,r);
+//    //})
+//},3000);
 
 
 

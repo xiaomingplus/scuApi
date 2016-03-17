@@ -13,39 +13,42 @@ var common =require('../libs/common.js');
 var pages = require('../libs/pages.js');
 api.apiPermission = function(req,res,next){
     res.setHeader('content-type','application/json; charset=UTF-8');
-    var id = req.query.appId?req.query.appId:req.query.appid;
-    //console.log(id);
-    //根据appid读取app权限信息
-    services.app_permission_model.findOne({appid:id},function(err,app_permission){
-        //console.log(err,app_permission);
+    var id = req.query.appId;
 
-        if(err){
-            console.log(err);
-            res.dump('redisError');
-            return;
-        }
-        if(app_permission==null){
-            res.dump('appIdError');
-        }else{
-            //判断appkey是否正确
-            var key = req.query.appSecret?req.query.appSecret:req.query.appsecret;
-            if(key!=app_permission.appkey){
-                res.dump('appKeyError');
-            }else{
-                //console.log(req.params);
-                //console.log(req.params[0]);
-                var func = req.params[0];
-                //判断app是否有权限调用当前接口
-                if(app_permission.p_list.indexOf(func)==-1){
-                    res.dump('appPermissionError');
-                }else{
-                    //console.log('permission ok');
-                    next();
-                }
+    if(id) {
 
+        //根据appid读取app权限信息
+        services.app_permission_model.findOne({appid: id}, function (err, app_permission) {
+            if (err) {
+                console.log(err);
+                res.dump('redisError');
+                return;
             }
-        }
-    });
+            if (app_permission == null) {
+                res.dump('appIdError');
+            } else {
+                //判断appkey是否正确
+                var key = req.query.appSecret ? req.query.appSecret : req.query.appsecret;
+                if (key != app_permission.appkey) {
+                    res.dump('appKeyError');
+                } else {
+                    //console.log(req.params);
+                    //console.log(req.params[0]);
+                    var func = req.params[0];
+                    //判断app是否有权限调用当前接口
+                    if (app_permission.p_list.indexOf(func) == -1) {
+                        res.dump('appPermissionError');
+                    } else {
+                        //console.log('permission ok');
+                        next();
+                    }
+
+                }
+            }
+        });
+    }else{
+        res.dump('appIdError');
+    }
 };
 
 /**

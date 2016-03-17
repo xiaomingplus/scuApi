@@ -2,8 +2,6 @@
 logs
 *.log
 
-mysql.js
-mongoModel.js
 
 # Runtime data
 pids
