@@ -634,22 +634,22 @@ setTimeout(function(){
             start: 0
         }
     );
-    autos.queryExamProducer(
+    //autos.queryExamProducer(
+    //    {
+    //        start: 0
+    //    }
+    //);
+
+    autos.queryMajorProducer(
         {
-            start: 0
+            start:0
         }
     );
-
-    //autos.queryMajorProducer(
-    //    {
-    //        start:0
-    //    }
-    //);
-    //autos.queryScoreProducer(
-    //    {
-    //        start:0
-    //    }
-    //);
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
 
     //autos.delete(
     //    {
@@ -669,21 +669,21 @@ autos.queryBookProducer(
         start: 0
     }
 );
-    //autos.queryMajorProducer(
-    //    {
-    //        start:0
-    //    }
-    //);
-    //autos.queryScoreProducer(
-    //    {
-    //        start:0
-    //    }
-    //);
-    autos.queryExamProducer(
+    autos.queryMajorProducer(
         {
-            start: 0
+            start:0
         }
     );
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
+    //autos.queryExamProducer(
+    //    {
+    //        start: 0
+    //    }
+    //);
 
 
     },12*60*60*1000);

@@ -407,14 +407,12 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-        console.log('init');
-        //consumer.scoreQuery();
-        // consumer.bookQuery();
+        consumer.scoreQuery();
+         consumer.bookQuery();
         consumer.majorQuery();
-        //consumer.renewQuery();
-        //consumer.examQuery();
+        consumer.renewQuery();
+        consumer.examQuery();
     }else{
-        console.log('init2');
         setTimeout(function(){
             consumer.init()
         },6000);
