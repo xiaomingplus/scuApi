@@ -43,9 +43,9 @@ autos.delete = function(o){
                     return;
                 }
 
-                
+
                 if(user.scoreVersion>1){
-                    
+
                     console.log("delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion);
                     conn.query({
                             sql: "delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion
@@ -58,7 +58,7 @@ autos.delete = function(o){
 
                 if(user.majorVersion>1){
                     console.log("delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion);
-                    
+
                     conn.query({
                             sql: "delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion
                         }, function (eeee, rrrr) {
@@ -69,9 +69,9 @@ autos.delete = function(o){
 
 
                 if(user.examVersion>1){
-                    
+
                     console.log("delete from `scu_exam` where studentId="+user.id+" and version<" + user.examVersion);
-                    
+
                     conn.query({
                             sql: "delete from `scu_exam` where studentId="+user.id+" and version<" + user.examVersion
                         }, function (eeee, rrrr) {
@@ -83,7 +83,7 @@ autos.delete = function(o){
 
 
                 if(user.extendVersion>1){
-                    
+
                     console.log("delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion);
 
 
@@ -250,7 +250,7 @@ autos.queryScoreProducer = function(o){
 
 //添加到课表队列生产者
 autos.queryMajorProducer = function(o){
-    
+
     //console.log('major',o);
     conn.query(
         {
@@ -376,7 +376,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                     }
                     //console.log('2');
                     //console.log(r);
-                    
+
                     if(r.length==0){
 
                         //console.log('没有借书');
@@ -410,7 +410,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                     return;
                                 }
 
-                                
+
                                 if(rows.length == 0){
                                     console.log(user.id+'没有变化为0');
                                     autos.queryBookProducer({start: o.start + 1});
@@ -507,10 +507,10 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                 for(var i=0;i< r.length;i++){
                                     newBooks[r[i].barcode]=r[i].deadline
                                 }
-                                
+
                                 //console.log(newBooks);
                                 //console.log(rows);
-                                
+
 
                                 for(var i=0;i< rows.length;i++){
 
@@ -526,7 +526,7 @@ console.log(JSON.stringify(rrr[0])+new Date());
                                                 console.log(eee);
                                                 return;
                                             }
-                                            
+
                                             console.log('插入图书队列');
                                             for(var i=0;i< rows.length;i++){
                                                 if((rows[i].deadline-common.time()>0) && ((rows[i].deadline-common.time())<36*60*60) && (rows[i].deadline>common.time())){
@@ -634,11 +634,11 @@ setTimeout(function(){
             start: 0
         }
     );
-    //autos.queryExamProducer(
-    //    {
-    //        start: 0
-    //    }
-    //);
+    autos.queryExamProducer(
+       {
+           start: 0
+       }
+    );
 
     autos.queryMajorProducer(
         {
@@ -657,7 +657,7 @@ setTimeout(function(){
     //    }
     //)
 
-    
+
 
 },3*1000);
 
@@ -679,11 +679,11 @@ autos.queryBookProducer(
             start:0
         }
     );
-    //autos.queryExamProducer(
-    //    {
-    //        start: 0
-    //    }
-    //);
+    autos.queryExamProducer(
+       {
+           start: 0
+       }
+    );
 
 
     },12*60*60*1000);
