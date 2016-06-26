@@ -1,7 +1,7 @@
 /**
  * mysql模块，只负责连接数据库，
  */
-var client = require('easymysql');
+var client = require('fy-mysql');
 //mysql conn
 var config = require('./config.js');
 var conn = null;

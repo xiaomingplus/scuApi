@@ -13,7 +13,7 @@ pages.teacherList = function(html,cb){
     var trs = $(html).find("table.titleTop2 table#user tbody tr");
     var item =null;
     var teacherIdTd;
-    
+
     console.log(trs);
 
     trs.each(function(i,v){
@@ -320,7 +320,7 @@ pages.scorePass = function(html){
             };
             data[term[i]][$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim()]=item;
         }
-        
+
     }
     //console.log(data);
 return data;
@@ -362,7 +362,7 @@ pages.scoreFail = function(html){
 
     for(var i= 0,k=0;i<$("table.displayTag").length;i++,k++) {
         for(var m = 1;m<$($("table.displayTag")[i]).find('tr').length;m++){
-            
+
             //console.log($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim());
 
             item={
@@ -598,6 +598,7 @@ pages.exam = function(html){
                 'name':common.mysqlEscape($($(tr[m]).find('td')[4]).text().trim()),
                 'building':$($(tr[m]).find('td')[2]).text().trim()?$($(tr[m]).find('td')[2]).text().trim():"",
                 'classroom':$($(tr[m]).find('td')[3]).text().trim()?$($(tr[m]).find('td')[3]).text().trim():"",
+                'seat':$($(tr[m]).find('td')[9]).text().trim()?$($(tr[m]).find('td')[9]).text().trim():""
             };
             data.push(item);
 
@@ -626,7 +627,7 @@ pages.library = function(html){
     var table = $(".sheet");
     var data = [],item={};
     //console.log(table.text());
-    
+
     for(var i=0;i<table.length;i++){
         var date =$($(table[i]).find("table tr td")[2]).text().trim();
          item = {
