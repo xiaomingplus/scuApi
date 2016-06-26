@@ -629,33 +629,33 @@ autos.queryExamProducer = function(o){
 setTimeout(function(){
 
 
-    // autos.queryBookProducer(
-    //     {
-    //         start: 0
-    //     }
-    // );
-    // autos.queryExamProducer(
-    //    {
-    //        start: 0
-    //    }
-    // );
-    //
-    // autos.queryMajorProducer(
-    //     {
-    //         start:0
-    //     }
-    // );
-    // autos.queryScoreProducer(
-    //     {
-    //         start:0
-    //     }
-    // );
-
-    autos.delete(
+    autos.queryBookProducer(
+        {
+            start: 0
+        }
+    );
+    autos.queryExamProducer(
        {
-           start:6706
+           start: 0
        }
-    )
+    );
+
+    autos.queryMajorProducer(
+        {
+            start:0
+        }
+    );
+    autos.queryScoreProducer(
+        {
+            start:0
+        }
+    );
+
+    // autos.delete(
+    //    {
+    //        start:6706
+    //    }
+    // )
 
 
 

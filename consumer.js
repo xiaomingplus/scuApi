@@ -19,9 +19,9 @@ consumer.scoreQuery= function(){
                 },1000);
                 return;
             }
-            
+
             //console.log(body);
-            
+
             try {
                 var user = JSON.parse(decodeURIComponent(body));
 
@@ -29,14 +29,14 @@ consumer.scoreQuery= function(){
                 var user = {}
             }
 
-            
+
             if(Object.keys(user).length>0) {
                 user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 //console.log('队列开始第一项了');
                 //console.log(encodeURIComponent(user.password));
-                
+
                 //console.log(user);
-                
+
                 updates.score(user, function (ee) {
                     //console.log(ee);
                     if (ee) {
@@ -50,7 +50,7 @@ consumer.scoreQuery= function(){
                             studentId: user.studentId
 
                         });
-                        
+
 
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
@@ -64,7 +64,7 @@ consumer.scoreQuery= function(){
                         },function(e,r){
                             console.log(e,r);
                         });
-                        
+
                     }else{
                         console.log({
     callback:user.appId?datas.app[user.appId].callback:"",
@@ -407,10 +407,10 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-        consumer.scoreQuery();
-         consumer.bookQuery();
-        consumer.majorQuery();
-        consumer.renewQuery();
+        // consumer.scoreQuery();
+        //  consumer.bookQuery();
+        // consumer.majorQuery();
+        // consumer.renewQuery();
         consumer.examQuery();
     }else{
         setTimeout(function(){
