@@ -44,28 +44,28 @@ autos.delete = function(o){
                 }
 
 
-                if(user.scoreVersion>1){
-
-                    console.log("delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion);
-                    conn.query({
-                            sql: "delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion
-                        }, function (eeee, rrrr) {
-                            console.log(eeee,rrrr);
-                        }
-                    );
-                }
-
-
-                if(user.majorVersion>1){
-                    console.log("delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion);
-
-                    conn.query({
-                            sql: "delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion
-                        }, function (eeee, rrrr) {
-                            console.log(eeee,rrrr);
-                        }
-                    );
-                }
+                // if(user.scoreVersion>1){
+                //
+                //     console.log("delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion);
+                //     conn.query({
+                //             sql: "delete from `scu_score` where studentId="+user.id+" and version<" + user.scoreVersion
+                //         }, function (eeee, rrrr) {
+                //             console.log(eeee,rrrr);
+                //         }
+                //     );
+                // }
+                //
+                //
+                // if(user.majorVersion>1){
+                //     console.log("delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion);
+                //
+                //     conn.query({
+                //             sql: "delete from `scu_major` where studentId="+user.id+" and version<" + user.majorVersion
+                //         }, function (eeee, rrrr) {
+                //             console.log(eeee,rrrr);
+                //         }
+                //     );
+                // }
 
 
                 if(user.examVersion>1){
@@ -82,18 +82,18 @@ autos.delete = function(o){
 
 
 
-                if(user.extendVersion>1){
-
-                    console.log("delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion);
-
-
-                    conn.query({
-                            sql: "delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion
-                        }, function (eeee, rrrr) {
-                            console.log(eeee,rrrr);
-                        }
-                    );
-                }
+                // if(user.extendVersion>1){
+                //
+                //     console.log("delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion);
+                //
+                //
+                //     conn.query({
+                //             sql: "delete from `scu_extend` where studentId="+user.id+" and version<" + user.extendVersion
+                //         }, function (eeee, rrrr) {
+                //             console.log(eeee,rrrr);
+                //         }
+                //     );
+                // }
 
 
                 setTimeout(
@@ -629,27 +629,27 @@ autos.queryExamProducer = function(o){
 setTimeout(function(){
 
 
-    autos.queryBookProducer(
-        {
-            start: 0
-        }
-    );
-    autos.queryExamProducer(
-       {
-           start: 0
-       }
-    );
-
-    autos.queryMajorProducer(
-        {
-            start:0
-        }
-    );
-    autos.queryScoreProducer(
-        {
-            start:0
-        }
-    );
+    // autos.queryBookProducer(
+    //     {
+    //         start: 0
+    //     }
+    // );
+    // autos.queryExamProducer(
+    //    {
+    //        start: 0
+    //    }
+    // );
+    //
+    // autos.queryMajorProducer(
+    //     {
+    //         start:0
+    //     }
+    // );
+    // autos.queryScoreProducer(
+    //     {
+    //         start:0
+    //     }
+    // );
 
     autos.delete(
        {
