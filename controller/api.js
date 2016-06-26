@@ -274,7 +274,7 @@ api.exam = function(req, res) {
           }
 
         }
-        //console.log(r);
+        console.log(list);
 
         res.dump('ok', {
           currentWeek: common.currentWeek(datas.firstDay[datas.currentTerm.termId]),

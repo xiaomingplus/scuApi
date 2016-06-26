@@ -651,11 +651,11 @@ setTimeout(function(){
         }
     );
 
-    //autos.delete(
-    //    {
-    //        start:0
-    //    }
-    //)
+    autos.delete(
+       {
+           start:0
+       }
+    )
 
 
 
