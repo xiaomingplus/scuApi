@@ -653,7 +653,7 @@ setTimeout(function(){
 
     autos.delete(
        {
-           start:0
+           start:6706
        }
     )
 
