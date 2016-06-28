@@ -634,11 +634,11 @@ setTimeout(function(){
             start: 0
         }
     );
-    autos.queryExamProducer(
-       {
-           start: 0
-       }
-    );
+    // autos.queryExamProducer(
+    //    {
+    //        start: 0
+    //    }
+    // );
 
     autos.queryMajorProducer(
         {
@@ -679,11 +679,11 @@ autos.queryBookProducer(
             start:0
         }
     );
-    autos.queryExamProducer(
-       {
-           start: 0
-       }
-    );
+    // autos.queryExamProducer(
+    //    {
+    //        start: 0
+    //    }
+    // );
 
 
     },12*60*60*1000);
