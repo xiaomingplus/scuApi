@@ -34,7 +34,7 @@
 		var aes128 = require("aes128.js");
 		var password = aes.encode(appId,appSecret,_password); //加密后的
 		
-**3.api网址：http://api.fyscu.com**
+**3.api网址：http://api.scuinfo.com**
 		
 下面是接口的文档：
 		
