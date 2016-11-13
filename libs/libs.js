@@ -47,7 +47,7 @@ lib.check = function (o,cb){
     };
     request(options,function(err,response){
 
-        console.log(err,response.body);
+        // console.log(err,response.body);
         if(err){
 
             cb({code:code.requestError.code,message:code.requestError.message});
