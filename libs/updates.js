@@ -1696,17 +1696,18 @@ updates.examAgain = function(o) {
           var building = "";
           var classroom = "";
 
-          if (r[0].place.indexOf("楼") > -1) {
-            building = r[0].place.substring(0, (r[0].place.indexOf("楼") + 1));
-            classroom = r[0].place.substring((r[0].place.indexOf("楼") + 1));
-          } else {
-            building = r[0].place.substring(0, (r[0].place.indexOf("教") + 1));
-            classroom = r[0].place.substring((r[0].place.indexOf("教") + 1));
-          }
-
+          // if (r[0].place.indexOf("楼") > -1) {
+          //   building = r[0].place.substring(0, (r[0].place.indexOf("楼") + 1));
+          //   classroom = r[0].place.substring((r[0].place.indexOf("楼") + 1));
+          // } else {
+          //   building = r[0].place.substring(0, (r[0].place.indexOf("教") + 1));
+          //   classroom = r[0].place.substring((r[0].place.indexOf("教") + 1));
+          // }
+          building = r[0].place;
+          classroom = r[0].classroom;
 
           var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom,username) values ('" +
-            r[0].examName + "','" + r[0].studentId + "','2015-2016-2-1'," + start + "," + end + ",'" + datas.campus[r[0].campus].campusId + "','" + r[0].name + "','" + building + "','" + classroom + "','" + r[0].username + "')";
+            r[0].examName + "','" + r[0].studentId + "','2016-2017-1-1'," + start + "," + end + ",'" + datas.campus[r[0].campus].campusId + "','" + r[0].name + "','" + building + "','" + classroom + "','" + r[0].username + "')";
           //console.log(sql);return;
 
           conn.query({
@@ -1824,19 +1825,15 @@ updates.examAgainNotice = function(o, cb) {
 
 };
 
-// datas.load();
-//
-// setTimeout(function() {
-//
-//   updates.exam({
-//     studentId: "2015151642180",
-//     password: "goodjob305"
-//   }, function(e, r) {
-//     console.log(e);
-//
-//     console.log(r);
-//   })
-// }, 3000);
+datas.load();
+
+setTimeout(function() {
+
+  updates.term(function(e, r) {
+    console.log(e);
+    console.log(r);
+  })
+}, 3000);
 
 
 

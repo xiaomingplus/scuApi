@@ -43,7 +43,7 @@ lib.check = function (o,cb){
     };
     request(options,function(err,response){
 
-        //console.log(err,response.body);
+        console.log(err,response.body);
         if(err){
 
             cb({code:code.requestError.code,message:code.requestError.message});
@@ -58,7 +58,7 @@ lib.check = function (o,cb){
         //console.log(loginCallback);
         var $ = cheerio.load(loginCallback);
         if($('title').text().trim()=="学分制综合教务"){
-            
+
             cb(null,j);
         }else{
             //console.log('222');
@@ -79,7 +79,7 @@ lib.get = function (o,cb){
 
     lib.check(o,function(err,j){
         if(err) {
-            
+
             console.log(err);
             console.log('i');
             cb(err);
@@ -95,11 +95,11 @@ lib.get = function (o,cb){
         //console.log('222');
         //console.log(opts);
         request(opts,function(err,r){
-            
+
             //console.log(opts);
             //console.log(r.body);
             if(err){
-                
+
                 console.log('第一次get错误');
                 cb({code:code.requestError.code,message:code.requestError.message,j:j});
                 console.log(err);
@@ -148,11 +148,11 @@ lib.post = function (o,cb){
             jar:j,
             timeout: o.timeout? o.timeout:10000
         };
-        
+
 
             request(opts,function(err,r){
-                
-                
+
+
                 if(err){
                     console.log(err);
                     cb({code:code.requestError.code,message:code.requestError.message});
@@ -162,7 +162,7 @@ lib.post = function (o,cb){
                     cb({code:code.requestError.code,message:code.requestError.message});
                     return;
                 }
-                
+
                 cb(null, {code:0, j:j,data:iconv.decode(new Buffer(r.body, 'binary'), 'GBK')});
             });
 
@@ -313,7 +313,7 @@ console.log(e1);
         timeout: o.timeout? o.timeout:10000
     };
     request.post(options,function(err,response,body){
-        
+
         //console.log(body);return;
         if(err){
 
