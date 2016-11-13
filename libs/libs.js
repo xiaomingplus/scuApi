@@ -35,11 +35,15 @@ lib.check = function (o,cb){
     //console.log(encodeURIComponent(o.password));
     var options = {
         method:"post",
-        url: 'http://202.115.47.141/loginAction.do?zjh='+ o.studentId+'&mm='+encodeURIComponent(o.password),
+        url: 'http://202.115.47.141/loginAction.do',
         encoding: 'binary',
         form:{zjh: o.studentId,mm:""+o.password+""},
         jar:j,
-        timeout: o.timeout? o.timeout:10000
+        timeout: o.timeout? o.timeout:10000,
+        // headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded',
+        //     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
+        // },
     };
     request(options,function(err,response){
 
@@ -55,7 +59,7 @@ lib.check = function (o,cb){
             return;
         }
         var loginCallback = iconv.decode(new Buffer(response.body, 'binary'), 'GBK');//登录返回页面
-        //console.log(loginCallback);
+        // console.log(loginCallback);
         var $ = cheerio.load(loginCallback);
         if($('title').text().trim()=="学分制综合教务"){
 
@@ -363,6 +367,13 @@ lib.getBookId = function(o,cb){
 
 
 };
+
+// lib.check({
+//     studentId:"2015141421022",
+//     password:"012214"
+// },function(e,r){
+//     console.log(e,r);
+// })
 
 
 module.exports = lib;
