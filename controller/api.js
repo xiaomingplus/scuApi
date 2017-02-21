@@ -330,14 +330,14 @@ api.examAgain = function(req, res) {
 
 
     if (!req.query.termId) {
-
       termId = datas.currentTerm.termId;
     } else {
       termId = req.query.termId;
     }
-
+    var sql = "select * from scu_exam_again where studentId=" + req.query.studentId + " and termId='" + termId + "'";
+console.log(sql);
     conn.query({
-      sql: "select * from scu_exam_again where studentId=" + req.query.studentId + " and termId='" + termId + "'"
+      sql: sql
     }, function(ee, rr) {
 
       if (ee) {
@@ -392,7 +392,7 @@ api.examAgain = function(req, res) {
 
 //输出课表
 api.major = function(req, res) {
-  console.log(req.query);
+  // console.log(req.query);
   req.query.field = 'major';
   check.student(req.query, function(e, r) {
     if (e) {
@@ -578,7 +578,7 @@ api.renew = function(req, res) {
       res.end(JSON.stringify(e));
       return;
     }
-    console.log(config.queryUrl + '/?name=renew&opt=put&data=' + encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId, config.querySecret.appSecret, r.password) + '","barcode":"' + req.query.bookId + '","borId":"' + req.query.borrowId + '","appId":' + req.query.appId + '}'));
+    // console.log(config.queryUrl + '/?name=renew&opt=put&data=' + encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId, config.querySecret.appSecret, r.password) + '","barcode":"' + req.query.bookId + '","borId":"' + req.query.borrowId + '","appId":' + req.query.appId + '}'));
     request(config.queryUrl + '/?name=renew&opt=put&data=' + encodeURIComponent('{"studentId":"' + req.query.studentId + '","password":"' + aes128.encode(config.querySecret.appId, config.querySecret.appSecret, r.password) + '","barcode":"' + req.query.bookId + '","borId":"' + req.query.borrowId + '","appId":' + req.query.appId + '}'), function(eee, rrr) {
       if (eee) {
         res.dump('requestLibError');
@@ -832,7 +832,7 @@ api.course = function(req, res) {
   conn.query({
     sql: sql
   }, function(e, r) {
-    console.log(e, r);
+    // console.log(e, r);
 
     res.dump('ok', r);
   });

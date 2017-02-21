@@ -35,7 +35,7 @@ updates.term = function(cb) {
       studentId: datas.account.studentId,
       password: datas.account.password
     };
-
+    console.log(o);
     libs.get(o, function(err, data) {
       if (err) {
         cb(err);
@@ -1670,6 +1670,7 @@ var dateToTimestamp = function(string) {
 };
 
 updates.examAgain = function(o) {
+    //记得改一下termid啊
   conn.query({
       sql: "select * from scu_exam_temp limit " + o.start + ",1"
     }, function(e, r) {
@@ -1704,10 +1705,10 @@ updates.examAgain = function(o) {
           //   classroom = r[0].place.substring((r[0].place.indexOf("教") + 1));
           // }
           building = r[0].place;
-          classroom = r[0].classroom;
+          classroom = "";
 
-          var sql = "insert into scu_exam_again (examName,studentId,termId,start,end,campusId,name,building,classroom,username) values ('" +
-            r[0].examName + "','" + r[0].studentId + "','2016-2017-1-1'," + start + "," + end + ",'" + datas.campus[r[0].campus].campusId + "','" + r[0].name + "','" + building + "','" + classroom + "','" + r[0].username + "')";
+          var sql = "insert into scu_exam_again (id,examName,studentId,termId,start,end,campusId,name,building,classroom,username) values ("+r[0].id+",'" +
+            r[0].examName + "','" + r[0].studentId + "','2016-2017-2-1'," + start + "," + end + ",'" + datas.campus[r[0].campus].campusId + "','" + r[0].name + "','" + building + "','" + classroom + "','" + r[0].username + "')";
           //console.log(sql);return;
 
           conn.query({
@@ -1825,19 +1826,23 @@ updates.examAgainNotice = function(o, cb) {
 
 };
 
-datas.load();
-
-setTimeout(function() {
-
-  updates.term(function(e, r) {
-    console.log(e);
-    console.log(r);
-  })
-}, 3000);
-
+// datas.load();
+//
+// setTimeout(function() {
+//
+//   updates.examAgain({
+//       start:0
+//   })
+// }, 3000);
 
 
-
+//
+// setTimeout(function() {
+//
+//   updates.term(function(err,data){
+//       console.log(err,data);
+//   })
+// }, 3000);
 
 
 module.exports = updates;

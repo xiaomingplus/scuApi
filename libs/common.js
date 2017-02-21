@@ -97,4 +97,20 @@ common.mysqlEscape = function  (str) {
         }
     });
 };
+
+common.getPreviousTerm = function(term){
+    console.log(term);
+    //获取上个学期的str
+    //2016-2017-2-1  to   2016-2017-1-1
+    //2016-2017-1-1 to 2015-2016-2-1
+    var strArr = term.split('-');
+    var previousTerm = term;
+    if(strArr[2]=='2'){
+        previousTerm = `${strArr[0]}-${strArr[1]}-1-${strArr[3]}`;
+    }
+    if(strArr[2]=='1'){
+        previousTerm = `${strArr[0]-1}-${strArr[1]-1}-2-${strArr[3]}`;
+    }
+    return previousTerm;
+}
 module.exports = common;

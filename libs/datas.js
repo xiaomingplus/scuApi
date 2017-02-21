@@ -29,8 +29,8 @@ var datas={
         firstDayStatus:false
     },
     account:{
-        studentId:"2012141442029",
-        password:"013991"
+        studentId:"2015141011021",
+        password:"136641"
     },
     campus:{
 
@@ -78,7 +78,7 @@ datas.loadApp = function(){
         if(e){
             console.log(e);return;
         }
-        
+
         if(r.length>0){
             for(var i=0;i< r.length;i++){
                 datas.app[r[i].id]={
@@ -260,7 +260,7 @@ datas.loadProperty = function(){
 datas.loadTerm = function(){
     if(datas.status.versionStatus){
         db.getTerm({version:datas.version.termVersion},function(e,r){
-            
+
             if(e){
                 console.log(e);
                 return;
@@ -324,7 +324,7 @@ if(!datas.status.status){
                 console.log(e);
                 return;
             }
-            
+
 
             if(!datas.status.accountStatus){
                 datas.loadAccount();
