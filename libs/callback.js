@@ -4,7 +4,7 @@ var callback ={
 var code = require('../code.js');
 var common = require('./common.js');
 var request = require('request');
-
+var crypto = require('crypto');
 var form = {
     // message为事件内容
     // { ToUserName: 'gh_d3e07d51b513',
@@ -27,13 +27,39 @@ var form = {
 
 
 callback.post = function(o,cb){
+    //console.log(o);
+
     if(!o.callback){
         cb(code.lackParamsCallback);
         return;
     }
-request.post(
+//
+//    signature	微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
+//timestamp	时间戳
+//    nonce	随机数
+//    echostr
+
+    var nonce=Math.floor(Math.random()*10000000000000+1);
+    var timestamp = parseInt(new Date().getTime()/1000);
+    var appSecret = o.appSecret? o.appSecret:"";
+    var shasum = crypto.createHash('sha1');
+    var arr = [appSecret, timestamp, nonce].sort();
+    shasum.update(arr.join(''));
+    var signature = shasum.digest('hex');
+    console.log({
+        url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
+        form:{
+            appId: o.appId? o.appId:0,
+            code: o.code? o.code:0,
+            message: o.message? o.message:"no Data",
+            type: o.action? o.action:"",
+            studentId: o.studentId? o.studentId:"",
+            time:common.time()
+        }
+    });
+    request.post(
     {
-        url: o.callback,
+        url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
         form:{
             appId: o.appId? o.appId:0,
             code: o.code? o.code:0,
@@ -43,6 +69,7 @@ request.post(
             time:common.time()
         }
     },function(e,r,b){
+        //console.log(e,b);
         if(e){
             cb(code.requestCallbackError);
             //console.log(e);
@@ -54,6 +81,59 @@ request.post(
 )
 };
 
+callback.p = function(o,cb){
+    //console.log(o);
 
+    if(!o.callback){
+        cb(code.lackParamsCallback);
+        return;
+    }
+//
+//    signature	微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
+//timestamp	时间戳
+//    nonce	随机数
+//    echostr
+
+    var nonce=Math.floor(Math.random()*10000000000000+1);
+    var timestamp = parseInt(new Date().getTime()/1000);
+    var appSecret = o.appSecret? o.appSecret:"";
+    var shasum = crypto.createHash('sha1');
+    var arr = [appSecret, timestamp, nonce].sort();
+    shasum.update(arr.join(''));
+    var signature = shasum.digest('hex');
+console.log({
+            url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
+            form: o.form
+                //appId: o.appId? o.appId:0,
+                //code: o.code? o.code:0,
+                //message: o.message? o.message:"no Data",
+                //type: o.action? o.action:"",
+                //studentId: o.studentId? o.studentId:"",
+                //time:common.time()
+
+        });
+    request.post(
+        {
+            url: o.callback+"?nonce="+nonce+"&timestamp="+timestamp+"&signature="+signature,
+            form: o.form
+                //appId: o.appId? o.appId:0,
+                //code: o.code? o.code:0,
+                //message: o.message? o.message:"no Data",
+                //type: o.action? o.action:"",
+                //studentId: o.studentId? o.studentId:"",
+                //time:common.time()
+
+        },function(e,r,b){
+            //console.log(e,b);
+            if(e){
+                cb(code.requestCallbackError);
+                //console.log(e);
+                return;
+            }
+
+            cb(null,b);
+        }
+    )
+};
 
 module.exports = callback;

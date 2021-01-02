@@ -2,7 +2,6 @@ var check = {
     name:"检测"
 };
 var code = require('../code.js');
-var services = require('./system.js');
 var conn = require('../mysql.js');
 var aes128 = require('./aes128.js');
 var libs = require('./libs.js');
@@ -14,19 +13,20 @@ check.password = function(o,cb,debug){
         var password = o.password;
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
+        o.password=aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
-    console.log("select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId);
+    //console.log(password);
+    //console.log("select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId);
   conn.query({
       sql:"select password,error,"+ o.field+"UpdateAt,"+ o.field+"Count,"+ o.field+"Version from scu_user where id="+ o.studentId
   },function(e,r){
-//console.log(e,r);
+// console.log(e,r);
       if(e){
           console.log(e);
          cb(code.mysqlError);
           return;
       }else{
-          
-          console.log(r);
+          //console.log(r);
           if(r.length==0) {
 
               //cb(code.notFoundStudentId);
@@ -48,7 +48,7 @@ check.password = function(o,cb,debug){
                       }
 
 
-                  request(config.queryUrl+'/?name='+o.field+'&opt=put&data={"studentId":' + o.studentId + ',"password":"' +password + '","appId":' + o.appId + '}', function (eee, rrr) {
+                  request(config.queryUrl+'/?name='+o.field+'&opt=put&data='+encodeURIComponent('{"studentId":' + o.studentId + ',"password":"' +aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":' + o.appId + '}'), function (eee, rrr) {
 
                           if (eee) {
                               cb(code.requestError);
@@ -65,6 +65,7 @@ check.password = function(o,cb,debug){
               })
           }else{
               if(r[0].error==1){
+                  //o.timeout=3000;
                   libs.check(o, function (ee) {
                       if (ee) {
                           cb(ee);
@@ -83,7 +84,7 @@ check.password = function(o,cb,debug){
                               return;
                           }
 
-                          request(config.queryUrl+'/?name=' + o.field + '&opt=put&data={"studentId":' + o.studentId + ',"password":"' + password + '","appId":' + o.appId + '}', function (eee, rrr) {
+                          request(config.queryUrl+'/?name=' + o.field + '&opt=put&data='+encodeURIComponent('{"studentId":' + o.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":' + o.appId + '}'), function (eee, rrr) {
 
                                   if (eee) {
                                       cb(code.requestError);
@@ -100,6 +101,8 @@ check.password = function(o,cb,debug){
                       return;
                   });
               }else{
+
+
 
 
                if(password==r[0].password){
@@ -155,6 +158,7 @@ check.libraryPassword = function(o,cb,debug){
         var password = o.password;
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
+        o.password=aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
     conn.query({
         sql:"select password,error,updateAt,count,version from scu_library where id="+ o.studentId
@@ -185,7 +189,7 @@ check.libraryPassword = function(o,cb,debug){
                         }
 
 
-                        request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + o.studentId + ',"password":"' +password + '","appId":"'+ o.appId? o.appId:0+'"}', function (eee, rrr) {
+                        request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":' + o.studentId + ',"password":"' +aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":"'+ o.appId? o.appId:0+'"}'), function (eee, rrr) {
 
                                 if (eee) {
                                     cb(code.requestError);
@@ -202,6 +206,8 @@ check.libraryPassword = function(o,cb,debug){
                 })
             }else{
                 if(r[0].error==1){
+                    o.timeout=10000;
+
                     libs.checkLib(o, function (ee) {
                         if (ee) {
                             cb(ee);
@@ -209,7 +215,7 @@ check.libraryPassword = function(o,cb,debug){
                         }
 
                         conn.query({
-                            sql: "update scu_library set password =:password where id = :id",
+                            sql: "update scu_library set password =:password,error=0 where id = :id",
                             params: {
                                 id: o.studentId,
                                 password: password
@@ -220,7 +226,7 @@ check.libraryPassword = function(o,cb,debug){
                                 return;
                             }
 
-                            request(config.queryUrl+'/?name=book&opt=put&data={"studentId":' + o.studentId + ',"password":"' + password + '","appId":"' + o.appId? o.appId:0+ '"}', function (eee, rrr) {
+                            request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":' + o.studentId + ',"password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,password) + '","appId":"' + o.appId? o.appId:0+ '"}'), function (eee, rrr) {
 
                                     if (eee) {
                                         cb(code.requestError);
@@ -288,6 +294,7 @@ check.renewPassword = function(o,cb,debug){
         var password = o.password;
     }else {
         var password = aes128.decode(o.appId, o.appSecret, "" + o.password + "");
+        o.password=aes128.decode(o.appId, o.appSecret, "" + o.password + "");
     }
     conn.query({
         sql:"select password,error,updateAt,count,version from scu_library where id="+ o.studentId
@@ -328,6 +335,7 @@ check.renewPassword = function(o,cb,debug){
                 })
             }else{
                 if(r[0].error==1){
+                    o.timeout = 3000;
                     libs.checkLib(o, function (ee) {
                         if (ee) {
                             cb(ee);
@@ -383,7 +391,7 @@ check.renewPassword = function(o,cb,debug){
 
 
 check.renew = function (o,cb){
-console.log(o);
+//console.log(o);
     if(!o.studentId){
         cb(code.lackParamsStudentId);
         return;
@@ -394,17 +402,13 @@ console.log(o);
         return;
     }
 
-    if(!o.xc){
-        cb(code.lackParamsXc);
-        return;
-    }
 
-    if(!o.barcode){
-        cb(code.lackParamsBarcode);
+    if(!o.bookId){
+        cb(code.lackParamsBookId);
         return;
     }
-    if(!o.borId){
-        cb(code.lackParamsBorId);
+    if(!o.borrowId){
+        cb(code.lackParamsBorrowId);
         return;
     }
 

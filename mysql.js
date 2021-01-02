@@ -1,17 +1,12 @@
 /**
  * mysql模块，只负责连接数据库，
  */
-var client = require('easymysql');
+var client = require('fy-mysql');
 //mysql conn
+var config = require('./config.js');
 var conn = null;
-
-var db_conf = {
-    'host':'127.0.0.1',
-    'user':'root',
-    'password':'123456',
-    'database':'secret'
-};
-
+//
+var db_conf = config.mysql;
 
 var link = function(){
 

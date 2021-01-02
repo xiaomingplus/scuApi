@@ -31,15 +31,23 @@ lib.check = function (o,cb){
         password:""+datas.account.password+""
     };
     var j = request.jar();
+//console.log(o.password);
+    //console.log(encodeURIComponent(o.password));
     var options = {
         method:"post",
-        url: 'http://202.115.47.141/loginAction.do?zjh='+ o.studentId+'&mm='+o.password,
+        url: 'http://202.115.47.141/loginAction.do',
         encoding: 'binary',
-        form:{zjh: o.studentId,mm: ""+o.password+""},
-        jar:j
+        form:{zjh: o.studentId,mm:""+o.password+""},
+        jar:j,
+        timeout: o.timeout? o.timeout:10000,
+        // headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded',
+        //     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
+        // },
     };
-   // console.log(options);
     request(options,function(err,response){
+
+        // console.log(err,response.body);
         if(err){
 
             cb({code:code.requestError.code,message:code.requestError.message});
@@ -51,8 +59,10 @@ lib.check = function (o,cb){
             return;
         }
         var loginCallback = iconv.decode(new Buffer(response.body, 'binary'), 'GBK');//登录返回页面
+        // console.log(loginCallback);
         var $ = cheerio.load(loginCallback);
         if($('title').text().trim()=="学分制综合教务"){
+
             cb(null,j);
         }else{
             //console.log('222');
@@ -73,6 +83,9 @@ lib.get = function (o,cb){
 
     lib.check(o,function(err,j){
         if(err) {
+
+            console.log(err);
+            console.log('i');
             cb(err);
             return;
         }
@@ -80,17 +93,25 @@ lib.get = function (o,cb){
             method:"get",
             url: o.url,
             encoding:"binary",
-            jar:j
+            jar:j,
+            timeout: o.timeout? o.timeout:10000
         };
+        //console.log('222');
+        //console.log(opts);
         request(opts,function(err,r){
+
+            //console.log(opts);
+            //console.log(r.body);
             if(err){
-                cb({code:code.requestError.code,message:code.requestError.message});
+
+                console.log('第一次get错误');
+                cb({code:code.requestError.code,message:code.requestError.message,j:j});
                 console.log(err);
                 return;
             }
 
             if(r.statusCode!=200){
-                cb({code:code.requestError.code,message:code.requestError.message});
+                cb({code:code.requestError.code,message:code.requestError.message,j:j});
                 return;
             }
             cb(null, {code:0,j:j, data:iconv.decode(new Buffer(r.body, 'binary'), 'GBK')});
@@ -111,6 +132,9 @@ lib.post = function (o,cb){
     //test id:2012141442029
     //test password:013991
 
+    o.timeout=o.timeout? o.timeout:10000;
+
+
     lib.check(o,function(err,j){
        // console.log(o);
         if(err) {
@@ -125,10 +149,14 @@ lib.post = function (o,cb){
             url: o.url,
             encoding:"binary",
             //form: o.form,
-            jar:j
+            jar:j,
+            timeout: o.timeout? o.timeout:10000
         };
 
+
             request(opts,function(err,r){
+
+
                 if(err){
                     console.log(err);
                     cb({code:code.requestError.code,message:code.requestError.message});
@@ -138,6 +166,7 @@ lib.post = function (o,cb){
                     cb({code:code.requestError.code,message:code.requestError.message});
                     return;
                 }
+
                 cb(null, {code:0, j:j,data:iconv.decode(new Buffer(r.body, 'binary'), 'GBK')});
             });
 
@@ -159,6 +188,8 @@ lib.reGet = function (o,cb){
             return;
         }
         if(r.statusCode!=200){
+            console.log('再次get请求错误');
+            console.log(r.body);
             cb({code:code.requestError.code,message:code.requestError.message});
             return;
         }
@@ -185,6 +216,8 @@ lib.rePost = function (o,cb){
             return;
         }
         if(r.statusCode!=200){
+            console.log('再次请求错误');
+            console.log(r.body);
             cb({code:code.requestError.code,message:code.requestError.message});
             return;
         }
@@ -271,18 +304,21 @@ console.log(e1);
        cb(code.requestLibError);
        return;
    }
-    var options = {
+
+
+        var options = {
         uri: 'http://mc.m.5read.com/irdUser/login/opac/opacLogin.jspx',
         form:{
             schoolid:395,
             username: o.studentId,
             password: ""+o.password+"",
             userType:0},
-        jar:j
+        jar:j,
+        timeout: o.timeout? o.timeout:10000
     };
     request.post(options,function(err,response,body){
-        
-        //console.log(err,body);
+
+        //console.log(body);return;
         if(err){
 
             cb(code.requestLibError);
@@ -299,7 +335,7 @@ console.log(e1);
             return;
         }
         cb(code.requestLibError);
-        console.log(err,body);
+        //console.log(err,body);
         return;
     });
     });
@@ -331,4 +367,13 @@ lib.getBookId = function(o,cb){
 
 
 };
+
+// lib.check({
+//     studentId:"2015141421022",
+//     password:"012214"
+// },function(e,r){
+//     console.log(e,r);
+// })
+
+
 module.exports = lib;

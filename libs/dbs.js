@@ -10,7 +10,7 @@ var dbs = {
  * @param cb
  */
 dbs.getAppInfo = function(cb){
-    var sql = 'SELECT id,callback from scu_app_info';
+    var sql = 'SELECT id,callback,appkey from scu_app_info';
     conn.query(
         {
             sql:sql
@@ -60,12 +60,13 @@ dbs.getVersion = function(cb){
         {
             sql:"select `typeVersion`,`typeLatestVersion`,`termVersion`,`termLatestVersion`,`accountVersion`,`campusVersion`,`propertyVersion`,`collegeVersion`,`courseVersion`,`teacherVersion`,`accountLatestVersion`,`campusLatestVersion`,`propertyLatestVersion`,`collegeLatestVersion`,`courseLatestVersion`,`teacherLatestVersion` from scu_version where id=1"
         },function(err,rows){
+            //console.log(err,rows);
             if(err){
                 console.log(err);
                 cb(err);
                 return;
             }
-           // console.log(rows[0]);
+            //console.log(rows[0]);
             cb(null,{
                     termLatestVersion:rows[0].termLatestVersion,
                     collegeLatestVersion:rows[0].collegeLatestVersion,
@@ -82,7 +83,7 @@ dbs.getVersion = function(cb){
                     campusVersion:rows[0].campusVersion,
                     propertyVersion:rows[0].propertyVersion,
                     accountVersion:rows[0].accountVersion,
-                    termVersion:rows[0].termVersion
+                    termVersion:rows[0].termVersion,
                 }
             );
         }

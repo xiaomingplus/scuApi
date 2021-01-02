@@ -29,8 +29,8 @@ var datas={
         firstDayStatus:false
     },
     account:{
-        studentId:"2012141442029",
-        password:"013991"
+        studentId:"2015141011021",
+        password:"136641"
     },
     campus:{
 
@@ -78,13 +78,15 @@ datas.loadApp = function(){
         if(e){
             console.log(e);return;
         }
-        
+
         if(r.length>0){
             for(var i=0;i< r.length;i++){
                 datas.app[r[i].id]={
-                    callback:r[i].callback
+                    callback:r[i].callback,
+                    appSecret:r[i].appkey
                 }
             }
+            console.log(datas.app);
             datas.status.appStatus=true;
         }else{
             console.log('no App ');
@@ -142,6 +144,7 @@ datas.loadVersion = function(cb){
         datas.version.accountLatestVersion = r.accountLatestVersion;
         datas.version.termLatestVersion = r.termLatestVersion;
         datas.version.typeLatestVersion = r.typeLatestVersion;
+
         datas.status.versionStatus = true;
         console.log('version信息载入完成');
         cb(null);
@@ -223,6 +226,9 @@ datas.loadCollege = function(){
     }
 };
 
+
+
+
 /**
  * 载入属性信息
  */
@@ -254,7 +260,7 @@ datas.loadProperty = function(){
 datas.loadTerm = function(){
     if(datas.status.versionStatus){
         db.getTerm({version:datas.version.termVersion},function(e,r){
-            
+
             if(e){
                 console.log(e);
                 return;
@@ -318,7 +324,7 @@ if(!datas.status.status){
                 console.log(e);
                 return;
             }
-            
+
 
             if(!datas.status.accountStatus){
                 datas.loadAccount();
@@ -393,6 +399,8 @@ if(!datas.status.status){
 
         if(datas.status.firstDayStatus && datas.status.appStatus && datas.status.campusStatus && datas.status.collegeStatus && datas.status.propertyStatus && datas.status.accountStatus && datas.status.termStatus && datas.status.typeStatus){
             datas.status.status = true;
+
+            //console.log(datas);
         }
 
     }
@@ -430,6 +438,7 @@ datas.getStatus = function(){
 datas.getAccount = function(){
     return datas.account;
 };
+
 
 
 module.exports = datas;

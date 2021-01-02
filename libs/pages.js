@@ -13,11 +13,14 @@ pages.teacherList = function(html,cb){
     var trs = $(html).find("table.titleTop2 table#user tbody tr");
     var item =null;
     var teacherIdTd;
+
+    console.log(trs);
+
     trs.each(function(i,v){
     teacherIdTd=$($(v).find('td')[4]).find("img").attr('onclick');
         item = {
             id:teacherIdTd.substring(teacherIdTd.indexOf('xjsh=')+5,teacherIdTd.indexOf('&xjsm')),
-            name: $($(v).find('td')[1]).text().trim(),
+            name: common.mysqlEscape($($(v).find('td')[1]).text().trim()),
             collegeId:datas.college[$($(v).find('td')[2]).text().trim()].collegeId,
             college: $($(v).find('td')[2]).text().trim(),
             level: $($(v).find('td')[3]).text().trim()
@@ -52,7 +55,7 @@ pages.courseList = function(html,key){
                 key:i,
                 courseId:$($(v).find('td')[1]).text().trim(),
                 type: $($(v).find('td')[4]).text().trim(),
-                name: $($(v).find('td')[2]).text().trim(),
+                name: common.mysqlEscape($($(v).find('td')[2]).text().trim()),
                 college: college,
                 collegeId: collegeId
             };
@@ -252,10 +255,12 @@ pages.scoreList = function(html){
     for(var i= 2,k=0;i<$("table.displayTag").length;i+=3,k++){
 
         for(var m = 1;m<$($("table.displayTag")[i]).find('tr').length-1;m++){
+            var propertyId=$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[2]).text().trim();
+
             item0={
                 'termId':datas.term[term[k]].termId,
                 'courseId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim(),
-                'propertyId':datas.property[$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[2]).text().trim()].propertyId,
+                'propertyId':propertyId?datas.property[propertyId].propertyId:"未知",
                 'score':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim(),
                 'date':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[4]).text().trim(),
                 'name':common.mysqlEscape($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[1]).text().trim())
@@ -275,8 +280,22 @@ pages.scoreList = function(html){
             data[term[k]].push(item1);
         }
     }
+
+    var flag=false;
+    for(var i in data){
+        if(data[i].length>0){
+            flag=true;
+        }
+    }
+
+    if(flag){
+        return data;
+
+    }else{
+        data={};
+        return data;
+    }
     //console.log(data);
-    return data;
 
 };
 
@@ -301,7 +320,7 @@ pages.scorePass = function(html){
             };
             data[term[i]][$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim()]=item;
         }
-        
+
     }
     //console.log(data);
 return data;
@@ -343,6 +362,9 @@ pages.scoreFail = function(html){
 
     for(var i= 0,k=0;i<$("table.displayTag").length;i++,k++) {
         for(var m = 1;m<$($("table.displayTag")[i]).find('tr').length;m++){
+
+            //console.log($($($($("table.displayTag")[i]).find('tr')[m]).find('td')[3]).text().trim());
+
             item={
                 'courseId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[0]).text().trim(),
                 'orderId':$($($($("table.displayTag")[i]).find('tr')[m]).find('td')[1]).text().trim(),
@@ -356,8 +378,10 @@ pages.scoreFail = function(html){
         }
 
     }
+    //console.log(data);
+
     return data;
-     //console.log(data);
+
     //
     //  var t=$($($($("table.displayTag")[0]).find('tr')[1]).find('td')[0]).text().trim()
 //console.log(t);
@@ -387,33 +411,14 @@ pages.curriculum = function(html){
     var $ = cheerio.load(html);
     var item={};
     var data=[];
-//console.log(html);
-   // $($($("table.displayTag")[1]).find("tr")[1]).find('td')[1]
     var teacher,weekHasLessonStr,weekHasLessonStart,weekHasLessonEnd,lessonStr,lessonStart,lessonEnd;
-//console.log($($("table.displayTag")[1]).find("tr").length-1);
     for(var i= 0,k=1;i<$($("table.displayTag")[1]).find("tr").length-1;i++,k++) {
         var tr = $($("table.displayTag")[1]).find("tr");
-        //console.log(tr.toString());
-        //console.log('11');
-        //console.log(k);
-        //console.log($($(tr[k]).find('td')[0]).text().trim());
-        
-        //console.log($($(tr[k-1]).find('td')[0]).text().trim());
-        //console.log('22');
         if(k>1 && $($(tr[k]).find('td')[0]).text().trim()!=$($(tr[1]).find('td')[0]).text().trim()){
-//console.log('x');
             var weekHasLesson = [];
-            teacher =[];
-            teacher = $($(tr[k]).find('td')[7]).text().trim().split(" ");
-            //console.log(teacher);
-
-            for (var n = 0; n < teacher.length; n++) {
-                teacher[n] = teacher[n].replace("*", "");
-            }
 
 
-            weekHasLessonStr = $($(tr[k]).find('td')[11]).text().trim();
-            //console.log(weekHasLessonStr);
+            weekHasLessonStr = $($(tr[k]).find('td')[0]).text().trim();
             if (!weekHasLessonStr) {
                 weekHasLesson = [];
             } else {
@@ -430,14 +435,14 @@ pages.curriculum = function(html){
                     weekHasLessonStart = parseInt(weekHasLessonStr.substring(0, weekHasLessonStr.indexOf("-")));
                     weekHasLessonEnd = parseInt(weekHasLessonStr.substring(weekHasLessonStr.indexOf("-") + 1, weekHasLessonStr.indexOf("周")));
 
-                    // console.log(weekHasLessonStart);console.log(weekHasLessonEnd);
+                     //console.log(weekHasLessonStart);console.log(weekHasLessonEnd);
                     for (var l = weekHasLessonStart; l <= weekHasLessonEnd; l++) {
                         weekHasLesson.push(parseInt(l));
                     }
                     //console.log(weekHasLesson);
                 }
             }
-            lessonStr = $($(tr[k]).find('td')[13]).text().trim();
+            lessonStr = $($(tr[k]).find('td')[2]).text().trim();
             var lesson = [];
             if (!lessonStr) {
                 lesson = [];
@@ -456,7 +461,8 @@ pages.curriculum = function(html){
                 }
             }
 
-            var week = $($(tr[k]).find('td')[12]).text().trim();
+            var week = $($(tr[k]).find('td')[1]).text().trim();
+            //console.log(week);
             if (week) {
                 week = parseInt(week);
 
@@ -464,8 +470,6 @@ pages.curriculum = function(html){
                 week = parseInt(0);
             }
 
-//console.log(data[i-1]);
-//console.log('111');
             item={
                 courseId:data[i-1].courseId,
                 orderId:data[i-1].orderId,
@@ -474,7 +478,7 @@ pages.curriculum = function(html){
                 status:data[i-1].status,
                 credit:data[i-1].credit,
                 weekHasLesson:weekHasLesson.join(','),
-                teacher:teacher.join(','),
+                teacher:data[i-1].teacher,
                 week:week,
                 lesson:lesson.join(','),
                 campusId:$($(tr[k]).find('td')[3]).text().trim()?datas.campus[$($(tr[k]).find('td')[3]).text().trim()].campusId:"",
@@ -482,15 +486,11 @@ pages.curriculum = function(html){
                 classroom:$($(tr[k]).find('td')[5]).text().trim()
 
             };
-            //console.log(item);
-            //console.log('222');
             data[i]=item;
-//console.log('333');
         }else {
             var weekHasLesson = [];
             teacher = [];
             teacher = $($(tr[k]).find('td')[7]).text().trim().split(" ");
-            //console.log(teacher);
 
             for (var n = 0; n < teacher.length; n++) {
                 teacher[n] = teacher[n].replace("*", "");
@@ -498,7 +498,6 @@ pages.curriculum = function(html){
 
 
             weekHasLessonStr = $($(tr[k]).find('td')[11]).text().trim();
-            //console.log(weekHasLessonStr);
             if (!weekHasLessonStr) {
                 weekHasLesson = [];
             } else {
@@ -515,11 +514,9 @@ pages.curriculum = function(html){
                     weekHasLessonStart = parseInt(weekHasLessonStr.substring(0, weekHasLessonStr.indexOf("-")));
                     weekHasLessonEnd = parseInt(weekHasLessonStr.substring(weekHasLessonStr.indexOf("-") + 1, weekHasLessonStr.indexOf("周")));
 
-                    // console.log(weekHasLessonStart);console.log(weekHasLessonEnd);
                     for (var l = weekHasLessonStart; l <= weekHasLessonEnd; l++) {
                         weekHasLesson.push(parseInt(l));
                     }
-                    //console.log(weekHasLesson);
                 }
             }
             lessonStr = $($(tr[k]).find('td')[13]).text().trim();
@@ -529,8 +526,6 @@ pages.curriculum = function(html){
             } else {
                 lessonStart = parseInt(lessonStr.substring(0, lessonStr.indexOf("~")));
                 lessonEnd = parseInt(lessonStr.substring((lessonStr.indexOf("~") + 1)));
-                //console.log(lessonStart);
-                //console.log(lessonEnd);
                 if (lessonStart == 0 && lessonEnd == 0) {
                     lesson = [];
                 } else {
@@ -557,12 +552,8 @@ pages.curriculum = function(html){
                 credit = 0;
             }
 
-//console.log($($(tr[k]).find('td')[5]).text().trim());
-//            console.log('1');
             var property = $($(tr[k]).find('td')[5]).text().trim();
-            //console.log(property);
 
-            //console.log('2');
 
             item = {
                 courseId: $($(tr[k]).find('td')[1]).text().trim(),
@@ -583,7 +574,6 @@ pages.curriculum = function(html){
             data[i] = item;
         }
         }
-
     return data;
 };
 
@@ -599,15 +589,16 @@ pages.exam = function(html){
     var tr=$($("table.displayTag")[1]).find('tr');
         for(var m = 1;m<tr.length;m++){
             item={
-                'examName':$($(tr[m]).find('td')[0]).text().trim(),
+                'examName':common.mysqlEscape($($(tr[m]).find('td')[0]).text().trim()),
                 'campusId':$($(tr[m]).find('td')[1]).text().trim()?datas.campus[$($(tr[m]).find('td')[1]).text().trim()].campusId:"",
                 'teamId':datas.currentTerm.termId,
-                'start':parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substring(0,$($(tr[m]).find('td')[8]).text().trim().indexOf('-'))))/1000),
-                'end':parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substr(($($(tr[m]).find('td')[8]).text().trim().indexOf('-')+1)))/1000)),
-                'week':parseInt($($(tr[m]).find('td')[5]).text().trim()),
-                'name':$($(tr[m]).find('td')[4]).text().trim(),
-                'building':$($(tr[m]).find('td')[2]).text().trim(),
-                'classroom':$($(tr[m]).find('td')[3]).text().trim()
+                'start':$($(tr[m]).find('td')[7]).text().trim()?(parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substring(0,$($(tr[m]).find('td')[8]).text().trim().indexOf('-'))))/1000)):0,
+                'end':$($(tr[m]).find('td')[7]).text().trim()?(parseInt((Date.parse($($(tr[m]).find('td')[7]).text().trim()+" "+$($(tr[m]).find('td')[8]).text().trim().substr(($($(tr[m]).find('td')[8]).text().trim().indexOf('-')+1)))/1000))):0,
+                'week':$($(tr[m]).find('td')[5]).text().trim()?parseInt($($(tr[m]).find('td')[5]).text().trim()):0,
+                'name':common.mysqlEscape($($(tr[m]).find('td')[4]).text().trim()),
+                'building':$($(tr[m]).find('td')[2]).text().trim()?$($(tr[m]).find('td')[2]).text().trim():"",
+                'classroom':$($(tr[m]).find('td')[3]).text().trim()?$($(tr[m]).find('td')[3]).text().trim():"",
+                'seat':$($(tr[m]).find('td')[9]).text().trim()?$($(tr[m]).find('td')[9]).text().trim():""
             };
             data.push(item);
 
@@ -636,16 +627,15 @@ pages.library = function(html){
     var table = $(".sheet");
     var data = [],item={};
     //console.log(table.text());
-    
+
     for(var i=0;i<table.length;i++){
         var date =$($(table[i]).find("table tr td")[2]).text().trim();
          item = {
-             name:$($(table[i]).find("table tr td")[1]).text().trim(),
+             name:common.mysqlEscape($($(table[i]).find("table tr td")[1]).text().trim()),
              deadline:parseInt(new Date(date.substr(0,4)+'-'+date.substr(4,2)+'-'+date.substr(6,2)+" 0:0:0:0").getTime()/1000),
-             author:$($(table[i]).find("table tr td")[0]).text().trim(),
+             author:common.mysqlEscape($($(table[i]).find("table tr td")[0]).text().trim()),
              location:$($(table[i]).find("table tr td")[3]).text().trim(),
              index:$($(table[i]).find("table tr td")[4]).text().trim(),
-             xc:$($(table[i]).find("table tr td")[5]).find("input[name=xc]").val(),
              barcode:$($(table[i]).find("table tr td")[5]).find("input[name=barcode]").val(),
              borId:$($(table[i]).find("table tr td")[5]).find("input[name=bor_id]").val()
          };
@@ -663,9 +653,60 @@ pages.bookIds = function(html){
     var table = $(".sheet");
     var data = [];
     for(var i=0;i<table.length;i++){
-        data[i] = "'"+$($(table[i]).find("table tr td")[5]).find("input[name=barcode]").val()+"'";
-    }
+        var date =$($(table[i]).find("table tr td")[2]).text().trim();
+        data[i] = {
+            barcode:  $($(table[i]).find("table tr td")[5]).find("input[name=barcode]").val() ,
+            deadline: parseInt(new Date(date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2) + " 0:0:0:0").getTime() / 1000)
+        }
+        }
     return data;
 
 };
+
+
+pages.currentScore = function(html){
+    var $ = cheerio.load(html);
+    var item={};
+    var data=[];
+
+        for(var m = 1;m<($("table.displayTag").find('tr').length);m++){
+            item={
+                'courseId':$($($($("table.displayTag")).find('tr')[m]).find('td')[0]).text().trim(),
+                'orderId':$($($($("table.displayTag")).find('tr')[m]).find('td')[1]).text().trim(),
+                'score':$($($($("table.displayTag")).find('tr')[m]).find('td')[6]).text().trim(),
+                'englishName':common.mysqlEscape($($($($("table.displayTag")).find('tr')[m]).find('td')[3]).text().trim()),
+                'property':$($($($("table.displayTag")).find('tr')[m]).find('td')[5]).text().trim(),
+                'credit':$($($($("table.displayTag")).find('tr')[m]).find('td')[4]).text().trim(),
+                "name":common.mysqlEscape($($($($("table.displayTag")).find('tr')[m]).find('td')[2]).text().trim())
+            };
+            data.push(item);
+    }
+    return data;
+
+
+};
+
+
+pages.classroom = function(html){
+    var data =[];
+    var $ = cheerio.load(html);
+    var trs = $(html).find("table.titleTop2 table#user tbody tr");
+    var item =null;
+    var link = undefined;
+    trs.each(function(i,v){
+        link=$($(v).find('td')[6]).find("img").attr('onclick');
+item = {
+    campusId:datas.campus[$($(v).find('td')[1]).text().trim()].campusId,
+    buildId:link.substring(link.indexOf('jxlh=')+5,link.indexOf('&jxlm')),
+    building: $($(v).find('td')[2]).text().trim(),
+    classroom:$($(v).find('td')[3]).text().trim(),
+    classroomId:link.substring(link.indexOf('jash=')+5,link.indexOf('&jasm')),
+    type:$($(v).find('td')[4]).text().trim(),
+    count:$($(v).find('td')[5]).text().trim()
+};
+        data.push(item);
+    });
+    return data;
+};
+
 module.exports = pages;

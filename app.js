@@ -6,9 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var datas = require('./libs/datas.js');
 
-var update = require('./libs/updates.js');
 var routes = require('./routes/index');
-//var autos = require('./libs/autos.js');
 var app = express();
 var updates = require('./libs/updates.js');
 // view engine setup
@@ -56,7 +54,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9232,function(){
-    console.log('9232');
+    console.log('9232'+new Date());
 });
 
 /**
@@ -64,7 +62,7 @@ app.listen(9232,function(){
  */
 datas.load();
 setInterval(function(){
-  console.log('查看是否全局数据是否有更新');
+  console.log('查看是否全局数据是否有更新'+new Date());
   datas.load();
 },1000*60*600);
 

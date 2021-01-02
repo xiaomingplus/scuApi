@@ -1,613 +1,174 @@
-
-
-
-
-
-<html lang="zh-CN">
-<head>
-    <title>考试安排信息查询</title>
-    <link  href="css/style.css" rel=stylesheet type="text/css">
-</head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="overflow:auto;">
-<form  name="form1"  action="ksApCxAction.do">
-
-
-
-
-
-
-
-
-
-
-
-    <body leftmargin="1" topmargin="0" marginwidth="0" marginheight="0" style="overflow:auto;">
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr><td class="Linetop"></td>
-        </tr>
-    </table>
-
-    <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="title" id="tblHead">
-        <tr>
-            <td width="50%" >
-                <table border="0" align="left" cellpadding="0" cellspacing="0" >
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td valign="middle">&nbsp;周次：
-                            <select  name="selZc"  onchange="zelzcSubmit()" >
-                                <option value="1">第1周</option><option value="2">第2周</option><option value="3">第3周</option><option value="4">第4周</option><option value="5">第5周</option><option value="6">第6周</option><option value="7">第7周</option><option value="8">第8周</option><option value="9">第9周</option><option value="10">第10周</option><option value="11">第11周</option><option value="12">第12周</option><option value="13">第13周</option><option value="14">第14周</option><option value="15">第15周</option><option value="16">第16周</option><option value="17">第17周</option><option value="18">第18周</option><option value="19">第19周</option><option value="20">第20周</option><option value="21">第21周</option><option value="22">第22周</option><option value="23">第23周</option><option value="24">第24周</option>
-                            </select >
-                        </td>
-                    </tr>
-                </table>
-        </tr>
-    </table>
-
-
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"  >
-        <tr>
-            <td class="Linetop"></td>
-        </tr>
-    </table>
-    <table><tr><td></td></tr></table>
-    </body>
-
-
-
-
-
-
-
-
-
-    <link href="/css/newcss/project.css" rel="stylesheet" type="text/css">
-
-
-
-
-
-    <!--  <table width="100%" align="center" cellpadding="0" cellspacing="0" borderColorLight="#7AA5E4" borderColorDark="#ffffff" border="1">
-      <tr bgcolor="#DEEAFA">
-        <td colspan="2" class="td_k">&nbsp;</td>
-        -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="titleTop2">
-        <tr>
-            <td class="pageAlign">
-                <table cellpadding="0" width="100%" class="displayTag" cellspacing="1" border="0" id="user">
-                    <thead>
-                    <tr>
-                        <td colspan="2" bgcolor="#DEEAFA">&nbsp;</td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-                                星期日
-                            </div></td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-
-                                星期一
-
-                            </div></td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-
-                                星期二
-
-                            </div></td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-
-                                星期三
-
-                            </div></td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-
-                                星期四
-
-                            </div></td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-
-                                星期五
-
-                            </div></td>
-
-                        <td width="13%" bgcolor="#DEEAFA" class="sortable"><div align="center">
-
-                                星期六
-
-                            </div></td>
-
-
-
-
-
-
-
-
-
-
-                    </tr>
-                    </thead>
-                    <tr bgcolor="#FFFFFF">
-
-                        <td width="3%" rowspan="2"><p class="style4">上午</p></td>
-
-                        <td width="11%">第1节</td>
-                        <td>
-                            &nbsp;
-
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                    </tr>
-                    </thead>
-                    <tr bgcolor="#FFFFFF">
-
-                        <td width="11%">第2节</td>
-                        <td>
-                            &nbsp;
-
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                    <tr bgcolor="#FFFFFF">
-                        <td colspan="9"><p align="center" class="td2 style5"><strong>午 休</strong></p></td>
-                    </tr>
-
-                    </tr>
-                    </thead>
-                    <tr bgcolor="#FFFFFF">
-
-                        <td width="3%" rowspan="2"><p class="style4">下午</p></td>
-
-                        <td width="11%">第3节</td>
-                        <td>
-                            &nbsp;
-
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                    </tr>
-                    </thead>
-                    <tr bgcolor="#FFFFFF">
-
-                        <td width="11%">第4节</td>
-                        <td>
-                            &nbsp;
-
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                    <tr bgcolor="#FFFFFF">
-                        <td colspan="9"><p align="center" class="td2 style5"><strong>晚 饭</strong></p></td>
-                    </tr>
-
-                    </tr>
-                    </thead>
-                    <tr bgcolor="#FFFFFF">
-
-                        <td width="3%" rowspan="10"><p class="style4">晚上</p></td>
-
-                        <td width="11%">第5节</td>
-                        <td>
-                            &nbsp;
-
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                        <td>
-                            &nbsp;
-
-                        </td>
-
-                </table>
-            </td>
-        </tr>
-    </table>
-    <table><tr><td></td></tr></table>
-
-
-
-
-
-
-
-
-
-
-
-    <html>
-    <head>
-        <title>
-            学生考试安排信息查询
-        </title>
-        <link href="/css/newcss/project.css" rel="stylesheet" type="text/css">
-    </head>
-    <body bgcolor="#ffffff">
-
-    <!--  <table width="100%" align="center" cellpadding="0" cellspacing="0" borderColorLight="#7AA5E4" borderColorDark="#ffffff" border="1">
-    -->
-    <table cellpadding="0" width="100%" class="displayTag" cellspacing="1" border="0" id="user">
-        <thead>
-        <tr>
-            <th width="40" class="sortable">考试名</th>
-            <th class="sortable">校区</th>
-            <th class="sortable">教学楼</th>
-            <th class="sortable">教室</th>
-            <th class="sortable">课程</th>
-            <th class="sortable">考试周次</th>
-            <th class="sortable">考试星期</th>
-            <th class="sortable">考试日期</th>
-            <th class="sortable">考试时间</th>
-            <th class="sortable">座位号</th>
-            <th class="sortable">准考证号</th>
-            <th class="sortable">备注</th>
-        </tr>
-        </thead>
-
-        <tr class="odd">
-            <td>补缓考2015年3月</td>
-            <td>江安</td>
-            <td>一教B座</td>
-            <td>B101</td>
-            <td>数学物理方法-01&nbsp;</td>
-            <td>1</td>
-            <td>7</td>
-
-            <td>2015-03-01</td>
-
-            <td>10:30-12:30</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>时间片自动排考</td>
-        </tr>
-
-        <tr class="odd">
-            <td>补缓考2015年3月</td>
-            <td>江安</td>
-            <td>综合楼C座</td>
-            <td>C303</td>
-            <td>模拟电子技术（Ⅱ）-04&nbsp;</td>
-            <td>1</td>
-            <td>6</td>
-
-            <td>2015-03-07</td>
-
-            <td>16:30-18:30</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>时间片自动排考</td>
-        </tr>
-
-        <tr class="odd">
-            <td>补缓考2015年3月</td>
-            <td>江安</td>
-            <td>综合楼C座</td>
-            <td>C506</td>
-            <td>大学英语（创意阅读）-3-13&nbsp;</td>
-            <td>1</td>
-            <td>6</td>
-
-            <td>2015-03-07</td>
-
-            <td>14:00-16:00</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>时间片自动排考</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期中考（5月9、10日）</td>
-            <td>江安</td>
-            <td>综合楼C座</td>
-            <td>C203</td>
-            <td>大学英语（创意阅读）-4-13&nbsp;</td>
-            <td>10</td>
-            <td>6</td>
-
-            <td>2015-05-09</td>
-
-            <td>14:00-16:00</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教B座</td>
-            <td>B401</td>
-            <td>信号与系统-04&nbsp;</td>
-            <td>18</td>
-            <td>7</td>
-
-            <td>2015-06-28</td>
-
-            <td>16:30-18:30</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教A座</td>
-            <td>A501</td>
-            <td>计算机网络与通信-08&nbsp;</td>
-            <td>18</td>
-            <td>7</td>
-
-            <td>2015-06-28</td>
-
-            <td>08:00-10:00</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教B座</td>
-            <td>B401</td>
-            <td>固体物理（Ⅰ）-01&nbsp;</td>
-            <td>18</td>
-            <td>4</td>
-
-            <td>2015-07-02</td>
-
-            <td>10:30-12:30</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教A座</td>
-            <td>A214</td>
-            <td>电路理论-02&nbsp;</td>
-            <td>18</td>
-            <td>3</td>
-
-            <td>2015-07-01</td>
-
-            <td>14:00-16:00</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教A座</td>
-            <td>A512</td>
-            <td>数字电子技术（Ⅱ）-03&nbsp;</td>
-            <td>18</td>
-            <td>3</td>
-
-            <td>2015-07-01</td>
-
-            <td>10:30-12:30</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教A座</td>
-            <td>A220</td>
-            <td>大学英语（创意阅读）-4-13&nbsp;</td>
-            <td>18</td>
-            <td>1</td>
-
-            <td>2015-06-29</td>
-
-            <td>14:00-16:00</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr class="odd">
-            <td>期末考试</td>
-            <td>江安</td>
-            <td>一教A座</td>
-            <td>A312</td>
-            <td>毛泽东思想和中国特色社会主义理论体系概论-21&nbsp;</td>
-            <td>18</td>
-            <td>2</td>
-
-            <td>2015-06-30</td>
-
-            <td>16:30-18:00</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-
-            <td>&nbsp;</td>
-        </tr>
-
-    </table>
-    </body>
-    </html>
-
-    <table width="100%">
-        <tr><td>&nbsp;</td>
-            <td align="right">
-                <input type="hidden" name="oper" value="getKsapZcxx">
-            </td></tr>
-    </table>
-</form>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-
+<!doctype html>
+<html>
+<style>
+    body {
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+    .auto_hidden {
+        width:204px;border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+        border-left: 1px solid #333;
+        border-right: 1px solid #333;
+        position:absolute;
+        display:none;
+    }
+    .auto_show {
+        width:204px;
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+        border-left: 1px solid #333;
+        border-right: 1px solid #333;
+        position:absolute;
+        z-index:9999; /* 设置对象的层叠顺序 */
+        display:block;
+    }
+    .auto_onmouseover{
+        color:#ffffff;
+        background-color:highlight;
+        width:100%;
+    }
+    .auto_onmouseout{
+        color:#000000;
+        width:100%;
+        background-color:#ffffff;
+    }
+</style>
+<script language="javascript">
+    <!--
+    var $ = function (id) {
+        return "string" == typeof id ? document.getElementById(id) : id;
+    }
+    var Bind = function(object, fun) {
+        return function() {
+            return fun.apply(object, arguments);
+        }
+    }
+    function AutoComplete(obj,autoObj,arr){
+        this.obj=$(obj);        //输入框
+        this.autoObj=$(autoObj);//DIV的根节点
+        this.value_arr=arr;        //不要包含重复值
+        this.index=-1;          //当前选中的DIV的索引
+        this.search_value="";   //保存当前搜索的字符
+    }
+    AutoComplete.prototype={
+        //初始化DIV的位置
+        init: function(){
+            this.autoObj.style.left = this.obj.offsetLeft + "px";
+            this.autoObj.style.top  = this.obj.offsetTop + this.obj.offsetHeight + "px";
+            this.autoObj.style.width= this.obj.offsetWidth - 2 + "px";//减去边框的长度2px
+        },
+        //删除自动完成需要的所有DIV
+        deleteDIV: function(){
+            while(this.autoObj.hasChildNodes()){
+                this.autoObj.removeChild(this.autoObj.firstChild);
+            }
+            this.autoObj.className="auto_hidden";
+        },
+        //设置值
+        setValue: function(_this){
+            return function(){
+                _this.obj.value=this.seq;
+                _this.autoObj.className="auto_hidden";
+            }
+        },
+        //模拟鼠标移动至DIV时，DIV高亮
+        autoOnmouseover: function(_this,_div_index){
+            return function(){
+                _this.index=_div_index;
+                var length = _this.autoObj.children.length;
+                for(var j=0;j<length;j++){
+                    if(j!=_this.index ){
+                        _this.autoObj.childNodes[j].className='auto_onmouseout';
+                    }else{
+                        _this.autoObj.childNodes[j].className='auto_onmouseover';
+                    }
+                }
+            }
+        },
+        //更改classname
+        changeClassname: function(length){
+            for(var i=0;i<length;i++){
+                if(i!=this.index ){
+                    this.autoObj.childNodes[i].className='auto_onmouseout';
+                }else{
+                    this.autoObj.childNodes[i].className='auto_onmouseover';
+                    this.obj.value=this.autoObj.childNodes[i].seq;
+                }
+            }
+        }
+        ,
+        //响应键盘
+        pressKey: function(event){
+            var length = this.autoObj.children.length;
+            //光标键"↓"
+            if(event.keyCode==40){
+                ++this.index;
+                if(this.index>length){
+                    this.index=0;
+                }else if(this.index==length){
+                    this.obj.value=this.search_value;
+                }
+                this.changeClassname(length);
+            }
+            //光标键"↑"
+            else if(event.keyCode==38){
+                this.index--;
+                if(this.index<-1){
+                    this.index=length - 1;
+                }else if(this.index==-1){
+                    this.obj.value=this.search_value;
+                }
+                this.changeClassname(length);
+            }
+            //回车键
+            else if(event.keyCode==13){
+                this.autoObj.className="auto_hidden";
+                this.index=-1;
+            }else{
+                this.index=-1;
+            }
+        },
+        //程序入口
+        start: function(event){
+            if(event.keyCode!=13&&event.keyCode!=38&&event.keyCode!=40){
+                this.init();
+                this.deleteDIV();
+                this.search_value=this.obj.value;
+                var valueArr=this.value_arr;
+                valueArr.sort();
+                if(this.obj.value.replace(/(^\s*)|(\s*$)/g,'')==""){ return; }//值为空，退出
+                try{ var reg = new RegExp("(" + this.obj.value + ")","i");}
+                catch (e){ return; }
+                var div_index=0;//记录创建的DIV的索引
+                for(var i=0;i<valueArr.length;i++){
+                    if(reg.test(valueArr[i])){
+                        var div = document.createElement("div");
+                        div.className="auto_onmouseout";
+                        div.seq=valueArr[i];
+                        div.onclick=this.setValue(this);
+                        div.onmouseover=this.autoOnmouseover(this,div_index);
+                        div.innerHTML=valueArr[i].replace(reg,"<strong>$1</strong>");//搜索到的字符粗体显示
+                        this.autoObj.appendChild(div);
+                        this.autoObj.className="auto_show";
+                        div_index++;
+                    }
+                }
+            }
+            this.pressKey(event);
+            window.onresize=Bind(this,function(){this.init();});
+        }
+    }
+    //-->
+</SCRIPT>
+<body>
+<h1 align="center">自动完成函数(Autocomplete Function)</h1>
+<div align="center"><input type="text" style="width:300px;height:20px;font-size:14pt;" id="o" onkeyup="autoComplete.start(event)"></div>
+<div class="auto_hidden" id="auto"><!--自动完成 DIV--></div>
+<script>
+    var autoComplete=new AutoComplete('o','auto',['b0','b12','b22','b3','b4','b5','b6','b7','b8','b2','abd','ab','acd','accd','b1','cd','ccd','cbcv','cxf']);
+</SCRIPT>
 </body>
 </html>
-<Script language="JavaScript">
-    function  zelzcSubmit(){
-        window.document.form1.submit();
-    }
-</Script>
-
-

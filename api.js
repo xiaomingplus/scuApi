@@ -11,7 +11,10 @@ var app = express();
 // view engine set
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+app.set('env','production');
+//app.set('env','development');
+
+//app.use(logger('dev'));
 app.use('/', routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -39,7 +42,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9231,function(){
-    console.log('9231');
+    console.log('9231'+new Date());
 });
 
 services.flushPermission();
@@ -49,7 +52,7 @@ services.flushPermission();
  */
 datas.load();
 setInterval(function(){
-  console.log('查看是否全局数据是否有更新');
+  console.log('查看是否全局数据是否有更新'+new Date());
   datas.load();
 },1000*60*600);
 process.on('uncaughtException', function(err) {

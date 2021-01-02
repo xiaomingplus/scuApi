@@ -4,10 +4,12 @@ var request = require('request');
 var config= require('./config.js');
 var datas= require('./libs/datas.js');
 var callback=require('./libs/callback.js');
+var aes128 = require('./libs/aes128.js');
 var consumer = {
     name:"消费者"
 };
 consumer.scoreQuery= function(){
+     //console.log('update score');
     setTimeout(function(){
         request(config.queryUrl+'/?name=score&opt=get',function(err,response,body) {
             if (err) {
@@ -17,23 +19,42 @@ consumer.scoreQuery= function(){
                 },1000);
                 return;
             }
+
+            //console.log(body);
+
             try {
-                var user = JSON.parse(body);
+                var user = JSON.parse(decodeURIComponent(body));
 
             }catch(e){
                 var user = {}
             }
 
-            
+
             if(Object.keys(user).length>0) {
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
+                //console.log('队列开始第一项了');
+                //console.log(encodeURIComponent(user.password));
+
                 //console.log(user);
-                
-                console.log('队列开始第一项了');
+
                 updates.score(user, function (ee) {
+                    //console.log(ee);
                     if (ee) {
                         console.log('更新成绩错误'+user.studentId);
+                        console.log({
+                            callback:user.appId?datas.app[user.appId].callback:"",
+                            appId: user.appId,
+                            code: ee.code,
+                            message:ee.message,
+                            action: 'score',
+                            studentId: user.studentId
+
+                        });
+
+
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -43,8 +64,9 @@ consumer.scoreQuery= function(){
                         },function(e,r){
                             console.log(e,r);
                         });
+
                     }else{
-callback.post({
+                        console.log({
     callback:user.appId?datas.app[user.appId].callback:"",
     appId: user.appId,
     code: 200,
@@ -52,8 +74,18 @@ callback.post({
     action: 'score',
     studentId: user.studentId
 
+});
+callback.post({
+    callback:user.appId?datas.app[user.appId].callback:"",
+    appSecret:user.appId?datas.app[user.appId].appSecret:"",
+    appId: user.appId,
+    code: 200,
+    message:user.studentId+'的成绩已更新到最新版',
+    action: 'score',
+    studentId: user.studentId
+
 },function(e,r){
-    console.log(e,r);
+    // console.log(e,r);
 });
                     }
 
@@ -66,7 +98,7 @@ callback.post({
                 setTimeout(function(){
                     consumer.scoreQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -80,6 +112,7 @@ callback.post({
 consumer.majorQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=major&opt=get',function(err,response,body) {
+            console.log(body);
             if (err) {
                 console.log(err);
                 setTimeout(function(){
@@ -88,18 +121,20 @@ consumer.majorQuery= function(){
                 return;
             }
             try {
-                var user = JSON.parse(body);
+                var user = JSON.parse(decodeURIComponent(body));
 
             }catch(e){
                 var user = {}
             }
-
+            console.log(user);
             if(Object.keys(user).length>0) {
+                user.password = aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.curriculum(user, function (ee) {
                     if (ee) {
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -107,11 +142,12 @@ consumer.majorQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         })
                     }else{
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: 200,
                             message:user.studentId+'的课表已更新到最新版',
@@ -119,7 +155,7 @@ consumer.majorQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            ////console.log(e,r);
                         });
                     }
                 });
@@ -131,7 +167,7 @@ consumer.majorQuery= function(){
                 setTimeout(function(){
                     consumer.majorQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -154,30 +190,33 @@ consumer.examQuery= function(){
             }
             //console.log(body);
             try {
-                var user = JSON.parse(body);
+                var user = JSON.parse(decodeURIComponent(body));
 
             }catch(e){
                 var user = {}
             }
-            console.log(user);
+            //console.log(user);
 
             if(Object.keys(user).length>0) {
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
                 updates.exam(user, function (ee) {
                     if (ee) {
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
                             action: 'exam',
                             studentId: user.studentId
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         })
                     }else{
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: 200,
                             message:user.studentId+'的考表已更新到最新版',
@@ -185,7 +224,7 @@ consumer.examQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         });
                     }
                 });
@@ -197,7 +236,7 @@ consumer.examQuery= function(){
                 setTimeout(function(){
                     consumer.examQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -207,6 +246,7 @@ consumer.examQuery= function(){
 
 consumer.bookQuery= function(){
     setTimeout(function(){
+        //console.log(config.queryUrl+'/?name=book&opt=get');
         request(config.queryUrl+'/?name=book&opt=get',function(err,response,body) {
             if (err) {
                 console.log(err);
@@ -215,23 +255,32 @@ consumer.bookQuery= function(){
                 },1000);
                 return;
             }
-            console.log(body);
+
             try {
-                var user = JSON.parse(body);
+                var user = JSON.parse(decodeURIComponent(body));
 
             }catch(e){
                 var user = {}
             }
-            console.log(user);
 
-            if(Object.keys(user).length>0) {
 
-                console.log('队列开始第一项了');
+             if(typeof(user)!='object'){
+
+                 setTimeout(function(){
+                     consumer.bookQuery();
+                 },1000);
+             }else if(Object.keys(user).length>0) {
+
+                //console.log('队列开始第一项了');
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
+
                 updates.library(user, function (ee) {
                     if (ee) {
                         console.log(ee);
+                        //console.log('2222');
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -244,6 +293,7 @@ consumer.bookQuery= function(){
                     }else{
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: 200,
                             message:user.studentId+'借的图书列表已更新到最新版',
@@ -251,7 +301,7 @@ consumer.bookQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
+                            //console.log(e,r);
                         });
 
                     }
@@ -264,7 +314,7 @@ consumer.bookQuery= function(){
                 setTimeout(function(){
                     consumer.bookQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -274,7 +324,7 @@ consumer.bookQuery= function(){
 consumer.renewQuery= function(){
     setTimeout(function(){
         request(config.queryUrl+'/?name=renew&opt=get',function(err,response,body) {
-            console.log(err,body);
+            //console.log(err,body);
             if (err) {
                 console.log(err);
                 setTimeout(function(){
@@ -283,20 +333,25 @@ consumer.renewQuery= function(){
                 return;
             }
             try {
-                var user = JSON.parse(body);
+                var user = JSON.parse(decodeURIComponent(body));
 
             }catch(e){
                 var user = {};
             }
 
-            if(Object.keys(user).length>0) {
 
-                console.log('队列开始第一项了');
+            if(Object.keys(user).length>0) {
+                user.password=aes128.decode(config.querySecret.appId,config.querySecret.appSecret,user.password);
+                //console.log(user);
+
+                //console.log('队列开始第一项了');
                 updates.renew(user, function (ee) {
+                    //console.log(ee);
                     if (ee) {
                         console.log(ee);
                         callback.post({
                             callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
                             appId: user.appId,
                             code: ee.code,
                             message:ee.message,
@@ -304,33 +359,46 @@ consumer.renewQuery= function(){
                             studentId: user.studentId
 
                         },function(e,r){
-                            console.log(e,r);
-                            callback.post({
-                                callback:user.appId?datas.app[user.appId].callback:"",
-                                appId: user.appId,
-                                code: 200,
-                                message:user.studentId+'的续借操作已成功',
-                                action: 'renew',
-                                studentId: user.studentId
+                            //console.log(e,r);
 
-                            },function(e,r){
-                                console.log(e,r);
-                            });
-                        })
+                            setTimeout(function(){
+                                consumer.renewQuery();
+                            },1000);
+                        });
                     }else{
 
+
+                        callback.post({
+                            callback:user.appId?datas.app[user.appId].callback:"",
+                            appSecret:user.appId?datas.app[user.appId].appSecret:"",
+                            appId: user.appId,
+                            code: 200,
+                            message:user.studentId+'的续借操作已成功',
+                            action: 'renew',
+                            studentId: user.studentId
+
+                        },function(e,r){
+                            //console.log(e,r);
+                        });
+
+                        request(config.queryUrl+'/?name=book&opt=put&data='+encodeURIComponent('{"studentId":"' + user.studentId + '","password":"' + aes128.encode(config.querySecret.appId,config.querySecret.appSecret,user.password) + '","appId":'+user.appId+'}'), function (eee) {
+
+                            }
+                        );
+                        setTimeout(function(){
+                            consumer.renewQuery();
+                        },1000);
+                        return;
                     }
                     //console.log(user.studentId+'续借成功');
                 });
 
-                setTimeout(function(){
-                    consumer.renewQuery();
-                },1000);
+
             }else{
                 setTimeout(function(){
                     consumer.renewQuery();
                 },1000*60);
-                console.log('队列为空');
+                //console.log('队列为空');
             }
         });
 
@@ -339,18 +407,15 @@ consumer.renewQuery= function(){
 
 consumer.init = function(){
     if(datas.status.appStatus) {
-
         consumer.scoreQuery();
-        consumer.bookQuery();
+         consumer.bookQuery();
         consumer.majorQuery();
         consumer.renewQuery();
         consumer.examQuery();
     }else{
-
         setTimeout(function(){
-            console.log('app信息未载入，2秒后将自动再试');
             consumer.init()
-        },2000);
+        },6000);
 
     }
 };
@@ -366,6 +431,9 @@ process.on('uncaughtException', function(err) {
  * 每n分钟自动载入数据
  */
 datas.load();
+
+
+
 setInterval(function(){
     console.log('查看是否全局数据是否有更新');
     datas.load();

@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
-mongo = mongoose.createConnection('203.195.164.179','open');
+var config = require('./config.js');
+mongoose.connect(config.mongodbUrl);
+var mongo = mongoose.connection;
 mongo.on('error',console.error.bind(console,'conn error\n'));
 mongo.once('open',function(){
-	console.log('conn open\n');
+	console.log('conn open\n'+new Date());
 });
 
 

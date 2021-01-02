@@ -2,6 +2,7 @@
 logs
 *.log
 
+
 # Runtime data
 pids
 *.pid
@@ -27,3 +28,8 @@ build/
 node_modules
 
 .idea
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+config.js
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
